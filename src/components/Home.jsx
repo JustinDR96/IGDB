@@ -7,25 +7,30 @@ function Home() {
   const [gameList, setGameList] = useState([]);
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const bestGames = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/games/");
+        const response = await axios.get("http://localhost:3000/best");
         setGameList(response.data);
         console.log(gameList);
       } catch (error) {
         console.error("Error fetching games:", error);
       }
     };
-    fetchGames();
+    bestGames();
   }, []);
 
   return (
     <div>
+      <h1>Home page</h1>
       <h2>Liste de jeux</h2>
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
-            <Link to={`/game/${game.id}`}>{game.name}</Link>
+            <img
+              src={`https://images.igdb.com/igdb/image/upload/t_720p/${
+                game.cover.image_id
+              }.jpg`}
+            />
           </li>
         ))}
       </ul>
