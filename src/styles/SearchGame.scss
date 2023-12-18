@@ -1,0 +1,12 @@
+// @mixin container($max-width: 1110px) {
+//   display: grid;
+//   grid-template-columns:
+//     minmax(5vw, 1fr) repeat(12, minmax(11px, $max-width / 12))
+//     minmax(5vw, 1fr);
+// }
+
+// .SearchGame {
+//   width: 100%;
+//   @include container(1440px);
+//   grid-column: 2/14;
+// }
