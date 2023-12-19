@@ -8,9 +8,9 @@ function Home() {
   const [popularGames, setPopularGames] = useState([]);
 
   useEffect(() => {
-    const bestGames = async () => {
+    const fetchGames = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/best");
+        const response = await axios.get("http://localhost:3000/games/");
         setGameList(response.data);
         console.log(gameList);
       } catch (error) {
@@ -34,16 +34,11 @@ function Home() {
 
   return (
     <div>
-      <h1>Home page</h1>
       <h2>Liste de jeux</h2>
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
-            <img
-              src={`https://images.igdb.com/igdb/image/upload/t_720p/${
-                game.cover.image_id
-              }.jpg`}
-            />
+            <Link to={`/game/${game.id}`}>{game.name}</Link>
           </li>
         ))}
       </ul>
