@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const [gameList, setGameList] = useState([]);
+  const [popularGames, setPopularGames] = useState([]);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -16,7 +17,19 @@ function Home() {
         console.error("Error fetching games:", error);
       }
     };
+
+    const fetchPopularGames = async () => {
+      // Ajoutez une nouvelle fonction pour récupérer les jeux populaires
+      try {
+        const response = await axios.get("http://localhost:3000/popular");
+        setPopularGames(response.data);
+        console.log(popularGames);
+      } catch (error) {
+        console.error("Error fetching popular games:", error);
+      }
+    };
     fetchGames();
+    fetchPopularGames();
   }, []);
 
   return (
@@ -24,6 +37,15 @@ function Home() {
       <h2>Liste de jeux</h2>
       <ul>
         {gameList.map((game) => (
+          <li key={game.id}>
+            <Link to={`/game/${game.id}`}>{game.name}</Link>
+          </li>
+        ))}
+      </ul>
+      <h2>Jeux les plus populaires</h2>{" "}
+      {/* Ajoutez une nouvelle liste pour les jeux populaires */}
+      <ul>
+        {popularGames.map((game) => (
           <li key={game.id}>
             <Link to={`/game/${game.id}`}>{game.name}</Link>
           </li>

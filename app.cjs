@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors"); // Ajoutez cette ligne
 const app = express();
 const authMiddleware = require("./middleware/auth.cjs"); // Importez le middleware d'authentification
+
 // ... les routes et les autres configurations de l'application sont définies ici
 const gamesRouter = require("./routes/fetchGames.cjs");
 const searchGamesRouter = require("./routes/searchGames.cjs");
