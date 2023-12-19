@@ -1,55 +1,66 @@
-// // app.cjs
-// const express = require("express");
-// const cors = require("cors"); // Ajoutez cette ligne
-// const app = express();
-// const authMiddleware = require("./middleware/auth.cjs"); // Importez le middleware d'authentification
-
-// // ... les routes et les autres configurations de l'application sont définies ici
-// const gamesRouter = require("./routes/fetchGames.cjs");
-// const searchGamesRouter = require("./routes/searchGames.cjs");
-// const recentGamesRouter = require("./routes/recentGames.cjs");
-// const popularGamesRouter = require("./routes/popularGames.cjs");
-// const bestGamesRouter = require("./routes/bestGames.cjs");
-// const detailsGameRouter = require("./routes/detailsGame.cjs");
-
-// // Utilisez la méthode use pour définir les routes de votre application Express.js
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(authMiddleware);
-
-// // Utilisation du routeur des jeux
-// app.use("/games", gamesRouter);
-// app.use(searchGamesRouter);
-// app.use(recentGamesRouter);
-// app.use(popularGamesRouter);
-// app.use(bestGamesRouter);
-// app.use(detailsGameRouter);
-
-// // Définition d'une route de base
-// app.get("/", (req, res) => {
-//   res.send("Bienvenue sur mon serveur Express !");
-// });
-
-// // Lancement du serveur à partir du port 3000
-// app.listen(3000, () => {
-//   console.log("Le serveur est en écoute sur le port 3000");
-// });
-
-// App.js
 const express = require("express");
 const connectToDatabase = require("./db_connect.cjs");
+const authMiddleware = require("./middleware/auth.cjs");
+const axios = require("axios");
 const app = express();
 const cors = require("cors");
+
+app.use(authMiddleware);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/", authMiddleware, async (req, res) => {
+  try {
+    // Obtenez l'access token à partir de req.accessToken
+    const accessToken = req.accessToken;
+    console.log("Access Token:", accessToken);
+
+    // Utilisez l'access token pour effectuer une requête à l'API IGDB
+    const igdbResponse = await axios.post(
+      "https://api.igdb.com/v4/games",
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Client-ID": req.clientId,
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          fields:
+            "id,name,platforms,cover.image_id,hypes,genres.name, age_ratings,hypes; limit:2;",
+        },
+      }
+    );
+
+    // Logique pour insérer les données dans MongoDB
+    const db = await connectToDatabase();
+    const collection = db.collection("Games"); // Remplacez par le nom de votre collection
+
+    // Avant chaque insertion, vider la collection
+    await collection.deleteMany({});
+    // Exemple : Insérer les documents récupérés de l'API IGDB dans la collection MongoDB
+    for (const game of igdbResponse.data) {
+      // Vérifier si le jeu existe déjà dans la collection par son ID, par exemple
+      const existingGame = await collection.findOne({ id: game.id });
+
+      // Si le jeu n'existe pas, l'ajouter à la collection
+      if (!existingGame) {
+        await collection.insertOne(game);
+      }
+    }
+    // Exemple : Envoyer la réponse de l'API IGDB en tant que réponse de votre endpoint
+    res.json(igdbResponse.data);
+  } catch (error) {
+    console.error("Erreur dans l'endpoint sécurisé :", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.get("/games", async (req, res) => {
   try {
     const db = await connectToDatabase();
     const collection = db.collection("Games"); // Remplacez par le nom de votre collection
-
     // Exemple: récupérer tous les documents dans la collection
     const documents = await collection.find({}).toArray();
     res.json(documents);
