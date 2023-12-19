@@ -37,7 +37,7 @@ summary
 - pouvoir choisir les dlcs (si il y a) et les buy
 - gerer les tags
 - ajout d'un CTA avec abonnement(jeux moins cher ex: jeux entre 20-30 = 10% de remise )
-- (chatbot pour le support)
+- (chatbot pour le support) //react-chatbot-kit 
 - (ajouter amis et voir leur achats)
 
 ## pages
