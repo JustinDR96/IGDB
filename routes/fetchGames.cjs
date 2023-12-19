@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: "fields id,name,cover.image_id,videos.video_id;limit:5;",
+      data: "fields id,name,cover.image_id,videos.video_id;",
     });
 
     res.send(responseIGDB.data);

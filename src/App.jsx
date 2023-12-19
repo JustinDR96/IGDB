@@ -1,16 +1,28 @@
-// App.js
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/Home"; // Assurez-vous d'importer correctement votre composant Home
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get("http://localhost:3000/games");
+        setGames(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* Ajoutez d'autres routes ici selon votre structure */}
-      </Routes>
-    </Router>
+    <div className="App">
+      {games.map((game) => (
+        <div key={game._id}>{game.name}</div>
+      ))}
+    </div>
   );
 }
 
