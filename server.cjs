@@ -1,10 +1,10 @@
 const express = require("express");
 const connectToDatabase = require("./db_connect.cjs");
-const authMiddleware = require("./middleware/auth.cjs");
 const axios = require("axios");
 const app = express();
 const cors = require("cors");
 
+const authMiddleware = require("./middleware/auth.cjs");
 // import route
 const gamesRouter = require("./routes/fetchGames.cjs"); // Assurez-vous que le chemin est correct
 
@@ -31,7 +31,7 @@ app.get("/", authMiddleware, async (req, res) => {
           Authorization: `Bearer ${accessToken}`,
         },
         params: {
-          fields: `id,name,platforms.name,platforms.platform_logo.image_id ,cover.image_id,hypes,genres.name,age_ratings.content_descriptions.category,hypes;where name ~ *"${gameName}"*;`,
+          fields: `id,name,platforms.name,platforms.platform_logo.image_id ,cover.image_id,hypes,genres.name,age_ratings.content_descriptions.category,hypes;limit:1;where name ~ *"${gameName}"*;`,
         },
       }
     );
@@ -43,20 +43,16 @@ app.get("/", authMiddleware, async (req, res) => {
     // Avant chaque insertion, vider la collection
     await collection.deleteMany({});
 
-    for (let i = 0; i < igdbResponse.data.length; i++) {
-      await collection.insertOne(igdbResponse.data[i]);
-    }
-
     // // Exemple : Insérer les documents récupérés de l'API IGDB dans la collection MongoDB
-    // for (const game of igdbResponse.data) {
-    //   // Vérifier si le jeu existe déjà dans la collection par son ID, par exemple
-    //   const existingGame = await collection.findOne({ id: game.id });
+    for (const game of igdbResponse.data) {
+      // Vérifier si le jeu existe déjà dans la collection par son ID, par exemple
+      const existingGame = await collection.findOne({ id: game.id });
 
-    //   // Si le jeu n'existe pas, l'ajouter à la collection
-    //   if (!existingGame) {
-    //     await collection.insertOne(game);
-    //   }
-    // }
+      // Si le jeu n'existe pas, l'ajouter à la collection
+      if (!existingGame) {
+        await collection.insertOne(game);
+      }
+    }
     // Exemple : Envoyer la réponse de l'API IGDB en tant que réponse de votre endpoint
     res.json(igdbResponse.data);
   } catch (error) {
