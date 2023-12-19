@@ -5,17 +5,21 @@ const axios = require("axios");
 const app = express();
 const cors = require("cors");
 
+// import route
+const gamesRouter = require("./routes/fetchGames.cjs"); // Assurez-vous que le chemin est correct
+
 app.use(authMiddleware);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// inserer les jeux dans la base de données
 app.get("/", authMiddleware, async (req, res) => {
   try {
     // Obtenez l'access token à partir de req.accessToken
     const accessToken = req.accessToken;
     console.log("Access Token:", accessToken);
-
+    const gameName = "Grand theft auto V";
     // Utilisez l'access token pour effectuer une requête à l'API IGDB
     const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/games",
@@ -27,8 +31,7 @@ app.get("/", authMiddleware, async (req, res) => {
           Authorization: `Bearer ${accessToken}`,
         },
         params: {
-          fields:
-            "id,name,platforms,cover.image_id,hypes,genres.name, age_ratings,hypes; limit:2; ",
+          fields: `id,name,platforms.name,platforms.platform_logo.image_id ,cover.image_id,hypes,genres.name,age_ratings.content_descriptions.category,hypes; limit:1;where name ~ *"${gameName}"*;`,
         },
       }
     );
@@ -57,18 +60,8 @@ app.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-app.get("/games", async (req, res) => {
-  try {
-    const db = await connectToDatabase();
-    const collection = db.collection("Games"); // Remplacez par le nom de votre collection
-    // Exemple: récupérer tous les documents dans la collection
-    const documents = await collection.find({}).toArray();
-    res.json(documents);
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données:", error);
-    res.status(500).send("Erreur du serveur");
-  }
-});
+// route use
+app.use("/games", gamesRouter);
 
 app.listen(3000, () => {
   console.log("Le serveur est en écoute sur le port 3000");

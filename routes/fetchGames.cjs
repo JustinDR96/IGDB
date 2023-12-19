@@ -1,34 +1,19 @@
 const express = require("express");
-const axios = require("axios");
-const authMiddleware = require("../middleware/auth.cjs");
 const router = express.Router();
-
-// Utilisez le middleware d'authentification
-router.use(authMiddleware);
+const connectToDatabase = require("../db_connect.cjs"); // Assurez-vous que le chemin est correct
 
 // Route pour récupérer les jeux depuis l'API
 router.get("/", async (req, res) => {
   try {
-    // Utilisez l'accessToken dans la requête vers l'API IGDB
-    const responseIGDB = await axios({
-      method: "post",
-      url: "https://api.igdb.com/v4/games",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Client-ID": req.clientId,
-        Authorization: `Bearer ${req.accessToken}`,
-      },
-      data: "fields id,name,cover.image_id,videos.video_id;",
-    });
+    const db = await connectToDatabase();
+    const collection = db.collection("Games");
 
-    res.send(responseIGDB.data);
+    // Exemple: récupérer tous les documents dans la collection
+    const documents = await collection.find({}).toArray();
+    res.json(documents);
   } catch (error) {
-    console.error(
-      "Error:",
-      error.response ? error.response.data : error.message
-    );
-    res.status(500).send("Internal Server Error");
+    console.error("Erreur lors de la récupération des données:", error);
+    res.status(500).send("Erreur du serveur");
   }
 });
 

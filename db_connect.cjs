@@ -1,7 +1,7 @@
 // db.js
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb+srv://justin:test@igdb.tigeuuy.mongodb.net/";
+const uri = "mongodb+srv://justin:test@igdb.tigeuuy.mongodb.net/IGDB";
 
 async function connectToDatabase() {
   const client = new MongoClient(uri);

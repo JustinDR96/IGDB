@@ -9,6 +9,7 @@ platforms.name
 platforms.platform_logo.image_id
 genres.name
 rating_count
+age_ratings.rating_cover_url
 aggregated_rating_count
 hypes
 follows
