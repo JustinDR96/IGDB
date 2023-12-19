@@ -28,7 +28,7 @@ app.get("/", authMiddleware, async (req, res) => {
         },
         params: {
           fields:
-            "id,name,platforms,cover.image_id,hypes,genres.name, age_ratings,hypes; limit:2;",
+            "id,name,platforms,cover.image_id,hypes,genres.name, age_ratings,hypes; limit:2; ",
         },
       }
     );
