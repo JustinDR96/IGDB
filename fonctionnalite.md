@@ -23,6 +23,7 @@ summary
 - cookies
 - login/logout
 - ajouter compte par utilisateur (pseudo, password, email,) //cloudinary pour profil images et tester google auth librarie pour se connecter directement via un compte google
+- ajouter dashboard par utilisateurs (jeux achetes recemment, total depensé,dernier jeux ajouté a la wishlist,...)
 - wishlist par utilisateur (add,remove,etc)
 - gerer le payment d'un jeu
 - gerer un panier par session
@@ -35,7 +36,8 @@ summary
 - pouvoir choisir differente version d'un jeu (deluxe, collector,...) //si deluxe version = jeu de base + version deluxe
 - pouvoir choisir les dlcs (si il y a) et les buy
 - gerer les tags
-- (chatbot pour le suppor)
+- (chatbot pour le support)
+- (ajouter amis et voir leur achats)
 
 ## pages
 
