@@ -4,10 +4,7 @@ const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://justin:test@igdb.tigeuuy.mongodb.net/";
 
 async function connectToDatabase() {
-  const client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(uri);
 
   try {
     await client.connect();
