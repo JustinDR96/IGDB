@@ -17,7 +17,7 @@ router.get("/best", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: "fields name, rating_count; sort rating_count desc; limit 10;",
+      data: "fields name,cover.*, rating_count; sort rating_count desc;limit:20;",
     });
 
     res.send(responseIGDB.data);
