@@ -36,6 +36,7 @@ summary
 - pouvoir choisir differente version d'un jeu (deluxe, collector,...) //si deluxe version = jeu de base + version deluxe
 - pouvoir choisir les dlcs (si il y a) et les buy
 - gerer les tags
+- ajout d'un CTA avec abonnement(jeux moins cher ex: jeux entre 20-30 = 10% de remise )
 - (chatbot pour le support)
 - (ajouter amis et voir leur achats)
 
@@ -49,3 +50,11 @@ summary
 - page panier
 - page search avec filtres et trie
 - page admin pour gérer les games et les users
+
+## dependance use
+
+- axios
+- passport
+- express
+- sass
+- react-router
