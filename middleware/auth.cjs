@@ -1,6 +1,7 @@
 // auth.cjs
 const axios = require("axios");
 // const insertDB = require("../routes/insertDB.cjs");
+const insertDB = require("../routes/insertDB.cjs");
 const clientId = "mygig6l4lhpm5i6qe787vr0imqisnv";
 const clientSecret = "qadwupd2esu3u9j2i3fhbrt6ouwttm";
 let accessToken = null;

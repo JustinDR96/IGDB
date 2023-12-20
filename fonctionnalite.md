@@ -1,5 +1,3 @@
-## fields a recuperer
-
 # commencer par une base de donnée classique en utilisant l'api pour ensuite migrer sur la bd
 
 # info a recuperer
