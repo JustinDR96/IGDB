@@ -1,8 +1,10 @@
+// route pour get les jeux dans la base de données 
+
 const express = require("express");
 const router = express.Router();
 const connectToDatabase = require("../db_connect.cjs"); // Assurez-vous que le chemin est correct
 
-// Route pour récupérer les jeux depuis l'API
+//Route pour récupérer les jeux depuis la DB
 router.get("/", async (req, res) => {
   try {
     const db = await connectToDatabase();

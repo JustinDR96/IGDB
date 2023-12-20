@@ -16,15 +16,16 @@ age_ratings.rating_cover_url
 aggregated_rating_count
 hypes
 follows
-release_date.date
+release_dates.date
 multiplayer_modes
 dlcs
 videos.video_id
 summary
 screenshots.image_id
 
-## fonctionnalités (en cours)
+## fonctionnalités a ajouter
 
+- ajouter jeux depuis l'api dans la base de données
 - Rechercher via nom du jeux, déveloper, ...
 - ajout super user
 - dark mode
