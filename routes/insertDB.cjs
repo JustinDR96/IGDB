@@ -1,13 +1,12 @@
-
+// insertDB.cjs
 const axios = require('axios');
+const connectToDatabase =require("../db_connect.cjs");
 
 // inserer les jeux dans la base de données
-async function insertDB(accessToken,clientId) {
+async function insertDB(accessToken, clientId) {
     try {
-      // Obtenez l'access token à partir de req.accessToken
-      const accessToken = req.accessToken;
       console.log("Access Token:", accessToken);
-      const gameName = "Grand theft auto V";
+      const gameName = "just cause";
       // Utilisez l'access token pour effectuer une requête à l'API IGDB
       const igdbResponse = await axios.post(
         "https://api.igdb.com/v4/games",
@@ -15,7 +14,7 @@ async function insertDB(accessToken,clientId) {
         {
           headers: {
             Accept: "application/json",
-            "Client-ID": req.clientId,
+            "Client-ID": clientId,
             Authorization: `Bearer ${accessToken}`,
           },
           params: {
@@ -23,30 +22,27 @@ async function insertDB(accessToken,clientId) {
           },
         }
       );
-  
+
       // Logique pour insérer les données dans MongoDB
       const db = await connectToDatabase();
       const collection = db.collection("Games"); // Remplacez par le nom de votre collection
-  
+
       // Avant chaque insertion, vider la collection
       await collection.deleteMany({});
-  
-      // // Exemple : Insérer les documents récupérés de l'API IGDB dans la collection MongoDB
+
+      // Exemple : Insérer les documents récupérés de l'API IGDB dans la collection MongoDB
       for (const game of igdbResponse.data) {
         // Vérifier si le jeu existe déjà dans la collection par son ID, par exemple
         const existingGame = await collection.findOne({ id: game.id });
-  
+
         // Si le jeu n'existe pas, l'ajouter à la collection
         if (!existingGame) {
           await collection.insertOne(game);
         }
-      }
-      // Exemple : Envoyer la réponse de l'API IGDB en tant que réponse de votre endpoint
-      res.json(igdbResponse.data);
+        }
     } catch (error) {
-      console.error("Erreur dans l'endpoint sécurisé :", error);
-      res.status(500).send("Internal Server Error");
+      console.error(error);
     }
-};
+}
 
-  module.exports = insertDB;
+module.exports = insertDB;
