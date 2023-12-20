@@ -17,11 +17,11 @@ router.get("/", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: "fields *;limit:1;",
+      data: "fields *, cover.*;limit:1;",
     });
 
     console.log("Réponse brute de l'API:", responseIGDB.data);
-    response.json(responseIGDB.data);
+    res.json(responseIGDB.data);
   } catch (error) {
     console.error(
       "Error:",
