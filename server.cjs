@@ -1,5 +1,5 @@
 const express = require("express");
-const connectToDatabase = require("./db_connect.cjs");
+// const connectToDatabase = require("./db_connect.cjs");
 const authMiddleware = require("./middleware/auth.cjs");
 const axios = require("axios");
 const app = express();

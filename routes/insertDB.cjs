@@ -6,7 +6,7 @@ const connectToDatabase =require("../db_connect.cjs");
 async function insertDB(accessToken, clientId) {
     try {
       console.log("Access Token:", accessToken);
-      const gameName = "Harry potter";
+      // const gameName = "";
       // Utilisez l'access token pour effectuer une requête à l'API IGDB
       const igdbResponse = await axios.post(
         "https://api.igdb.com/v4/games",
@@ -18,7 +18,7 @@ async function insertDB(accessToken, clientId) {
             Authorization: `Bearer ${accessToken}`,
           },
           params: {
-            fields: `id,name,cover.*,category.* ,screenshots.* ,platforms.* ,genres.* ,rating ,rating_count ,parent_games,age_ratings.*,aggregated_rating_count,hypes,follows,release_date.*,multiplayer_modes,dlcs,videos.*,summary ;limit:1;where name ~ *"${gameName}"*;`,
+            fields: ` id,name,cover.*,screenshots.*,genres.*,rating_count,age_ratings.*,hypes,follows,release_dates.* ,multiplayer_modes.*,collections.*,videos.*,summary,franchises.*;limit:10;sort follows desc;`,
           },
         }
       );

@@ -1,5 +1,11 @@
 ## fields a recuperer
 
+# commencer par une base de donnée classique en utilisant l'api pour ensuite migrer sur la bd
+
+# info a recuperer
+
+(nom,cover,screenshots,videos,edition?,platforme,developpeur,editeur,date de sortie,genres,notes,tags,dlcs,resumé)
+
 id
 name
 cover.image_id
@@ -7,12 +13,8 @@ screenshots.image_id
 platforms.name
 platforms.platform_logo.image_id
 genres.name
-rating
-parent
-parent_games
 rating_count
 age_ratings.rating_cover_url
-aggregated_rating_count
 hypes
 follows
 release_dates.date
@@ -20,7 +22,6 @@ multiplayer_modes
 dlcs
 videos.video_id
 summary
-screenshots.image_id
 
 ## fonctionnalités a ajouter
 
