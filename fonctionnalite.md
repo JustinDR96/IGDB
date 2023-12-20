@@ -8,14 +8,20 @@ screenshots.image_id
 platforms.name
 platforms.platform_logo.image_id
 genres.name
+rating
+parent
+parent_games
 rating_count
 age_ratings.rating_cover_url
 aggregated_rating_count
 hypes
 follows
-first_release_date
+release_date.date
+multiplayer_modes
+dlcs
 videos.video_id
 summary
+screenshots.image_id
 
 ## fonctionnalités (en cours)
 
@@ -34,7 +40,7 @@ summary
 - système de filtre et système de trie
 - gerer le stock disponible pour un jeu
 - gerer le prix pour un jeu
-- gerer la remise en stock et push notif si le jeu est de nouveau disponible
+- gerer la remise en stock et push notif si le jeu est de nouveau disponible //notificationAPI pushAPI
 - pouvoir choisir la platforme du jeu avant de buy
 - Clé d'activation pour les jeux pc
 - pouvoir choisir differente version d'un jeu (deluxe, collector,...) //si deluxe version = jeu de base + version deluxe
