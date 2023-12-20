@@ -19,25 +19,29 @@ summary
 
 ## fonctionnalités (en cours)
 
+- Rechercher via nom du jeux, déveloper, ...
+- ajout super user
 - dark mode
 - cookies
 - login/logout
 - ajouter compte par utilisateur (pseudo, password, email,) //cloudinary pour profil images et tester google auth librarie pour se connecter directement via un compte google
+- possibilités de changer ses infos de connexion
 - ajouter dashboard par utilisateurs (jeux achetes recemment, total depensé,dernier jeux ajouté a la wishlist,...)
 - wishlist par utilisateur (add,remove,etc)
 - gerer le payment d'un jeu
 - gerer un panier par session
 - ajout d'un jeu via le back dans la bd
-- systeme de filtre et systeme de trie
+- système de filtre et système de trie
 - gerer le stock disponible pour un jeu
 - gerer le prix pour un jeu
 - gerer la remise en stock et push notif si le jeu est de nouveau disponible
 - pouvoir choisir la platforme du jeu avant de buy
+- Clé d'activation pour les jeux pc
 - pouvoir choisir differente version d'un jeu (deluxe, collector,...) //si deluxe version = jeu de base + version deluxe
 - pouvoir choisir les dlcs (si il y a) et les buy
 - gerer les tags
-- ajout d'un CTA avec abonnement(jeux moins cher ex: jeux entre 20-30 = 10% de remise )
-- (chatbot pour le support) //react-chatbot-kit 
+- ajout d'un CTA abonnement(jeux moins cher ex: jeux entre 20-30 = 10% de remise )
+- (chatbot pour le support) //react-chatbot-kit
 - (ajouter amis et voir leur achats)
 
 ## pages
