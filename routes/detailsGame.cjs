@@ -7,10 +7,13 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // route pour recuperer les details d'un jeu
-router.post("/:id", async (req, res) => {
+// route pour recuperer les details d'un jeu
+router.get("/:id", async (req, res) => {
   try {
-    const gameId = req.body.id;
-    const fields = Array.isArray(req.body.fields) ? req.body.fields : ["*"];
+    const gameId = req.params.id; // Récupère l'ID du jeu à partir de l'URL
+    const fields = [
+      "id,name,cover.*,screenshots.*,genres.*,rating_count,age_ratings.*,hypes,follows,release_dates.* ,multiplayer_modes.*,collections.*,videos.*,summary,franchises.*",
+    ]; // Récupère tous les champs
     const responseIGDB = await axios({
       method: "post",
       url: "https://api.igdb.com/v4/games",
@@ -29,7 +32,6 @@ router.post("/:id", async (req, res) => {
       "Error:",
       error.response ? error.response.data : error.message
     );
-    res.status(500).send("Internal Server Error");
   }
 });
 
