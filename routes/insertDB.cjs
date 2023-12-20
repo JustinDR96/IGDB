@@ -6,7 +6,7 @@ const connectToDatabase =require("../db_connect.cjs");
 async function insertDB(accessToken, clientId) {
     try {
       console.log("Access Token:", accessToken);
-      const gameName = "just cause";
+      const gameName = "Harry potter";
       // Utilisez l'access token pour effectuer une requête à l'API IGDB
       const igdbResponse = await axios.post(
         "https://api.igdb.com/v4/games",
@@ -18,19 +18,19 @@ async function insertDB(accessToken, clientId) {
             Authorization: `Bearer ${accessToken}`,
           },
           params: {
-            fields: `id,name,platforms.name,platforms.platform_logo.image_id ,cover.image_id,hypes,genres.name,age_ratings.content_descriptions.category,hypes;where name ~ *"${gameName}"*;`,
+            fields: `id,name,cover.*,category.* ,screenshots.* ,platforms.* ,genres.* ,rating ,rating_count ,parent_games,age_ratings.*,aggregated_rating_count,hypes,follows,release_date.*,multiplayer_modes,dlcs,videos.*,summary ;limit:1;where name ~ *"${gameName}"*;`,
           },
         }
       );
 
       // Logique pour insérer les données dans MongoDB
       const db = await connectToDatabase();
-      const collection = db.collection("Games"); // Remplacez par le nom de votre collection
+      const collection = db.collection("Games");
 
       // Avant chaque insertion, vider la collection
       await collection.deleteMany({});
 
-      // Exemple : Insérer les documents récupérés de l'API IGDB dans la collection MongoDB
+      // Insérer les données dans la collection
       for (const game of igdbResponse.data) {
         // Vérifier si le jeu existe déjà dans la collection par son ID, par exemple
         const existingGame = await collection.findOne({ id: game.id });

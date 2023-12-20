@@ -1,6 +1,6 @@
 // auth.cjs
 const axios = require("axios");
-const insertDB = require("../routes/insertDB.cjs")
+const insertDB = require("../routes/insertDB.cjs");
 const clientId = "mygig6l4lhpm5i6qe787vr0imqisnv";
 const clientSecret = "qadwupd2esu3u9j2i3fhbrt6ouwttm";
 let accessToken = null;
@@ -12,6 +12,7 @@ const getTwitchAccessToken = async () => {
     );
     accessToken = responseToken.data.access_token;
     console.log("Access Token obtained successfully:", accessToken);
+    insertDB(accessToken, clientId);
   } catch (error) {
     console.error("Error fetching access token:", error);
   }
@@ -23,11 +24,8 @@ const authMiddleware = async (req, res, next) => {
     if (!accessToken) {
       await getTwitchAccessToken();
     }
-
     // Attach the accessToken to the request object
     req.accessToken = accessToken;
-    req.clientId = clientId;
-    insertDB(req.accessToken, req.clientId);
     next();
   } catch (error) {
     console.error("Error in authMiddleware:", error);

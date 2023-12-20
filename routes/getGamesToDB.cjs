@@ -1,5 +1,4 @@
 // route pour get les jeux dans la base de données 
-
 const express = require("express");
 const router = express.Router();
 const connectToDatabase = require("../db_connect.cjs"); // Assurez-vous que le chemin est correct

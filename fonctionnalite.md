@@ -3,7 +3,6 @@
 id
 name
 cover.image_id
-artwork.image_id
 screenshots.image_id
 platforms.name
 platforms.platform_logo.image_id
