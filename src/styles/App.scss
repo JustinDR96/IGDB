@@ -7,7 +7,12 @@
 body,
 html {
   max-width: 100%;
-  min-height: 100vh;
+  min-height: 150vh;
+  background-image: url("/Images/background/background_2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(202, 35, 35);
 }
 
 body {

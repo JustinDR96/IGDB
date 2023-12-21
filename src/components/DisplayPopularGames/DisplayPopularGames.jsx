@@ -2,7 +2,6 @@
 import react, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./DisplayPopularGames.scss";
 
 function DisplayPopularGames() {
   const [gameList, setGameList] = useState([]);
@@ -54,7 +53,7 @@ function DisplayPopularGames() {
             <Link to={`${game.id}`}>{game.name}</Link>
             {game.cover && game.cover.image_id && (
               <img
-                src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
+                src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
                 alt={game.name}
               />
             )}
