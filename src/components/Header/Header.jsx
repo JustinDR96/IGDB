@@ -7,7 +7,7 @@ function Header() {
         <a className="nav_logo" href="_blank">
           <img
             className="nav_logo"
-            src="public/images/logo/logo_game_center_removebg.png"
+            src="/Images/logo/logo_game_center_removebg.png"
             alt=""
           />
         </a>
@@ -28,11 +28,16 @@ function Header() {
         </ul>
         <div className="searchBar">
           <input type="text" placeholder="Search..." />
-          <img src="public/images/SVG/search_icone.svg" alt="" />
+          <a href="_blank">
+            <img src="/Images/SVG/search_icone.svg" alt="" />
+          </a>
         </div>
         <div className="user_links">
           <a href="">Login</a>
           <a href="">Sign Up</a>
+          <a href="_blank">
+            <img src="/Images/SVG/shopping_cart.svg" alt="" />
+          </a>
         </div>
       </nav>
     </div>
