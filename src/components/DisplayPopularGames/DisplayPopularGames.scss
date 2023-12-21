@@ -1,0 +1,14 @@
+.displayPopularGames {
+  display: flex;
+  flex-direction: column;
+}
+.gameList {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: scroll;
+}
+img {
+  width: 500px;
+  object-fit: contain;
+}

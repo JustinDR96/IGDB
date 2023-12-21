@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/home/Home";
 
 function App() {
-  const [games, setGames] = useState([]);
-
-  return <div className="App"></div>;
+  return (
+    <Router>
+      <Home />
+    </Router>
+  );
 }
 
 export default App;

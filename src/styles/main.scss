@@ -1,0 +1,15 @@
+// Importer les styles de base
+@import "./base/reset";
+
+// Importer les variables et les mixins
+@import "./helpers/mixins";
+@import "./helpers/variables";
+
+// Importer les styles des composants
+@import "../components/DisplayPopularGames/DisplayPopularGames.scss";
+
+// Importer les styles spécifiques aux pages
+@import "../pages/home/Home";
+
+// Importer les styles globaux
+@import "./App";

@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Route pour récupérer les jeux depuis l'API
-router.get("/", async (req, res) => {
+router.get("/popular", async (req, res) => {
   try {
     const responseIGDB = await axios({
       method: "post",
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: "fields *, cover.*;limit:5;",
+      data: `fields *, cover.*, videos.*;limit:10; sort hypes desc;`,
     });
     res.json(responseIGDB.data);
   } catch (error) {
