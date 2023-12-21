@@ -3,7 +3,6 @@ import react from "react";
 function Header() {
   return (
     <div className="header">
-      <h1>Header</h1>
       <nav className="navBar">
         <a className="nav_logo" href="_blank">
           <img
