@@ -1,6 +1,8 @@
 import react from "react";
 
 function Header() {
+  // const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+
   return (
     <div className="header">
       <nav className="navBar">
@@ -33,11 +35,17 @@ function Header() {
           </a>
         </div>
         <div className="user_links">
-          <a href="">Login</a>
-          <a href="">Sign Up</a>
           <a href="_blank">
             <img src="/Images/SVG/shopping_cart.svg" alt="" />
           </a>
+          <a href="_blank">
+            <img src="/Images/SVG/account_icon.svg" alt="" />
+            {/* <a href="">Login</a>
+          <a href="">Sign Up</a> */}
+          </a>
+        </div>
+        <div className="hamburger">
+          <img src="/Images/SVG/menu_hamburger.svg" alt="" />
         </div>
       </nav>
     </div>

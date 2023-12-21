@@ -1,84 +1,113 @@
 .header {
   @include flex-center;
 }
+
 .navBar {
   @include flex-center-vert;
-  width: 95%;
+  width: 100%;
   height: 80px;
   margin-top: 5px;
   border-radius: 5px;
   background-color: transparent;
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--backdrop-blur);
   position: fixed;
   top: 0;
   z-index: 100;
-  padding: 20px;
-  .nav_logo {
-    width: 200px;
-    height: 80px;
-    cursor: pointer;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: all 0.5s ease-in-out;
-    }
-    img:hover {
-      transform: scale(1.1);
-    }
-  }
-  .nav_links {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    li {
-      a {
-        text-decoration: none;
-        color: white;
-      }
-      a:hover {
-        color: rgb(202, 35, 35);
-      }
-    }
-  }
-  .searchBar {
-    width: 30rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-right: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 5px;
-    border: solid 1px rgba(0, 0, 0, 0.5);
-    input {
-      width: 100%;
-      border: none;
-      font-size: 20px;
-      outline: none;
-      background-color: inherit;
-      color: white;
-    }
-    img {
-      width: 30px;
-      object-fit: cover;
-      cursor: pointer;
-    }
-  }
-  .user_links {
-    width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
+  padding: 0 10px;
+}
+
+.nav_links {
+  width: 100%;
+  height: 100%;
+  @include flex-center-vert;
+  justify-content: space-around;
+  gap: 8rem;
+  li {
     a {
       text-decoration: none;
       color: white;
-      img {
-        width: 30px;
-      }
     }
+    a:hover {
+      color: rgb(202, 35, 35);
+    }
+  }
+}
+
+.searchBar {
+  width: 20rem;
+  @include flex-center-vert;
+  justify-content: space-around;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  border: solid 1px rgba(0, 0, 0, 0.5);
+  input {
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    outline: none;
+    background-color: inherit;
+    color: white;
+  }
+  img {
+    width: 30px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+}
+
+.nav_logo {
+  width: 200px;
+  height: 80px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease-in-out;
+  }
+  img:hover {
+    transform: scale(1.1);
+  }
+}
+
+.user_links {
+  width: 200px;
+  @include flex-center-vert;
+  justify-content: center;
+  gap: 1rem;
+  a {
+    text-decoration: none;
+    color: white;
+    img {
+      width: 30px;
+    }
+  }
+}
+
+.hamburger {
+  display: none;
+  img {
+    width: 50px;
+  }
+  @include tablet {
+    display: block;
+  }
+}
+
+@include tablet {
+  .navBar {
+    display: flex;
+    justify-content: space-between;
+  }
+  .hamburger {
+    display: block;
+    order: 3;
+  }
+  .nav_links {
+    display: none;
+  }
+  .user_links {
+    display: none;
   }
 }

@@ -31,24 +31,31 @@
   justify-content: center;
 }
 
+$mobile: 480px;
 $tablet: 768px;
 $large: 1024px;
 $desktop: 1280px;
 
+@mixin mobile {
+  @media only screen and (max-width: $mobile) {
+    @content;
+  }
+}
+
 @mixin tablet {
-  @media only screen and (min-width: $tablet) {
+  @media only screen and (max-width: $tablet) {
     @content;
   }
 }
 
 @mixin large {
-  @media only screen and (min-width: $large) {
+  @media only screen and (max-width: $large) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media only screen and (min-width: $desktop) {
+  @media only screen and (max-width: $desktop) {
     @content;
   }
 }
