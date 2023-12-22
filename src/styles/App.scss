@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -7,10 +9,11 @@
 body,
 html {
   max-width: 100%;
-  min-height: 100vh;
+  min-height: 150vh;
   background-image: url("/Images/background/background_5.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: "Play", sans-serif;
   color: rgb(202, 35, 35);
 }
 
