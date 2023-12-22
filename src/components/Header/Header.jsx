@@ -45,7 +45,7 @@ function Header() {
   return (
     <div className="header">
       <nav className="navBar">
-        <a className="nav_logo" href="_blank">
+        <a className="nav_logo" href="#">
           <img
             className="nav_logo"
             src="/Images/logo/logo_game_center_removebg.png"
@@ -54,26 +54,26 @@ function Header() {
         </a>
         <ul className="nav_links">
           <li>
-            <a href="">Home</a>
+            <a href="#">Home</a>
           </li>
           <li>
-            <a href="">Popular Games</a>
+            <a href="#">Popular Games</a>
           </li>
           <li>
-            <a href="">New Games</a>
+            <a href="#">New Games</a>
           </li>
           <li>
-            <a href="">Upcoming Games</a>
+            <a href="#">Upcoming Games</a>
           </li>
         </ul>
         <div className="searchBar">
           <input type="text" placeholder="Search..." />
-          <a href="_blank">
+          <a href="#">
             <img src="/Images/SVG/search_icone.svg" alt="" />
           </a>
         </div>
         <div className="user_links">
-          <a href="_blank">
+          <a href="#">
             <img src="/Images/SVG/shopping_cart.svg" alt="" />
           </a>
           <a
@@ -103,22 +103,22 @@ function Header() {
             <div className="account">
               <a href="#">Login</a>
               <a href="#">Sign Up</a>
-              <a href="_blank">
+              <a href="#">
                 <img src="/Images/SVG/shopping_cart.svg" alt="" />
               </a>
             </div>
             <ul className="nav_links">
               <li>
-                <a href="">Home</a>
+                <a href="#">Home</a>
               </li>
               <li>
-                <a href="">Popular Games</a>
+                <a href="#">Popular Games</a>
               </li>
               <li>
-                <a href="">New Games</a>
+                <a href="#">New Games</a>
               </li>
               <li>
-                <a href="">Upcoming Games</a>
+                <a href="#">Upcoming Games</a>
               </li>
             </ul>
           </div>
