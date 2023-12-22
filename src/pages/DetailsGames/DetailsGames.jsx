@@ -38,7 +38,7 @@ const DetailsGames = () => {
       <div className="gameContent">
         <img
           className="cover"
-          src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].cover.image_id}.jpg`}
+          src={`https://images.igdb.com/igdb/image/upload/t_720p/${game[0].cover.image_id}.jpg`}
           alt=""
         />
         <h1>{game[0].name}</h1>
