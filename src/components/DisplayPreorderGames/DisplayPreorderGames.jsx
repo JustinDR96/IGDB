@@ -52,7 +52,7 @@ function DisplayPreorderGames() {
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
-            <Link className="link" to={`${game.id}`}>
+            <Link className="link" to={`/games/${game.id}`}>
               {game.name}
               <p className="date">
                 <p>Release Date: </p>
@@ -64,7 +64,7 @@ function DisplayPreorderGames() {
               </p>
             </Link>
             {game.cover && game.cover.image_id && (
-              <Link to={`${game.id}`}>
+              <Link to={`/games/${game.id}`}>
                 <img
                   src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
                   alt={game.name}

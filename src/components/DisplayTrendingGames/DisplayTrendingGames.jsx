@@ -1,17 +1,16 @@
-//DisplayPopularGames.jsx
+//DisplayTrendingGames.jsx
 import react, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import DetailsGames from "../../pages/DetailsGames/DetailsGames";
 
-function DisplayPopularGames() {
+function DisplayTrendingGames() {
   const [gameList, setGameList] = useState([]);
   const [loading, setLoading] = useState(true);
   // récupérer les jeux les plus populaires via l'API
   useEffect(() => {
-    const fetchPopularGames = async () => {
+    const fetchTrendingGames = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/popular");
+        const response = await axios.get("http://localhost:3000/trending");
         console.log(response.data); // Affiche les données récupérées dans la console
         if (!response.data) {
           console.error("No data received from the server.");
@@ -39,7 +38,7 @@ function DisplayPopularGames() {
       }
     };
 
-    fetchPopularGames();
+    fetchTrendingGames();
   }, []);
 
   if (loading) {
@@ -47,9 +46,9 @@ function DisplayPopularGames() {
   }
 
   return (
-    <div className="displayPopularGames">
-      <h2>component displayPopularGames</h2>
-      <h1>Popular Games</h1>
+    <div className="displayTrendingGames">
+      <h2>component displayTrendingGames</h2>
+      <h1>Trending Games</h1>
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
@@ -82,4 +81,4 @@ function DisplayPopularGames() {
   );
 }
 
-export default DisplayPopularGames;
+export default DisplayTrendingGames;

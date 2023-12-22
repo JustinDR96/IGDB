@@ -1,4 +1,4 @@
-.displayPopularGames {
+.displayTrendingGames {
   max-width: 1440px;
   margin-bottom: 5rem;
   display: flex;
@@ -30,6 +30,14 @@
         white-space: wrap;
         width: 300px;
         min-height: 50px;
+        .date {
+          p {
+            margin-right: 5px;
+          }
+          display: flex;
+          margin-top: 10px;
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -39,6 +47,7 @@
     object-fit: fill;
     border-radius: var(--border-radius);
     cursor: pointer;
+    margin-bottom: 2px;
     transition: all 0.4s ease-in-out;
   }
   img:hover {

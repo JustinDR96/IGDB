@@ -6,14 +6,13 @@ const router = express.Router();
 // Utilisez le middleware d'authentification
 router.use(authMiddleware);
 
-// Route pour récupérer les jeux depuis l'API avec filtre de date
-router.get("/preorder", async (req, res) => {
+// Route pour récupérer les jeux tendances depuis l'api
+router.get("/trending", async (req, res) => {
   try {
-    const currentDateTimestamp = Math.floor(Date.now() / 1000);
-    const nextYearDate = Math.floor(
-      (Date.now() + 365 * 24 * 60 * 60 * 1000) / 1000
-    ); // Date Unix de l'année suivante
-
+    const threeMonthsAgo = Math.floor(
+      (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
+    ); // Date Unix d'il y a trois mois
+    const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
     const responseIGDB = await axios({
       method: "post",
       url: "https://api.igdb.com/v4/games",
@@ -22,9 +21,8 @@ router.get("/preorder", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: `fields *, cover.*, videos.*, first_release_date;sort hypes desc; where first_release_date > ${currentDateTimestamp} & first_release_date <= ${nextYearDate};`,
+      data: `fields *, cover.*, videos.*;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
     });
-    // console.log(currentDateTimestamp);
     res.json(responseIGDB.data);
   } catch (error) {
     console.error(

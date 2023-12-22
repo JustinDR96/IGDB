@@ -23,11 +23,13 @@
       flex-direction: column-reverse;
       align-items: center;
       .link {
-        display: flex;
-        flex-direction: column;
         text-decoration: none;
         color: white;
         margin-top: 1rem;
+        text-overflow: ellipsis;
+        white-space: wrap;
+        width: 300px;
+        min-height: 50px;
         .date {
           p {
             margin-right: 5px;
