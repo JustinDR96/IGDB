@@ -1,4 +1,4 @@
-.displayPopularGames {
+.displayPreorderGames {
   max-width: 1440px;
   margin-bottom: 5rem;
   display: flex;
@@ -23,9 +23,19 @@
       flex-direction: column-reverse;
       align-items: center;
       .link {
+        display: flex;
+        flex-direction: column;
         text-decoration: none;
         color: white;
         margin-top: 1rem;
+        .date {
+          p {
+            margin-right: 5px;
+          }
+          display: flex;
+          margin-top: 10px;
+          font-size: 1rem;
+        }
       }
     }
   }

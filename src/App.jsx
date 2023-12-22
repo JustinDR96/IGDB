@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <Header />
-      {/* <Home /> */}
+      <Home />
     </Router>
   );
 }

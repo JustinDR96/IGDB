@@ -1,16 +1,16 @@
-//DisplayPopularGames.jsx
+//DisplayPreorderGames.jsx
 import react, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function DisplayPopularGames() {
+function DisplayPreorderGames() {
   const [gameList, setGameList] = useState([]);
   const [loading, setLoading] = useState(true);
-  // récupérer les jeux les plus populaires via l'API
+  // récupérer les jeux en precommande via l'API
   useEffect(() => {
-    const fetchPopularGames = async () => {
+    const fetchPreorderGames = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/popular");
+        const response = await axios.get("http://localhost:3000/preorder");
         console.log(response.data); // Affiche les données récupérées dans la console
         if (!response.data) {
           console.error("No data received from the server.");
@@ -38,7 +38,7 @@ function DisplayPopularGames() {
       }
     };
 
-    fetchPopularGames();
+    fetchPreorderGames();
   }, []);
 
   if (loading) {
@@ -46,19 +46,27 @@ function DisplayPopularGames() {
   }
 
   return (
-    <div className="displayPopularGames">
-      <h2>component displayPopularGames</h2>
-      <h1>Popular Games</h1>
+    <div className="displayPreorderGames">
+      <h2>component displayPreorderGames</h2>
+      <h1>Pre-order Games</h1>
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
             <Link className="link" to={`${game.id}`}>
               {game.name}
+              <p className="date">
+                <p>Release Date: </p>
+                {
+                  new Date(game.first_release_date * 1000)
+                    .toISOString()
+                    .split("T")[0]
+                }
+              </p>
             </Link>
             {game.cover && game.cover.image_id && (
               <Link to={`${game.id}`}>
                 <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
+                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
                   alt={game.name}
                 />
               </Link>
@@ -81,4 +89,4 @@ function DisplayPopularGames() {
   );
 }
 
-export default DisplayPopularGames;
+export default DisplayPreorderGames;
