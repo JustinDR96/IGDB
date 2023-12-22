@@ -27,10 +27,22 @@ const DetailsGames = () => {
   }
   console.log(game);
   return (
-    <div>
-      <h1>{game[0].name}</h1>
-      <p>ID du jeu : {game[0].id}</p>
-      <p>Description : {game[0].description}</p>
+    <div className="detailsGames">
+      <div className="screenshot">
+        <img
+          src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].screenshots[0].image_id}.jpg`}
+          alt=""
+        />
+      </div>
+
+      <div className="gameContent">
+        <img
+          className="cover"
+          src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].cover.image_id}.jpg`}
+          alt=""
+        />
+        <h1>{game[0].name}</h1>
+      </div>
     </div>
   );
 };

@@ -45,7 +45,7 @@ function Header() {
   return (
     <div className="header">
       <nav className="navBar">
-        <a className="nav_logo" href="/home">
+        <a className="nav_logo" href="/">
           <img
             className="nav_logo"
             src="/Images/logo/logo_game_center_removebg.png"

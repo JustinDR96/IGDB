@@ -12,7 +12,7 @@ router.get("/:id", async (req, res) => {
     );
     const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/games",
-      `fields *; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
+      `fields *,cover.*,screenshots.*; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
       {
         headers: {
           Accept: "application/json",
