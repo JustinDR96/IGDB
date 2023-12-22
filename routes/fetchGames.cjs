@@ -17,9 +17,20 @@ router.get("/", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: "fields *, cover.*;",
+      data: "fields *,screenshots.*;",
     });
-    res.json(responseIGDB.data);
+
+    // Filtrer les jeux qui ont des screenshots
+    const gamesWithScreenshots = responseIGDB.data.filter(
+      (game) => game.screenshots && game.screenshots.length > 0
+    );
+    // Générer un index aléatoire
+    const randomIndex = Math.floor(Math.random() * responseIGDB.data.length);
+
+    // Sélectionner un jeu au hasard
+    const randomGame = gamesWithScreenshots[randomIndex];
+
+    res.json(randomGame);
   } catch (error) {
     console.error(
       "Error:",
