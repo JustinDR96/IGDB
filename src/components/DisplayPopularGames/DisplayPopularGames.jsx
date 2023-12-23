@@ -45,7 +45,15 @@ function DisplayPopularGames() {
   if (loading) {
     return <p>Loading...</p>;
   }
-
+  function getRatingColor(rating) {
+    if (rating < 50) {
+      return "red";
+    } else if (rating < 70) {
+      return "yellow";
+    } else {
+      return "green";
+    }
+  }
   return (
     <div className="displayPopularGames">
       <h2>component displayPopularGames</h2>
@@ -58,20 +66,38 @@ function DisplayPopularGames() {
               <Link to={`/games/${game.id}`}>
                 <div className="game_content">
                   <img
-                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${
-                      game.cover.image_id
-                    }.jpg`}
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
                     alt={game.name}
                   />
                   <div className="game_content_detail">
                     <h1>{game.name}</h1>
-                    <p className="summary">{game.summary}</p>
+                    {/* <div className="platform_name">
+                      {game.platforms &&
+                        game.platforms.map(
+                          (platform) =>
+                            platform.name && (
+                              <span key={platform.id} className="platform">
+                                {platform.name}
+                              </span>
+                            )
+                        )}
+                    </div> */}
+
+                    {/* <p className="summary">{game.summary}</p> */}
                     <div className="game_content_bottom">
-                      <p className="rating">{Math.floor(game.rating)}</p>
-                      {/* {game.genres &&
-                      game.genres.map((genre) => (
-                        <span key={genre.id}>{genre.name}</span>
-                      ))} */}
+                      <p
+                        className="rating"
+                        style={{ backgroundColor: getRatingColor(game.rating) }}
+                      >
+                        {Math.floor(game.rating)}
+                      </p>
+                      {game.genres &&
+                        game.genres.map((genre, index, array) => (
+                          <span key={genre.id}>
+                            {genre.name}
+                            {index < array.length - 1 && " / "}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 </div>

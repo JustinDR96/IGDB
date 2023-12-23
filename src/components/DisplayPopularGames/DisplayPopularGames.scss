@@ -1,9 +1,10 @@
 .displayPopularGames {
   max-width: 1440px;
-  margin-bottom: 5rem;
+  padding: 50px 0;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
+  overflow-x: hidden;
   h1 {
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -29,39 +30,47 @@
         }
         .game_content_detail {
           display: none;
-          height: 40%;
+          height: 50%;
           width: 100%;
           padding: 0.5rem;
           position: absolute;
           bottom: 0;
           left: 0;
           color: white;
-          background-color: transparent;
-          backdrop-filter: blur(10px);
+          background-color: #201f23;
           h1 {
             font-size: 1.5rem;
-            height: 1rem;
+            height: fit-content;
           }
           .summary {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+            border: solid 1px black;
+            height: 100%;
+            overflow: hidden; // Cache le texte qui dépasse
+            text-overflow: ellipsis; // Ajoute des points de suspension à la fin du texte caché
+            display: -webkit-box; // Nécessaire pour utiliser -webkit-line-clamp
+            -webkit-line-clamp: 3; // Limite le texte à 3 lignes
+            -webkit-box-orient: vertical;
           }
           .game_content_bottom {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             .rating {
               border-radius: 5px;
               padding: 10px;
               background-color: red;
+              margin-right: 1rem;
+            }
+            span {
+              font-size: 0.9rem;
+              color: #555557;
             }
           }
         }
       }
       .game_content:hover {
-        transform: translateY(-10px) scale(1.05);
-        margin: 0 5px;
+        transform: translateY(-10px) scale(1.1);
+        z-index: 100;
+        margin: 0 10px;
         display: flex;
         .game_content_detail {
           display: flex;
