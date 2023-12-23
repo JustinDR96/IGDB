@@ -53,25 +53,31 @@ function DisplayPopularGames() {
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
-            <Link className="link" to={`/games/${game.id}`}></Link>
+            <Link className="link" to={`/games/${game.id}`} />
             {game.cover && game.cover.image_id && (
               <Link to={`/games/${game.id}`}>
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
-                  alt={game.name}
-                />
+                <div className="game_content">
+                  <img
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${
+                      game.cover.image_id
+                    }.jpg`}
+                    alt={game.name}
+                  />
+                  <div className="game_content_detail">
+                    <h1>{game.name}</h1>
+                    <p className="summary">{game.summary}</p>
+                    <div className="game_content_bottom">
+                      <p className="rating">{Math.floor(game.rating)}</p>
+                      {/* {game.genres &&
+                      game.genres.map((genre) => (
+                        <span key={genre.id}>{genre.name}</span>
+                      ))} */}
+                    </div>
+                  </div>
+                </div>
               </Link>
             )}
             {/* <div className="rating">{Math.floor(game.rating)}</div> */}
-            <div className="game_content">
-              <h2>{game.name}</h2>
-              <p>{game.summary}</p>
-              <div className="game_content_bottom">
-                {" "}
-                <p>{Math.floor(game.rating)}</p>
-                <span>{game.genres.map((genre) => genre.name).join(", ")}</span>
-              </div>
-            </div>
           </li>
         ))}
       </ul>

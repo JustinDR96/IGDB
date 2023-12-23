@@ -11,80 +11,64 @@
   }
   ul {
     display: flex;
-    position: relative;
-    width: 350px;
-    height: 450px;
+    align-items: center;
     li {
+      margin: 0 5px;
       display: flex;
-      flex-direction: column-reverse;
-      align-items: center;
-      img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        object-fit: fill;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        transition: all 0.4s ease-in-out;
-      }
-      .link {
-        text-decoration: none;
-        color: white;
-        margin-top: 1rem;
-        text-overflow: ellipsis;
-        white-space: wrap;
-        width: 300px;
-        min-height: 50px;
-      }
-      .rating {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-      }
+      position: relative;
       .game_content {
+        width: 350px;
+        height: 500px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        width: 100%;
-        height: 50%;
-        padding: 10px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(32, 31, 35, 255);
-        transform: translateX(1000px);
-        transition: all 0.4s ease-in-out;
-        p:nth-child(2) {
-          overflow: hidden; // Cache le texte qui dépasse
-          text-overflow: ellipsis; // Ajoute des points de suspension à la fin du texte caché
-          white-space: normal;
-          max-height: 80px; // Empêche le texte de passer à la ligne
-          color: white;
+        transition: all 0.8s ease-in-out;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
-        .game_content_bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          p {
-            background-color: green;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1.1rem;
+        .game_content_detail {
+          display: none;
+          height: 40%;
+          width: 100%;
+          padding: 0.5rem;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          color: white;
+          background-color: transparent;
+          backdrop-filter: blur(10px);
+          h1 {
+            font-size: 1.5rem;
+            height: 1rem;
           }
-          span {
-            color: #4f4e50;
+          .summary {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          .game_content_bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .rating {
+              border-radius: 5px;
+              padding: 10px;
+              background-color: red;
+            }
           }
         }
       }
-    }
-  }
-  ul:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    .game_content {
-      transform: translateX(0);
+      .game_content:hover {
+        transform: translateY(-10px) scale(1.05);
+        margin: 0 5px;
+        display: flex;
+        .game_content_detail {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+      }
     }
   }
 }
