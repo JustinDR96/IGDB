@@ -53,9 +53,7 @@ function DisplayPopularGames() {
       <ul>
         {gameList.map((game) => (
           <li key={game.id}>
-            <Link className="link" to={`/games/${game.id}`}>
-              {game.name}
-            </Link>
+            <Link className="link" to={`/games/${game.id}`}></Link>
             {game.cover && game.cover.image_id && (
               <Link to={`/games/${game.id}`}>
                 <img
@@ -64,17 +62,16 @@ function DisplayPopularGames() {
                 />
               </Link>
             )}
-            {/* {game.videos && game.videos.length > 0 && (
-              <iframe
-                src={`https://www.youtube.com/embed/${game.videos[0].video_id}?autoplay=0&mute=1`}
-                title={game.videos[0].name}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                width={500}
-                height={450}
-              />
-            )} */}
+            {/* <div className="rating">{Math.floor(game.rating)}</div> */}
+            <div className="game_content">
+              <h2>{game.name}</h2>
+              <p>{game.summary}</p>
+              <div className="game_content_bottom">
+                {" "}
+                <p>{Math.floor(game.rating)}</p>
+                <span>{game.genres.map((genre) => genre.name).join(", ")}</span>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
