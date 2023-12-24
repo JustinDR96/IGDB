@@ -3,6 +3,7 @@ import react, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import DetailsGames from "../../pages/DetailsGames/DetailsGames";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 function DisplayPopularGames() {
   const [gameList, setGameList] = useState([]);
@@ -55,33 +56,23 @@ function DisplayPopularGames() {
     }
   }
   return (
-    <div className="displayPopularGames">
+    <div className="display_games">
       <h2>component displayPopularGames</h2>
-      <h1>Popular Games</h1>
-      <ul>
+      <h1 className="page_title">Popular Games</h1>
+      <ul className="game_list">
         {gameList.map((game) => (
-          <li key={game.id}>
+          <li className="game_element" key={game.id}>
             <Link className="link" to={`/games/${game.id}`} />
             {game.cover && game.cover.image_id && (
               <Link to={`/games/${game.id}`}>
                 <div className="game_content">
                   <img
+                    className="game_cover"
                     src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
                     alt={game.name}
                   />
                   <div className="game_content_detail">
-                    <h1>{game.name}</h1>
-                    {/* <div className="platform_name">
-                      {game.platforms &&
-                        game.platforms.map(
-                          (platform) =>
-                            platform.name && (
-                              <span key={platform.id} className="platform">
-                                {platform.name}
-                              </span>
-                            )
-                        )}
-                    </div> */}
+                    <h1 className="game_title">{game.name}</h1>
 
                     {/* <p className="summary">{game.summary}</p> */}
                     <div className="game_content_bottom">
@@ -93,9 +84,9 @@ function DisplayPopularGames() {
                       </p>
                       {game.genres &&
                         game.genres.map((genre, index, array) => (
-                          <span key={genre.id}>
+                          <span className="game_genres" key={genre.id}>
                             {genre.name}
-                            {index < array.length - 1 && " / "}
+                            {index < array.length - 1 && " , "}
                           </span>
                         ))}
                     </div>

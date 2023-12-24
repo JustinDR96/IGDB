@@ -44,44 +44,55 @@ function DisplayPreorderGames() {
   if (loading) {
     return <p>Loading...</p>;
   }
-
+  function getRatingColor(rating) {
+    if (rating <= 50) {
+      return "red";
+    } else if (rating <= 70) {
+      return "yellow";
+    } else if (rating <= 80) {
+      return "green";
+    }
+  }
   return (
-    <div className="displayPreorderGames">
+    <div className="display_games">
       <h2>component displayPreorderGames</h2>
-      <h1>Pre-order Games</h1>
-      <ul>
+      <h1 className="page_title">Pre-order Games</h1>
+      <ul className="game_list">
         {gameList.map((game) => (
-          <li key={game.id}>
-            <Link className="link" to={`/games/${game.id}`}>
-              {game.name}
-              <p className="date">
-                <p>Release Date: </p>
-                {
-                  new Date(game.first_release_date * 1000)
-                    .toISOString()
-                    .split("T")[0]
-                }
-              </p>
-            </Link>
+          <li className="game_element" key={game.id}>
+            <Link className="link" to={`/games/${game.id}`} />
             {game.cover && game.cover.image_id && (
               <Link to={`/games/${game.id}`}>
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
-                  alt={game.name}
-                />
+                <div className="game_content">
+                  <img
+                    className="game_cover"
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
+                    alt={game.name}
+                  />
+                  <div className="game_content_detail">
+                    <h1 className="game_title">{game.name}</h1>
+
+                    {/* <p className="summary">{game.summary}</p> */}
+                    <div className="game_content_bottom">
+                      <p
+                        className="rating"
+                        style={{ backgroundColor: getRatingColor(game.rating) }}
+                      >
+                        {Math.floor(game.rating)}
+                      </p>
+                      {game.genres &&
+                        game.genres.map((genre, index, array) => (
+                          <span key={genre.id}>
+                            {genre.name}
+                            {index < array.length - 1 && " / "}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+                </div>
               </Link>
             )}
-            {/* {game.videos && game.videos.length > 0 && (
-              <iframe
-                src={`https://www.youtube.com/embed/${game.videos[0].video_id}?autoplay=0&mute=1`}
-                title={game.videos[0].name}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                width={500}
-                height={450}
-              />
-            )} */}
+            {/* <div className="rating">{Math.floor(game.rating)}</div> */}
           </li>
         ))}
       </ul>

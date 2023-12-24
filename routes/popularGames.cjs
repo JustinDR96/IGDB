@@ -17,7 +17,7 @@ router.get("/popular", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:5;sort hypes desc; where rating >= 90;`,
+      data: `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;sort hypes desc; where rating >= 90;`,
     });
     res.json(responseIGDB.data);
   } catch (error) {

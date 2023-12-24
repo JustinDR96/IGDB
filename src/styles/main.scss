@@ -6,9 +6,7 @@
 @import "./helpers/variables";
 
 // Importer les styles des composants
-@import "../components/DisplayPopularGames/DisplayPopularGames.scss";
-@import "../components/DisplayPreorderGames/DisplayPreorderGames.scss";
-@import "../components/DisplayTrendingGames/DisplayTrendingGames.scss";
+@import "../components/DisplayPopularGames/DisplayGameshome.scss";
 @import "../components/Header/Header.scss";
 
 // Importer les styles spécifiques aux pages

@@ -44,36 +44,55 @@ function DisplayTrendingGames() {
   if (loading) {
     return <p>Loading...</p>;
   }
-
+  function getRatingColor(rating) {
+    if (rating < 50) {
+      return "red";
+    } else if (rating < 70) {
+      return "yellow";
+    } else {
+      return "green";
+    }
+  }
   return (
-    <div className="displayTrendingGames">
-      <h2>component displayTrendingGames</h2>
-      <h1>Trending Games</h1>
-      <ul>
+    <div className="display_games">
+      <h2>component displaytrendingGames</h2>
+      <h1 className="page_title">Trending Games</h1>
+      <ul className="game_list">
         {gameList.map((game) => (
-          <li key={game.id}>
-            <Link className="link" to={`/games/${game.id}`}>
-              {game.name}
-            </Link>
+          <li className="game_element" key={game.id}>
+            <Link className="link" to={`/games/${game.id}`} />
             {game.cover && game.cover.image_id && (
               <Link to={`/games/${game.id}`}>
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
-                  alt={game.name}
-                />
+                <div className="game_content">
+                  <img
+                    className="game_cover"
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
+                    alt={game.name}
+                  />
+                  <div className="game_content_detail">
+                    <h1 className="game_title">{game.name}</h1>
+
+                    {/* <p className="summary">{game.summary}</p> */}
+                    <div className="game_content_bottom">
+                      <p
+                        className="rating"
+                        style={{ backgroundColor: getRatingColor(game.rating) }}
+                      >
+                        {Math.floor(game.rating)}
+                      </p>
+                      {game.genres &&
+                        game.genres.map((genre, index, array) => (
+                          <span key={genre.id}>
+                            {genre.name}
+                            {index < array.length - 1 && " / "}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+                </div>
               </Link>
             )}
-            {/* {game.videos && game.videos.length > 0 && (
-              <iframe
-                src={`https://www.youtube.com/embed/${game.videos[0].video_id}?autoplay=0&mute=1`}
-                title={game.videos[0].name}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                width={500}
-                height={450}
-              />
-            )} */}
+            {/* <div className="rating">{Math.floor(game.rating)}</div> */}
           </li>
         ))}
       </ul>
