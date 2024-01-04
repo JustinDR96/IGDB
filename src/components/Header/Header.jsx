@@ -1,10 +1,18 @@
 import react, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
   const accountMenuRef = useRef(null);
   const sidenavRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/games/${searchInput}`);
+  };
 
   // Fermer le menu du compte lorsque vous cliquez en dehors de celui-ci
   useEffect(() => {
@@ -54,7 +62,7 @@ function Header() {
         </a>
         <ul className="nav_links">
           <li>
-            <a href="#">Home</a>
+            <a href="/">Home</a>
           </li>
           <li>
             <a href="#">Popular Games</a>
@@ -67,10 +75,17 @@ function Header() {
           </li>
         </ul>
         <div className="searchBar">
-          <input type="text" placeholder="Search..." />
-          <a href="#">
-            <img src="/Images/SVG/search_icone.svg" alt="" />
-          </a>
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <button type="submit">
+              <img src="/Images/SVG/search_icone.svg" alt="" />
+            </button>
+          </form>
         </div>
         <div className="user_links">
           <a href="#">

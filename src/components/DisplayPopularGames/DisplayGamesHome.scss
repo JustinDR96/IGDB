@@ -22,6 +22,15 @@
       margin: 0 5px;
       display: flex;
       position: relative;
+      animation: vibe;
+      animation-timeline: view(inline);
+      animation-range: cover 40% cover 60%;
+      @keyframes vibe {
+        50% {
+          transform: scale(1);
+          transform: filter(grayscale);
+        }
+      }
       .game_content {
         width: 350px;
         height: 500px;

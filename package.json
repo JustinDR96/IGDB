@@ -11,6 +11,7 @@
     "start": "nodemon server.cjs"
   },
   "dependencies": {
+    "@splidejs/react-splide": "^0.7.12",
     "apicalypse": "^0.2.0",
     "axios": "^1.6.2",
     "body-parser": "^1.20.2",

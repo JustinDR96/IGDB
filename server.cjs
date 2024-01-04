@@ -10,6 +10,7 @@ const popularGamesRouter = require("./routes/popularGames.cjs");
 const preorderGamesRouter = require("./routes/preorderGames.cjs");
 const trendingGamesRouter = require("./routes/trendingGames.cjs");
 const detailsGamesRouter = require("./routes/detailsGames.cjs");
+const searchGamesRouter = require("./routes/searchGames.cjs");
 
 app.use(authMiddleware);
 app.use(cors());
@@ -21,6 +22,7 @@ app.use(popularGamesRouter);
 app.use(preorderGamesRouter);
 app.use(trendingGamesRouter);
 app.use("/games", detailsGamesRouter);
+app.use("/search",searchGamesRouter);
 
 app.listen(3000, () => {
   console.log("Le serveur est en écoute sur le port 3000");

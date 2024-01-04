@@ -66,7 +66,9 @@ function DisplayTrendingGames() {
                 <div className="game_content">
                   <img
                     className="game_cover"
-                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`}
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${
+                      game.cover.image_id
+                    }.jpg`}
                     alt={game.name}
                   />
                   <div className="game_content_detail">
@@ -82,9 +84,9 @@ function DisplayTrendingGames() {
                       </p>
                       {game.genres &&
                         game.genres.map((genre, index, array) => (
-                          <span key={genre.id}>
+                          <span className="game_genres" key={genre.id}>
                             {genre.name}
-                            {index < array.length - 1 && " / "}
+                            {index < array.length - 1 && " , "}
                           </span>
                         ))}
                     </div>
