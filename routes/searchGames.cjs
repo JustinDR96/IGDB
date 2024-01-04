@@ -3,13 +3,13 @@ const express = require("express");
 const authMiddleware = require("../middleware/auth.cjs");
 const router = express.Router();
 
-// route pour recuperer un jeu via son nom
-router.post("/:name", async (req, res) => {
-  const gameName = req.params.name; // Récupérez l'ID du jeu de la route
+// route pour récupérer un jeu via son nom
+router.get("/:name", async (req, res) => {
+  const gameName = req.params.name; // Récupérez le nom du jeu de la route
   try {
     const igdbResponse = await axios.post(
-      "https://api.igdb.com/v4/games",
-      `fields *; search "${gameName}";`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
+      "https://api.igdb.com/v4/search",
+      `fields *;limit:20; search "${gameName}";`,
       {
         headers: {
           Accept: "application/json",

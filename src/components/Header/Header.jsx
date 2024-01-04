@@ -11,7 +11,12 @@ function Header() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/games/${searchInput}`);
+
+    // Vérifiez si searchInput a une valeur avant de naviguer
+    if (searchInput.trim() !== "") {
+      navigate(`/search/${searchInput}`);
+      console.log(searchInput);
+    }
   };
 
   // Fermer le menu du compte lorsque vous cliquez en dehors de celui-ci
