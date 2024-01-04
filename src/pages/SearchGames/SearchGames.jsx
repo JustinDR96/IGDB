@@ -14,6 +14,7 @@ const SearchGames = () => {
         const response = await axios.get(
           `http://localhost:3000/search/${gameName}`
         );
+        console.log(response.data);
         const game = response.data;
         setGame(game);
       } catch (error) {
@@ -32,10 +33,30 @@ const SearchGames = () => {
   }
   console.log(game);
   return (
-    <div className="detailsGames">
-      <h1>search Games</h1>
-
-      <h1>{game[0].name}</h1>
+    <div className="searchGames">
+      {game
+        .filter(
+          (gameItem) =>
+            gameItem.game && gameItem.game.cover && gameItem.game.cover.image_id
+        )
+        .map((gameItem) => (
+          <Link to={`/games/${gameItem.game.id}`}>
+            <div className="gameItem" key={gameItem.id}>
+              {gameItem.game.cover && gameItem.game.cover.image_id ? (
+                <img
+                  className="gameItem_cover"
+                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${gameItem.game.cover.image_id}.jpg`}
+                  alt=""
+                />
+              ) : (
+                <div>Cover not available</div>
+              )}
+              <div className="gameItem_content">
+                <h1>{gameItem.name}</h1>
+              </div>
+            </div>
+          </Link>
+        ))}
     </div>
   );
 };

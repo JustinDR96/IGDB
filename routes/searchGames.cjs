@@ -9,7 +9,7 @@ router.get("/:name", async (req, res) => {
   try {
     const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/search",
-      `fields *;limit:20; search "${gameName}";`,
+      `fields *,game.cover.image_id;limit:50; search "${gameName}";`,
       {
         headers: {
           Accept: "application/json",
@@ -18,7 +18,15 @@ router.get("/:name", async (req, res) => {
         },
       }
     );
-    res.json(igdbResponse.data);
+
+    const uniqueGames = igdbResponse.data.reduce((unique, game) => {
+      if (!unique.find((item) => item.name === game.name)) {
+        unique.push(game);
+      }
+      return unique;
+    }, []);
+
+    res.json(uniqueGames);
   } catch (error) {
     console.error(error);
     res

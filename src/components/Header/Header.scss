@@ -37,27 +37,33 @@
   }
 }
 .searchBar {
-  width: 30rem;
   @include flex-center-vert;
   border-radius: 10px;
   overflow: hidden;
-  padding: 5px;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
   @include mobile {
     width: 10rem;
   }
-  input {
-    width: 100%;
-    border: none;
-    font-size: 20px;
-    outline: none;
-    background-color: inherit;
-    color: white;
-  }
-  img {
-    width: 30px;
-    object-fit: cover;
-    cursor: pointer;
+  form {
+    padding: 5px;
+    width: 30rem;
+    display: flex;
+    align-items: center;
+    input {
+      width: 100%;
+      border: none;
+      font-size: 20px;
+      outline: none;
+      background-color: inherit;
+      color: white;
+    }
+    button {
+      background: none;
+      border: none;
+      width: 30px;
+      object-fit: cover;
+      cursor: pointer;
+    }
   }
 }
 .nav_logo {

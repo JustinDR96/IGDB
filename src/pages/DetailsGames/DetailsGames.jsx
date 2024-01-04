@@ -29,10 +29,14 @@ const DetailsGames = () => {
   return (
     <div className="detailsGames">
       <div className="screenshot">
-        <img
-          src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].screenshots[0].image_id}.jpg`}
-          alt=""
-        />
+        {game[0].screenshots && game[0].screenshots[0].image_id ? (
+          <img
+            src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].screenshots[0].image_id}.jpg`}
+            alt=""
+          />
+        ) : (
+          <div>Screenshot not available</div>
+        )}
       </div>
 
       <div className="gameContent">
