@@ -1,5 +1,3 @@
-@import "swiper/swiper-bundle.css";
-
 .display_games {
   max-width: 1440px;
   padding: 50px 0;
@@ -15,9 +13,8 @@
     height: 600px;
     display: flex;
     align-items: center;
-    flex-direction: row; // Changez ceci pour permettre le défilement horizontal
-    overflow-x: scroll; // Permet le défilement sur l'axe x
-
+    flex-direction: row;
+    overflow-x: scroll;
     .game_element {
       margin: 0 5px;
       display: flex;
@@ -35,6 +32,7 @@
         width: 350px;
         height: 500px;
         display: flex;
+        position: relative;
         flex-direction: column;
         transition: all 0.8s ease-in-out;
         .game_cover {
@@ -45,27 +43,16 @@
           }
         }
         .game_content_detail {
-          display: none;
+          display: block;
           height: 50%;
           width: 100%;
           padding: 0.5rem;
           position: absolute;
           bottom: 0;
-          left: 0;
           color: white;
-          background-color: #201f23;
+          background-color: rgba(0, 0, 0, 0.6);
           .game_title {
             font-size: 1.5rem;
-            height: max-content;
-          }
-          .summary {
-            border: solid 1px black;
-            height: 100%;
-            overflow: hidden; // Cache le texte qui dépasse
-            text-overflow: ellipsis; // Ajoute des points de suspension à la fin du texte caché
-            display: -webkit-box; // Nécessaire pour utiliser -webkit-line-clamp
-            -webkit-line-clamp: 3; // Limite le texte à 3 lignes
-            -webkit-box-orient: vertical;
           }
           .game_content_bottom {
             display: flex;
@@ -77,7 +64,7 @@
               margin-right: 1rem;
             }
             .game_genres {
-              font-size: 0.7rem;
+              font-size: 0.9rem;
               color: #555557;
             }
           }

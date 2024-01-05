@@ -22,7 +22,7 @@ app.use(popularGamesRouter);
 app.use(preorderGamesRouter);
 app.use(trendingGamesRouter);
 app.use("/games", detailsGamesRouter);
-app.use("/search",searchGamesRouter);
+app.use("/search", searchGamesRouter);
 
 app.listen(3000, () => {
   console.log("Le serveur est en écoute sur le port 3000");

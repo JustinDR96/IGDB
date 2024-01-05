@@ -1,16 +1,12 @@
 // Home.js
 import React from "react";
-import DisplayPopularGames from "../../components/DisplayPopularGames/DisplayPopularGames";
-import DisplayPreorderGames from "../../components/DisplayPreorderGames/DisplayPreorderGames";
-import DisplayTrendingGames from "../../components/DisplayTrendingGames/DisplayTrendingGames";
+import DisplayGames from "../../components/DisplayGames/DisplayGames";
 
 function Home() {
   return (
     <div className="home">
       <h1>page Home</h1>
-      <DisplayPopularGames />
-      <DisplayPreorderGames />
-      <DisplayTrendingGames />
+      <DisplayGames />
     </div>
   );
 }
