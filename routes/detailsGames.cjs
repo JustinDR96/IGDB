@@ -12,7 +12,7 @@ router.get("/:id", async (req, res) => {
     );
     const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/games",
-      `fields id,name,age_ratings.category,platforms.*,bundles.*,dlcs.*,cover.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
+      `fields id,name,age_ratings.category,platforms.*,platforms.platform_logo.image_id,bundles.*,bundles.cover.*,dlcs.*,cover.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
       {
         headers: {
           Accept: "application/json",
