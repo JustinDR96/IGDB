@@ -1,0 +1,12 @@
+- nom &
+- plateforme &
+- pegi &
+- edition dlc, etc &
+- rating &
+- developpeur /
+- editeur /
+- date de sortie &
+- genres &
+- resumé &
+- videos &
+- screenshots &

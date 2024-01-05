@@ -1,11 +1,11 @@
 .header {
   width: 100%;
-  height: 100px;
+  height: 80px;
 }
 .navBar {
   @include flex-center-vert;
   width: 100%;
-  height: 100px;
+  height: 80px;
   border-radius: 5px;
   background-color: transparent;
   backdrop-filter: var(--backdrop-blur);

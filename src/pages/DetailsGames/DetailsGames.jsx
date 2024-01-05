@@ -27,7 +27,7 @@ const DetailsGames = () => {
   }
   console.log(game);
   return (
-    <div className="detailsGames">
+    <div className="details_games">
       <div className="screenshot">
         {game[0].screenshots && game[0].screenshots[0].image_id ? (
           <img
@@ -39,13 +39,18 @@ const DetailsGames = () => {
         )}
       </div>
 
-      <div className="gameContent">
+      <div className="game_content">
         <img
           className="cover"
           src={`https://images.igdb.com/igdb/image/upload/t_720p/${game[0].cover.image_id}.jpg`}
           alt=""
         />
-        <h1>{game[0].name}</h1>
+        <div className="game_content_card">
+          <h1 className="game_title">{game[0].name}</h1>
+          <p>{game[0].summary}</p>
+          <p>{game[0].first_release_dates}</p>
+          <p>{game[0].age_ratings[0].category.name}</p>
+        </div>
       </div>
     </div>
   );
