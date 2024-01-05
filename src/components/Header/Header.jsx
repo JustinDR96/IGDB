@@ -88,7 +88,7 @@ function Header() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <button type="submit">
+            <button type="submit" className="submit">
               <img src="/Images/SVG/search_icone.svg" alt="" />
             </button>
           </form>

@@ -26,7 +26,18 @@ const DetailsGames = () => {
   if (!game) {
     return <div>Loading...</div>; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
+
+  function getRatingColor(rating) {
+    if (rating < 50) {
+      return "red";
+    } else if (rating < 80) {
+      return "orange";
+    } else {
+      return "green";
+    }
+  }
   console.log(game);
+
   return (
     <div className="details_games">
       <div className="screenshot">
@@ -46,16 +57,28 @@ const DetailsGames = () => {
           alt=""
         />
         <div className="game_content_card">
-          <h1 className="game_title">{game[0]?.name || ""}</h1>
+          <div className="game_content_card_header">
+            <h1 className="game_title">{game[0]?.name || ""}</h1>
+          </div>
 
-          <p className="game_release">
-            {game[0]?.first_release_date
-              ? format(
-                  new Date(game[0].first_release_date * 1000),
-                  "dd MMMM yyyy"
-                )
-              : ""}
-          </p>
+          <div className="game_content_card_mid">
+            <p className="game_release">
+              {game[0]?.first_release_date
+                ? format(
+                    new Date(game[0].first_release_date * 1000),
+                    "dd MMMM yyyy"
+                  )
+                : ""}
+            </p>
+            <p className="game_stock">Stock 5</p>
+            <p
+              className="game_rating"
+              style={{ backgroundColor: getRatingColor(game.rating) }}
+            >
+              {Math.floor(game[0].aggregated_rating)}
+            </p>
+          </div>
+
           <div className="game_select">
             <select className="game_platform">
               {game[0]?.platforms?.map((platform, index) => (
@@ -73,7 +96,12 @@ const DetailsGames = () => {
               ))}
             </select>
           </div>
-          <button>
+
+          <div className="game_price">
+            <p className="price_sold">65$</p>
+            <p>50$</p>
+          </div>
+          <button className="buy_btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -82,7 +110,7 @@ const DetailsGames = () => {
             >
               <path
                 d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"
-                fill="black"
+                fill="white"
               />
             </svg>
             Buy now
@@ -94,9 +122,3 @@ const DetailsGames = () => {
 };
 
 export default DetailsGames;
-
-{
-  /* <p className="game_age_rating">
-            {game[0]?.age_ratings[0]?.category || ""} age rating
-          </p> */
-}
