@@ -1,157 +1,211 @@
 .details_games {
-  @include flex-center;
-  border: solid 5px green;
-  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   .screenshot {
     img {
       width: 100%;
-      height: 100%;
       object-fit: cover;
       position: absolute;
       top: 0;
       left: 0;
-      clip-path: polygon(0 0, 100% 0%, 100% 60%, 0 40%);
-      z-index: 0;
+      clip-path: polygon(0 0, 100% 0%, 100% 50%, 0 40%);
     }
     @include mobile {
       img {
         display: none;
       }
     }
+    @include large {
+      img {
+        width: 100%;
+        clip-path: none;
+      }
+    }
   }
 
   .game_content {
-    width: 100%;
-    height: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    border: solid 3px green;
+    margin-top: 2rem;
     @include tablet {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     gap: 2rem;
-    position: absolute;
-    top: 80px;
-    z-index: 1;
     padding: 10px 0;
     .game_content_cover {
-      width: 400px;
+      max-width: 350px;
+      z-index: 2;
+      @include mobile {
+        width: 100%;
+      }
       img {
         width: 100%;
+        height: 100%;
         object-fit: cover;
-        border-radius: 10px;
+        border-radius: 5px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+    }
+    .game_content_card {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0);
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border-radius: 10px;
+      @include mobile {
+        width: 100%;
+      }
+      .game_content_card_header {
+        .game_title {
+          font-size: 1.6rem;
+          font-weight: 700;
+          color: white;
+          margin-bottom: 1rem;
+          text-align: center;
+        }
+      }
+
+      .game_content_card_mid {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 400;
+        padding: 0 5px;
+        .game_rating {
+          padding: 15px;
+          border-radius: 10px;
+        }
+      }
+
+      .game_price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        color: white;
+        font-size: 3rem;
+        font-weight: 400;
+        .price_sold {
+          font-size: 1.5rem;
+          text-decoration: line-through;
+          color: red;
+        }
+      }
+
+      .game_select {
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        border-radius: 10px;
+        overflow: hidden;
+        .game_platform,
+        .game_edition {
+          width: 250px;
+          height: 50px;
+          border: none;
+          outline: none;
+          appearance: none; /* Supprime les styles par défaut du navigateur */
+          -moz-appearance: none; /* Firefox */
+          padding: 0 10px;
+          font-size: 1rem;
+          font-weight: 500;
+          color: #ebeaea;
+          background-color: rgba(5, 5, 5, 0.9);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          .game_platform option,
+          .game_edition option {
+            padding: 10px;
+          }
+        }
+      }
+      .buy_btn {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 1rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        background-color: #e71708;
+        transition: all 0.1s ease-in-out;
+      }
+      .buy_btn:hover {
+        box-shadow:
+          rgba(255, 255, 255, 0.4) 0px 2px 4px,
+          rgba(255, 255, 255, 0.3) 0px 7px 13px -3px,
+          rgba(255, 255, 255, 0.2) 0px -3px 0px inset;
+        transform: translateY(-2px);
+      }
+      .buy_btn:active {
+        transform: translateY(0px);
+        box-shadow: none;
       }
     }
   }
 
-  .game_content_card {
+  .game_content_footer {
+    border: solid 3px green;
     display: flex;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0);
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    .game_content_card_header {
-      .game_title {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 1rem;
-        text-align: center;
-      }
-    }
-
-    .game_content_card_mid {
+    justify-content: space-evenly;
+    padding: 2rem;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    letter-spacing: 1.1px;
+    @include tablet {
       display: flex;
-      flex-direction: row-reverse;
+      flex-direction: column-reverse;
+    }
+    .game_summary {
+      max-width: 600px;
+      text-align: justify;
+      align-self: center;
+    }
+    .game_details {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      color: white;
-      font-size: 1.2rem;
-      font-weight: 400;
-      padding: 0 5px;
-      .game_rating {
-        padding: 15px;
-        border-radius: 10px;
+      .game_publisher,
+      .game_developer,
+      .game_genre,
+      .game_release,
+      .game_platforms,
+      .game_modes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      p:first-child {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      p:last-child {
+        font-size: 0.9rem;
+        width: 400px;
+        margin: 5px;
       }
     }
-
-    .game_price {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      font-size: 3rem;
-      font-weight: 400;
-      .price_sold {
-        font-size: 1.5rem;
-        text-decoration: line-through;
-        color: red;
-      }
-    }
-
-    .game_select {
-      width: 100%;
-      display: flex;
-      gap: 5px;
-      border-radius: 10px;
-      overflow: hidden;
-      .game_platform,
-      .game_edition {
-        width: 250px;
-        height: 50px;
-        border: none;
-        outline: none;
-        appearance: none; /* Supprime les styles par défaut du navigateur */
-        -moz-appearance: none; /* Firefox */
-        padding: 0 10px;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #ebeaea;
-        background-color: rgba(5, 5, 5, 0.9);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        .game_platform option,
-        .game_edition option {
-          padding: 10px;
-        }
-      }
-    }
-
-    .buy_btn {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 1rem;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      background-color: #e71708;
-      transition: all 0.1s ease-in-out;
-    }
-    .buy_btn:hover {
-      box-shadow:
-        rgba(255, 255, 255, 0.4) 0px 2px 4px,
-        rgba(255, 255, 255, 0.3) 0px 7px 13px -3px,
-        rgba(255, 255, 255, 0.2) 0px -3px 0px inset;
-      transform: translateY(-2px);
-    }
-    .buy_btn:active {
-      transform: translateY(0px);
-      box-shadow: none;
+    @include mobile {
+      font-size: 0.8rem;
     }
   }
 }

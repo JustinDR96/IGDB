@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
+import moment from "moment";
 
 const DetailsGames = () => {
   const { id } = useParams(); // Récupère l'ID du jeu à partir de la route
@@ -50,7 +51,6 @@ const DetailsGames = () => {
           <div>Screenshot not available</div>
         )}
       </div>
-
       <div className="game_content">
         <div className="game_content_cover">
           <img
@@ -97,6 +97,7 @@ const DetailsGames = () => {
             <p className="price_sold">65$</p>
             <p>50$</p>
           </div>
+
           <button className="buy_btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -112,19 +113,53 @@ const DetailsGames = () => {
             Buy now
           </button>
         </div>
+      </div>
 
-        <div className="game_content_footer"></div>
+      <div className="game_content_footer">
+        <div className="game_summary">
+          <p>{game[0]?.storyline || "Summary not available for this game"}</p>
+        </div>
+
+        <div className="game_details">
+          <div className="game_publisher">
+            <p>Publisher :</p>
+            <p>{game[0]?.involved_companies[0]?.company.name || ""}</p>
+          </div>
+
+          <div className="game_developer">
+            <p>Developer :</p>
+            <p>{game[0]?.involved_companies[0]?.company.name || ""}</p>
+          </div>
+
+          <div className="game_release">
+            <p>Release date :</p>
+            <p>{moment(game[0]?.release_date).format("DD MMMM YYYY")}</p>
+          </div>
+
+          <div className="game_genre">
+            <p>Genres :</p>
+            <p>{game[0]?.genres?.map((genre) => genre.name).join(", ")}</p>
+          </div>
+
+          <div className="game_platforms">
+            <p>Platforms :</p>
+            <p>
+              {game[0]?.platforms?.map((platform) => platform.name).join(", ")}
+            </p>
+          </div>
+
+          <div className="game_modes">
+            <p>Game modes :</p>
+            <p>
+              {game[0]?.game_modes
+                ?.map((game_mode) => game_mode.name)
+                .join(", ")}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default DetailsGames;
-
-{
-  /* <p className="game_release">
-  {game[0]?.first_release_date
-    ? format(new Date(game[0].first_release_date * 1000), "dd MMMM yyyy")
-    : ""}
-</p>; */
-}
