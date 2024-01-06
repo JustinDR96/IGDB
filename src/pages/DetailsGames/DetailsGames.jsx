@@ -50,26 +50,22 @@ const DetailsGames = () => {
           <div>Screenshot not available</div>
         )}
       </div>
+
       <div className="game_content">
-        <img
-          className="cover"
-          src={`https://images.igdb.com/igdb/image/upload/t_720p/${game[0].cover.image_id}.jpg`}
-          alt=""
-        />
+        <div className="game_content_cover">
+          <img
+            className="cover"
+            src={`https://images.igdb.com/igdb/image/upload/t_720p/${game[0].cover.image_id}.jpg`}
+            alt=""
+          />
+        </div>
+
         <div className="game_content_card">
           <div className="game_content_card_header">
             <h1 className="game_title">{game[0]?.name || ""}</h1>
           </div>
 
           <div className="game_content_card_mid">
-            <p className="game_release">
-              {game[0]?.first_release_date
-                ? format(
-                    new Date(game[0].first_release_date * 1000),
-                    "dd MMMM yyyy"
-                  )
-                : ""}
-            </p>
             <p className="game_stock">Stock 5</p>
             <p
               className="game_rating"
@@ -116,9 +112,19 @@ const DetailsGames = () => {
             Buy now
           </button>
         </div>
+
+        <div className="game_content_footer"></div>
       </div>
     </div>
   );
 };
 
 export default DetailsGames;
+
+{
+  /* <p className="game_release">
+  {game[0]?.first_release_date
+    ? format(new Date(game[0].first_release_date * 1000), "dd MMMM yyyy")
+    : ""}
+</p>; */
+}

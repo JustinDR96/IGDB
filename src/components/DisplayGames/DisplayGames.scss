@@ -1,85 +1,69 @@
+.display_games_main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0 15px;
+  gap: 5em;
+}
 .display_games {
-  max-width: 1440px;
-  padding: 50px 0;
-  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   .page_title {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
     color: white;
   }
   .game_list {
-    height: 600px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    overflow-x: scroll;
     .game_element {
-      margin: 0 5px;
-      display: flex;
+      transition: all 0.3s ease-in-out;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      margin-right: 2px;
       position: relative;
-      animation: vibe;
-      animation-timeline: view(inline);
-      animation-range: cover 40% cover 60%;
-      @keyframes vibe {
-        50% {
-          transform: scale(1);
-          transform: filter(grayscale);
-        }
-      }
-      .game_content {
-        width: 350px;
-        height: 500px;
+      .game_cover {
+        width: 100%;
         display: flex;
-        position: relative;
         flex-direction: column;
-        transition: all 0.8s ease-in-out;
-        .game_cover {
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-        .game_content_detail {
-          display: block;
-          height: 50%;
+        .game_cover_img {
           width: 100%;
-          padding: 0.5rem;
-          position: absolute;
-          bottom: 0;
-          color: white;
-          background-color: rgba(0, 0, 0, 0.6);
-          .game_title {
-            font-size: 1.5rem;
+          height: 100%;
+        }
+      }
+      .game_content_detail {
+        display: none;
+        height: 50%;
+        width: 100%;
+        padding: 1rem;
+        position: absolute;
+        bottom: 0;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.96);
+        .game_title {
+          font-size: 1.5rem;
+        }
+        .game_content_bottom {
+          display: flex;
+          align-items: center;
+          .rating {
+            border-radius: 5px;
+            padding: 10px;
+            background-color: red;
+            margin-right: 1rem;
           }
-          .game_content_bottom {
-            display: flex;
-            align-items: center;
-            .rating {
-              border-radius: 5px;
-              padding: 10px;
-              background-color: red;
-              margin-right: 1rem;
-            }
-            .game_genres {
-              font-size: 0.9rem;
-              color: #555557;
-            }
+          .game_genres {
+            font-size: 0.9rem;
+            color: #555557;
           }
         }
       }
-      .game_content:hover {
-        transform: translateY(-10px) scale(1.1);
-        z-index: 100;
-        margin: 0 10px;
-        display: flex;
-        .game_content_detail {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
+    }
+    .game_element:hover {
+      transform: translateY(-10px) scale(1.1);
+      z-index: 1000;
+      .game_content_detail {
+        display: block;
       }
     }
   }

@@ -23,8 +23,8 @@ summary
 
 ## fonctionnalités a ajouter
 
-- ajouter jeux depuis l'api dans la base de données
-- Rechercher via nom du jeux, déveloper, ...
+- ajouter jeux depuis l'api dans la base de données 
+- Rechercher via nom du jeux, déveloper, ... 
 - ajout super user
 - dark mode
 - cookies

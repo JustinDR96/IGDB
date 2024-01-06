@@ -22,7 +22,7 @@ router.get("/preorder", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: `fields *, cover.*, videos.*, first_release_date;sort hypes desc; where first_release_date > ${currentDateTimestamp} & first_release_date <= ${nextYearDate};`,
+      data: `fields *, cover.*, videos.*, first_release_date;sort hypes desc;limit:15; where first_release_date > ${currentDateTimestamp} & first_release_date <= ${nextYearDate};`,
     });
     // console.log(currentDateTimestamp);
     res.json(responseIGDB.data);

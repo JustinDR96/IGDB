@@ -10,6 +10,7 @@ body,
 html {
   max-width: 100%;
   min-height: 100vh;
+  margin: auto;
   background-color: rgba(21, 21, 21, 255);
   font-family: "Play", sans-serif;
   color: rgb(202, 35, 35);
@@ -33,5 +34,17 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+}
+
+.game_list::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.game_list::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+}
+
+.game_list::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
 }

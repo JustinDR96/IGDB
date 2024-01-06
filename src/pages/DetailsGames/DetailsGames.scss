@@ -1,7 +1,8 @@
 .details_games {
   @include flex-center;
+  border: solid 5px green;
+  z-index: 5;
   .screenshot {
-    width: 100%;
     img {
       width: 100%;
       height: 100%;
@@ -9,11 +10,16 @@
       position: absolute;
       top: 0;
       left: 0;
-      clip-path: polygon(0 0, 100% 0%, 100% 80%, 0 70%);
-      object-position: center;
+      clip-path: polygon(0 0, 100% 0%, 100% 60%, 0 40%);
       z-index: 0;
     }
+    @include mobile {
+      img {
+        display: none;
+      }
+    }
   }
+
   .game_content {
     width: 100%;
     height: 100%;
@@ -30,20 +36,22 @@
     top: 80px;
     z-index: 1;
     padding: 10px 0;
-    img {
+    .game_content_cover {
       width: 400px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
     }
   }
+
   .game_content_card {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
     padding: 25px;
-    min-width: 350px;
-    height: 500px;
     background: rgba(255, 255, 255, 0);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     backdrop-filter: blur(50px);
@@ -118,31 +126,32 @@
         }
       }
     }
+
+    .buy_btn {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 1rem;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      background-color: #e71708;
+      transition: all 0.1s ease-in-out;
+    }
+    .buy_btn:hover {
+      box-shadow:
+        rgba(255, 255, 255, 0.4) 0px 2px 4px,
+        rgba(255, 255, 255, 0.3) 0px 7px 13px -3px,
+        rgba(255, 255, 255, 0.2) 0px -3px 0px inset;
+      transform: translateY(-2px);
+    }
+    .buy_btn:active {
+      transform: translateY(0px);
+      box-shadow: none;
+    }
   }
-}
-.buy_btn {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 1rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  background-color: #e71708;
-  transition: all 0.1s ease-in-out;
-}
-.buy_btn:hover {
-  box-shadow:
-    rgba(255, 255, 255, 0.4) 0px 2px 4px,
-    rgba(255, 255, 255, 0.3) 0px 7px 13px -3px,
-    rgba(255, 255, 255, 0.2) 0px -3px 0px inset;
-  transform: translateY(-2px);
-}
-.buy_btn:active {
-  transform: translateY(0px);
-  box-shadow: none;
 }
