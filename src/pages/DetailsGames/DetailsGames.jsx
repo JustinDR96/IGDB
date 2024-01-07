@@ -41,6 +41,12 @@ const DetailsGames = () => {
     }
   }
   console.log(game);
+  const publisher =
+    game[0]?.involved_companies.filter((company) => company.publisher)?.[0]
+      ?.company.name || "";
+  const developer =
+    game[0]?.involved_companies.filter((company) => company.developer)?.[0]
+      ?.company.name || "";
 
   return (
     <div className="details_games">
@@ -127,12 +133,12 @@ const DetailsGames = () => {
         <div className="game_details">
           <div className="game_publisher">
             <p>Publisher :</p>
-            <p>{game[0]?.involved_companies[0]?.company.name || ""}</p>
+            <p>{publisher}</p>
           </div>
 
           <div className="game_developer">
             <p>Developer :</p>
-            <p>{game[0]?.involved_companies[0]?.company.name || ""}</p>
+            <p>{developer}</p>
           </div>
 
           <div className="game_release">
