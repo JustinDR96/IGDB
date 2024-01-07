@@ -271,5 +271,55 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       }
     }
+
+    .similar_games {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @include tablet {
+        width: 100%;
+      }
+      .similar_games_title {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        align-self: flex-start;
+        @include tablet {
+          align-self: center;
+        }
+      }
+      .similar_games_list {
+        padding: 0 10px;
+        display: grid;
+        grid-template-columns: repeat(
+          4,
+          1fr
+        ); // 3 éléments par ligne sur grand écran
+        gap: 2rem;
+        @include tablet {
+          grid-template-columns: repeat(
+            2,
+            1fr
+          ); // 2 éléments par ligne sur écran tablette
+        }
+        @include mobile {
+          grid-template-columns: repeat(1, 1fr);
+        }
+        .similar_game {
+          max-width: 350px;
+          border-radius: 2px;
+          overflow: hidden;
+          transition: all 0.3s ease-in-out;
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+        .similar_game:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
   }
 }

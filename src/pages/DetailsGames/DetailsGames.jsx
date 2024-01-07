@@ -23,7 +23,7 @@ const DetailsGames = () => {
         console.error("Full error: ", error);
       }
     };
-
+    window.scrollTo(0, 0);
     fetchGameDetails();
   }, [id]); // Exécutez cette fonction chaque fois que l'ID du jeu change
 
@@ -209,6 +209,22 @@ const DetailsGames = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
+
+        <div className="similar_games">
+          <h1 className="similar_games_title">Similar Games</h1>
+          <div className="similar_games_list">
+            {game[0]?.similar_games?.slice(0, 8).map((similarGame) => (
+              <div className="similar_game" key={similarGame.id}>
+                <Link to={`/games/${similarGame.id}`}>
+                  <img
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${similarGame.cover.image_id}.jpg`}
+                    alt=""
+                  />
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
