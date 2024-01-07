@@ -4,6 +4,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 import moment from "moment";
+import "swiper/swiper-bundle.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 const DetailsGames = () => {
   const { id } = useParams(); // Récupère l'ID du jeu à partir de la route
@@ -51,6 +54,7 @@ const DetailsGames = () => {
           <div>Screenshot not available</div>
         )}
       </div>
+
       <div className="game_content">
         <div className="game_content_cover">
           <img
@@ -133,7 +137,12 @@ const DetailsGames = () => {
 
           <div className="game_release">
             <p>Release date :</p>
-            <p>{moment(game[0]?.release_date).format("DD MMMM YYYY")}</p>
+            <p>
+              {format(
+                new Date(game[0].first_release_date * 1000),
+                "dd MMMM yyyy"
+              )}
+            </p>
           </div>
 
           <div className="game_genre">
@@ -156,6 +165,44 @@ const DetailsGames = () => {
                 .join(", ")}
             </p>
           </div>
+        </div>
+      </div>
+
+      <div className="game_content_trailer">
+        <div className="game_trailer">
+          <iframe
+            className="iframe"
+            width="560"
+            height="315"
+            src={`https://www.youtube.com/embed/${game[0]?.videos[0]?.video_id}`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          ></iframe>
+        </div>
+
+        <div className="game_screenshots">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={0}
+            slidesPerView={1}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            speed={500}
+            loop={true}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {game[0].screenshots.map((screenshot) => (
+              <SwiperSlide key={screenshot.id}>
+                <img
+                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`}
+                  alt="Screenshot"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </div>

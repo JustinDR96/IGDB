@@ -2,13 +2,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
   .screenshot {
     img {
       width: 100%;
-      object-fit: cover;
+      object-fit: coverg;
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 1;
       clip-path: polygon(0 0, 100% 0%, 100% 50%, 0 40%);
     }
     @include mobile {
@@ -28,18 +31,21 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    border: solid 3px green;
-    margin-top: 2rem;
+    margin-top: 3rem;
+    z-index: 2;
+    gap: 2rem;
     @include tablet {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    gap: 2rem;
-    padding: 10px 0;
+    @include mobile {
+      margin-top: 0;
+    }
+
     .game_content_cover {
       max-width: 350px;
-      z-index: 2;
+
       @include mobile {
         width: 100%;
       }
@@ -162,50 +168,108 @@
   }
 
   .game_content_footer {
-    border: solid 3px green;
     display: flex;
-    justify-content: space-evenly;
-    padding: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
     color: #fff;
     font-size: 1.1rem;
     line-height: 1.4rem;
     letter-spacing: 1.1px;
+    z-index: 2;
+    padding: 2rem;
     @include tablet {
       display: flex;
+      align-items: center;
       flex-direction: column-reverse;
     }
     .game_summary {
-      max-width: 600px;
+      width: 600px;
       text-align: justify;
-      align-self: center;
+      @include tablet {
+        width: 100%;
+      }
+      @include mobile {
+        font-size: 0.8rem;
+      }
     }
     .game_details {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      justify-content: flex-start;
+      width: 600px;
+      @include tablet {
+        width: 100%;
+      }
+
       .game_publisher,
       .game_developer,
       .game_genre,
       .game_release,
       .game_platforms,
       .game_modes {
-        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 2rem;
+        @include mobile {
+          gap: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 5px;
+        }
       }
       p:first-child {
         color: rgba(255, 255, 255, 0.6);
       }
       p:last-child {
         font-size: 0.9rem;
-        width: 400px;
+        width: 60%;
         margin: 5px;
       }
+      @include mobile {
+        font-size: 0.8rem;
+      }
     }
-    @include mobile {
-      font-size: 0.8rem;
+  }
+
+  .game_content_trailer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    z-index: 2;
+    .game_trailer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      .iframe {
+        width: 1000px;
+        height: 500px;
+        @include tablet {
+          width: 600px;
+          height: 400px;
+        }
+        @include mobile {
+          width: 300px;
+          height: 200px;
+        }
+      }
+    }
+
+    .game_screenshots {
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+      text-align: center;
+      img {
+        width: 80%;
+        object-fit: contain;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
     }
   }
 }
