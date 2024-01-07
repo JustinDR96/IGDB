@@ -69,6 +69,10 @@
             font-size: 1.5rem;
           }
           .game_release_date {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 2rem;
           }
         }
       }
