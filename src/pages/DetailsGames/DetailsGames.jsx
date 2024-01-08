@@ -93,6 +93,7 @@ const DetailsGames = () => {
                 </option>
               ))}
             </select>
+            
             <select className="game_edition">
               <option value={game[0]?.name}>{game[0]?.name}</option>
               {game[0]?.bundles?.map((bundle, index) => (
@@ -127,7 +128,7 @@ const DetailsGames = () => {
 
       <div className="game_content_footer">
         <div className="game_summary">
-          <p>{game[0]?.storyline || "Summary not available for this game"}</p>
+          <p>{game[0]?.storyline || game[0]?.summary}</p>
         </div>
 
         <div className="game_details">

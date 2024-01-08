@@ -5,7 +5,6 @@ import DisplayGames from "../../components/DisplayGames/DisplayGames";
 function Home() {
   return (
     <div className="home">
-      <h1>page Home</h1>
       <DisplayGames />
     </div>
   );
