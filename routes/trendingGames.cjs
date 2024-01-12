@@ -21,7 +21,7 @@ router.get("/trending", async (req, res) => {
         "Client-ID": req.clientId,
         Authorization: `Bearer ${req.accessToken}`,
       },
-      data: `fields *, cover.*, videos.*;limit:10;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
+      data: `fields *, cover.*, videos.*,screenshots.*;limit:20;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
     });
     res.json(responseIGDB.data);
   } catch (error) {
