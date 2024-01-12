@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const accountMenuRef = useRef(null);
@@ -97,21 +96,9 @@ function Header() {
           <a href="#">
             <img src="/Images/SVG/shopping_cart.svg" alt="" />
           </a>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsAccountMenuOpen(!isAccountMenuOpen);
-            }}
-          >
+          <a href="/register">
             <img src="/Images/SVG/account_icon.svg" alt="" />
           </a>
-          {isAccountMenuOpen && (
-            <div className="accountMenu open" ref={accountMenuRef}>
-              <a href="#">Login</a>
-              <a href="#">Sign Up</a>
-            </div>
-          )}
         </div>
         <div
           className="hamburger"
@@ -122,8 +109,10 @@ function Header() {
         {isHamburgerOpen && (
           <div className="sideNav open" ref={sidenavRef}>
             <div className="account">
-              <a href="#">Login</a>
-              <a href="#">Sign Up</a>
+              <a href="/register">
+                <img src="/Images/SVG/account_icon.svg" alt="" />
+              </a>
+
               <a href="#">
                 <img src="/Images/SVG/shopping_cart.svg" alt="" />
               </a>

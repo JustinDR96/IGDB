@@ -98,9 +98,14 @@
   a {
     text-decoration: none;
     color: white;
-    img {
-      width: 30px;
-    }
+  }
+  button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
+  img {
+    width: 30px;
   }
 }
 .accountMenu {
@@ -178,6 +183,14 @@
     }
     img {
       width: 25px;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+    img {
+      width: 30px;
     }
   }
   .nav_links {

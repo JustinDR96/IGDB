@@ -3,6 +3,7 @@ const axios = require("axios");
 const app = express();
 const cors = require("cors");
 const authMiddleware = require("./middleware/auth.cjs");
+const connectToDatabase = require("./db_connect.cjs");
 
 // import route
 const gamesRouter = require("./routes/fetchGames.cjs");
@@ -24,6 +25,7 @@ app.use(trendingGamesRouter);
 app.use("/games", detailsGamesRouter);
 app.use("/search", searchGamesRouter);
 
-app.listen(3000, () => {
+app.listen(3000, async () => {
+  await connectToDatabase();
   console.log("Le serveur est en écoute sur le port 3000");
 });

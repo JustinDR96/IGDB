@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Header from "./components/Header/Header";
 import DetailsGames from "./pages/DetailsGames/DetailsGames";
 import SearchGames from "./pages/SearchGames/SearchGames";
+import Register from "./pages/register/Register";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/games/:id" element={<DetailsGames />} />
         <Route path="/search/:name" element={<SearchGames />} />
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

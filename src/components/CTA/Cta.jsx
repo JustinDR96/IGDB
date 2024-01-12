@@ -43,7 +43,7 @@ export default function Cta() {
         <div className="cta-screenshot">
           {game.screenshots?.[0]?.image_id ? (
             <img
-              src={`https://images.igdb.com/igdb/image/upload/t_original/${game.screenshots[0].image_id}.jpg`}
+              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${game.screenshots[0].image_id}.jpg`}
               alt=""
             />
           ) : (

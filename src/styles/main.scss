@@ -9,11 +9,14 @@
 @import "../components/DisplayGames/DisplayGames.scss";
 @import "../components/Header/Header.scss";
 @import "../components/CTA/Cta.scss";
+@import "../components/Register/Login/Login.scss";
+@import "../components/Register/SignUp/SignUp.scss";
 
 // Importer les styles spécifiques aux pages
 @import "../pages/home/Home";
 @import "../pages/DetailsGames/DetailsGames.scss";
 @import "../pages/SearchGames/SearchGames.scss";
+@import "../pages/Register/Register.scss";
 
 // Importer les styles globaux
 @import "./App";
