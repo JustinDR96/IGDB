@@ -51,6 +51,19 @@ function DisplayGames() {
           className="game_list"
           loop={true}
           speed={1000}
+          breakpoints={{
+            // when window width is >= 320px
+            320: {
+              slidesPerView: 1,
+            },
+            480: {
+              slidesPerView: 4,
+            },
+            // when window width is >= 640px
+            1000: {
+              slidesPerView: 5,
+            },
+          }}
         >
           {games.map((game) => {
             const unixTimestamp = game.first_release_date;

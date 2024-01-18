@@ -8,8 +8,8 @@ router.get("/:name", async (req, res) => {
   const gameName = req.params.name; // Récupérez le nom du jeu de la route
   try {
     const igdbResponse = await axios.post(
-      "https://api.igdb.com/v4/search",
-      `fields *,game.cover.image_id;limit:50; search "${gameName}";`,
+      "https://api.igdb.com/v4/games",
+      `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
       {
         headers: {
           Accept: "application/json",

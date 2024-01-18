@@ -20,6 +20,7 @@ const SearchGames = () => {
       } catch (error) {
         console.error("Error fetching game search:", error.message);
         console.error("Full error: ", error);
+        setError(error.message); // Ajoutez cette ligne
       }
     };
 
@@ -36,24 +37,20 @@ const SearchGames = () => {
     <div className="searchGames">
       {game
         .filter(
-          (gameItem) =>
-            gameItem.game && gameItem.game.cover && gameItem.game.cover.image_id
+          (gameItem) => gameItem && gameItem.cover && gameItem.cover.image_id
         )
         .map((gameItem) => (
-          <Link to={`/games/${gameItem.game.id}`}>
-            <div className="gameItem" key={gameItem.id}>
-              {gameItem.game.cover && gameItem.game.cover.image_id ? (
+          <Link to={`/games/${gameItem.id}`} key={gameItem.id}>
+            <div className="gameItem">
+              {gameItem.cover && gameItem.cover.image_id ? (
                 <img
                   className="gameItem_cover"
-                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${gameItem.game.cover.image_id}.jpg`}
+                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${gameItem.cover.image_id}.jpg`}
                   alt=""
                 />
               ) : (
                 <div>Cover not available</div>
               )}
-              <div className="gameItem_content">
-                <h1>{gameItem.name}</h1>
-              </div>
             </div>
           </Link>
         ))}
