@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Loading() {
   return (
-    <div class="loader">
-      <div data-glitch="Loading..." class="glitch">
+    <div className="loader">
+      <div data-glitch="Loading..." className="glitch">
         Loading...
       </div>
     </div>

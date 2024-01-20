@@ -52,7 +52,7 @@ const DetailsGames = () => {
   return (
     <div className="details_games">
       <div className="screenshot">
-        {game[0].screenshots && game[0].screenshots[0].image_id ? (
+        {game[0]?.screenshots?.[0]?.image_id ? (
           <img
             src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].screenshots[0].image_id}.jpg`}
             alt=""
@@ -187,7 +187,7 @@ const DetailsGames = () => {
 
       <div className="game_content_trailer">
         <div className="game_trailer">
-          {game[0]?.videos?.video_id ? (
+          {game[0]?.videos?.[0]?.video_id ? (
             <iframe
               className="iframe"
               width="560"
@@ -199,6 +199,44 @@ const DetailsGames = () => {
           ) : (
             <p></p>
           )}
+        </div>
+        <div className="game_screenshots">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={0}
+            slidesPerView={1}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            speed={500}
+            loop={true}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {game[0].screenshots.map((screenshot) => (
+              <SwiperSlide key={screenshot.id}>
+                <img
+                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`}
+                  alt="Screenshot"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        <div className="similar_games">
+          <div className="similar_games_list">
+            {game[0]?.similar_games?.slice(0, 6).map((similarGame) => (
+              <div className="similar_game" key={similarGame.id}>
+                <Link to={`/games/${similarGame.id}`}>
+                  <img
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${similarGame.cover.image_id}.jpg`}
+                    alt=""
+                  />
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
