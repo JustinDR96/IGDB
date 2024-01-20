@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 const SearchGames = () => {
   const { name: gameName } = useParams();
@@ -30,7 +31,7 @@ const SearchGames = () => {
     return <div>Error: {error}</div>;
   }
   if (!game) {
-    return <div>Loading...</div>; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
+    return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
   console.log(game);
   return (

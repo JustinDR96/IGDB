@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 export default function Cta() {
   const [game, setGame] = useState(null);
@@ -28,7 +29,7 @@ export default function Cta() {
     fetchTrendingGame();
   }, []);
 
-  if (!game) return "Chargement...";
+  if (!game) return <Loading />;
   return (
     <div className="CTA">
       <Link to={`/games/${game.id}`}>

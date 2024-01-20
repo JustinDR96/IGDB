@@ -7,6 +7,7 @@ import moment from "moment";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import Loading from "../../components/Loading/Loading";
 
 const DetailsGames = () => {
   const { id } = useParams(); // Récupère l'ID du jeu à partir de la route
@@ -28,7 +29,7 @@ const DetailsGames = () => {
   }, [id]); // Exécutez cette fonction chaque fois que l'ID du jeu change
 
   if (!game) {
-    return <div>Loading...</div>; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
+    return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
 
   function getRatingColor(rating) {
@@ -57,7 +58,7 @@ const DetailsGames = () => {
             alt=""
           />
         ) : (
-          <div>Screenshot not available</div>
+          ""
         )}
       </div>
 
@@ -81,7 +82,9 @@ const DetailsGames = () => {
               className="game_rating"
               style={{ backgroundColor: getRatingColor(game.rating) }}
             >
-              {Math.floor(game[0].aggregated_rating)}
+              {isNaN(game[0].aggregated_rating)
+                ? "Coming Soon"
+                : Math.floor(game[0].aggregated_rating)}
             </p>
           </div>
 
@@ -93,7 +96,7 @@ const DetailsGames = () => {
                 </option>
               ))}
             </select>
-            
+
             <select className="game_edition">
               <option value={game[0]?.name}>{game[0]?.name}</option>
               {game[0]?.bundles?.map((bundle, index) => (
@@ -109,7 +112,10 @@ const DetailsGames = () => {
             <p>50$</p>
           </div>
 
-          <button className="buy_btn">
+          <button
+            className="buy_btn"
+            disabled={new Date(game[0]?.first_release_date * 1000) > new Date()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -121,7 +127,9 @@ const DetailsGames = () => {
                 fill="white"
               />
             </svg>
-            Buy now
+            {new Date(game[0]?.first_release_date * 1000) > new Date()
+              ? "Pre Order"
+              : "Buy now"}
           </button>
         </div>
       </div>
@@ -145,10 +153,12 @@ const DetailsGames = () => {
           <div className="game_release">
             <p>Release date :</p>
             <p>
-              {format(
-                new Date(game[0].first_release_date * 1000),
-                "dd MMMM yyyy"
-              )}
+              {game[0].first_release_date
+                ? format(
+                    new Date(game[0].first_release_date * 1000),
+                    "dd MMMM yyyy"
+                  )
+                : "/"}
             </p>
           </div>
 
@@ -177,55 +187,18 @@ const DetailsGames = () => {
 
       <div className="game_content_trailer">
         <div className="game_trailer">
-          <iframe
-            className="iframe"
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${game[0]?.videos[0]?.video_id}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        </div>
-
-        <div className="game_screenshots">
-          <Swiper
-            modules={[Autoplay]}
-            spaceBetween={0}
-            slidesPerView={1}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            speed={500}
-            loop={true}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
-            {game[0].screenshots.map((screenshot) => (
-              <SwiperSlide key={screenshot.id}>
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`}
-                  alt="Screenshot"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <div className="similar_games">
-          <h1 className="similar_games_title">Similar Games</h1>
-          <div className="similar_games_list">
-            {game[0]?.similar_games?.slice(0, 8).map((similarGame) => (
-              <div className="similar_game" key={similarGame.id}>
-                <Link to={`/games/${similarGame.id}`}>
-                  <img
-                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${similarGame.cover.image_id}.jpg`}
-                    alt=""
-                  />
-                </Link>
-              </div>
-            ))}
-          </div>
+          {game[0]?.videos?.video_id ? (
+            <iframe
+              className="iframe"
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${game[0]?.videos[0]?.video_id}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
     </div>
