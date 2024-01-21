@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Header from "./components/Header/Header";
 import DetailsGames from "./pages/DetailsGames/DetailsGames";
 import SearchGames from "./pages/SearchGames/SearchGames";
-import Register from "./pages/register/Register";
+import Register from "./pages/Register/Register";
 
 function App() {
   return (
