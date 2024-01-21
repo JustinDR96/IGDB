@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "../../components/Register/Login/Login";
-import SignUp from "../../components/Register/SignUp/SignUp";
+import Login from "../../components/Register_component/Login/Login";
+import SignUp from "../../components/Register_component/SignUp/SignUp";
 
 export default function Register() {
   const [showSignUp, setShowSignUp] = useState(false);
