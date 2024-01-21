@@ -1,9 +1,11 @@
 // auth.cjs
 
 const axios = require("axios");
-// const insertDB = require("../routes/insertDB.cjs");
-const clientId = "mygig6l4lhpm5i6qe787vr0imqisnv";
-const clientSecret = "qadwupd2esu3u9j2i3fhbrt6ouwttm";
+
+require("dotenv").config();
+
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 let accessToken = null;
 
 const getTwitchAccessToken = async () => {
