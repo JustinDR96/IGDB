@@ -19,7 +19,7 @@ export default function Cta() {
 
         const response = await axios({
           method: "post",
-          url: "https://api.igdb.com/v4/games",
+          url: "/api/games",
           headers: {
             Accept: "application/json",
             "Client-ID": clientId,
@@ -36,7 +36,6 @@ export default function Cta() {
             Math.floor(Math.random() * gamesWithScreenshots.length)
           ];
         setGame(randomGame);
-        console.log("bizarre");
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du jeu tendance :",

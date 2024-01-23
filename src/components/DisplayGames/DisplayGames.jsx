@@ -15,18 +15,23 @@ function DisplayGames() {
 
   const fetchGames = async (type, setGames) => {
     let body;
+    const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
+    const threeMonthsAgo = Math.floor(
+      (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
+    ); // Date Unix d'il y a trois mois
+    const nextYearDate = Math.floor(
+      (Date.now() + 365 * 24 * 60 * 60 * 1000) / 1000
+    ); // Date Unix de l'année suivante
 
     switch (type) {
       case "popular":
         body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort hypes desc; where rating >= 90;`;
         break;
       case "trending":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort popularity desc;`;
+        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*,follows;limit:20;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`;
         break;
       case "preorder":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort first_release_date desc; where first_release_date > ${Math.floor(
-          Date.now() / 1000
-        )};`;
+        body = `fields *, cover.*, videos.*, first_release_date;sort hypes desc;limit:15; where first_release_date > ${currentDate} & first_release_date <= ${nextYearDate};`;
         break;
       default:
         return;
@@ -56,12 +61,6 @@ function DisplayGames() {
     fetchGames("trending", setTrendingGames);
     fetchGames("preorder", setPreorderGames);
   }, [accessToken]);
-
-  // useEffect(() => {
-  //   fetchGames("popular", setPopularGames);
-  //   fetchGames("trending", setTrendingGames);
-  //   fetchGames("preorder", setPreorderGames);
-  // }, []);
 
   function getRatingColor(rating) {
     if (rating < 50) {
@@ -100,9 +99,12 @@ function DisplayGames() {
           }}
         >
           {games.map((game) => {
-            const unixTimestamp = game.first_release_date;
-            const date = new Date(unixTimestamp * 1000); // Convertit le timestamp Unix en millisecondes
-            const formattedDate = format(date, "dd MMMM yyyy");
+            let formattedDate = "";
+            if (game.first_release_date) {
+              const unixTimestamp = game.first_release_date;
+              const date = new Date(unixTimestamp * 1000); // Convertit le timestamp Unix en millisecondes
+              formattedDate = format(date, "dd MMMM yyyy");
+            }
 
             return (
               <SwiperSlide key={game.id}>
@@ -141,7 +143,7 @@ function DisplayGames() {
                                 .map((genre) => genre.name)
                                 .join(", ")}
                           </p>
-                          {title === "Pre-order" ? (
+                          {title === "Pre-order" && game.first_release_date ? (
                             <p className="game_release_date">{formattedDate}</p>
                           ) : (
                             <p className="game_prices">59,99$</p>
