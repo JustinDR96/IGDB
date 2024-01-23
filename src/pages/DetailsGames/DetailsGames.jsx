@@ -66,7 +66,7 @@ const DetailsGames = () => {
   const developer =
     game?.involved_companies.filter((company) => company.developer)?.[0]
       ?.company.name || "";
-  console.log(developer);
+
   return (
     <div className="details_games">
       <div className="screenshot">
