@@ -14,13 +14,10 @@ const DetailsGames = () => {
   const [game, setGame] = useState(null);
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const accessToken = useAuth();
-  // Utilisez le hook useParams pour obtenir les paramètres de l'URL
   const { id: gameId } = useParams();
 
   useEffect(() => {
     const fetchGame = async () => {
-      console.log("Client-ID:", clientId);
-      console.log("Authorization:", `Bearer ${accessToken}`);
       try {
         const igdbResponse = await axios.post(
           "/api/games",
