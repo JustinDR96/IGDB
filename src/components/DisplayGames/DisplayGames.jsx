@@ -5,15 +5,41 @@ import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { format } from "date-fns";
+import useAuth from "../../hook/auth";
 
 function DisplayGames() {
+  const accessToken = useAuth();
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
 
-  const fetchGames = async (endpoint, setGames) => {
+  const fetchGames = async (type, setGames) => {
+    let body;
+
+    switch (type) {
+      case "popular":
+        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort hypes desc; where rating >= 90;`;
+        break;
+      case "trending":
+        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort popularity desc;`;
+        break;
+      case "preorder":
+        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort first_release_date desc; where first_release_date > ${Math.floor(
+          Date.now() / 1000
+        )};`;
+        break;
+      default:
+        return;
+    }
+
     try {
-      const response = await axios.get(`http://localhost:3000/${endpoint}`);
+      const response = await axios.post("/api/games", body, {
+        headers: {
+          Accept: "application/json",
+          "Client-ID": import.meta.env.VITE_CLIENT_ID,
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       setGames(response.data);
     } catch (error) {
       console.error(
@@ -24,10 +50,18 @@ function DisplayGames() {
   };
 
   useEffect(() => {
+    if (!accessToken) return;
+
     fetchGames("popular", setPopularGames);
     fetchGames("trending", setTrendingGames);
     fetchGames("preorder", setPreorderGames);
-  }, []);
+  }, [accessToken]);
+
+  // useEffect(() => {
+  //   fetchGames("popular", setPopularGames);
+  //   fetchGames("trending", setTrendingGames);
+  //   fetchGames("preorder", setPreorderGames);
+  // }, []);
 
   function getRatingColor(rating) {
     if (rating < 50) {

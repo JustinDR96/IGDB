@@ -8,28 +8,46 @@ import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Loading from "../../components/Loading/Loading";
+import useAuth from "../../hook/auth";
 
 const DetailsGames = () => {
-  const { id } = useParams(); // Récupère l'ID du jeu à partir de la route
   const [game, setGame] = useState(null);
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const accessToken = useAuth();
+  // Utilisez le hook useParams pour obtenir les paramètres de l'URL
+  const { id: gameId } = useParams();
 
   useEffect(() => {
-    const fetchGameDetails = async () => {
+    const fetchGame = async () => {
+      console.log("Client-ID:", clientId);
+      console.log("Authorization:", `Bearer ${accessToken}`);
       try {
-        const response = await axios.get(`http://localhost:3000/games/${id}`);
-        const game = response.data;
-        setGame(game); // Met à jour l'état du jeu avec les données obtenues
+        const igdbResponse = await axios.post(
+          "/api/games",
+          `fields id,name,platforms.*,themes.name,similar_games.*,similar_games.cover.*,player_perspectives.name,storyline,game_modes.name,platforms.platform_logo.image_id,bundles.*,bundles.cover.*,dlcs.*,cover.*,involved_companies.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
+          {
+            headers: {
+              Accept: "application/json",
+              "Client-ID": clientId,
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        setGame(igdbResponse.data[0]);
       } catch (error) {
-        console.error("Error fetching game details:", error.message);
-        console.error("Full error: ", error);
+        console.error(
+          "Erreur lors de la récupération des données de l'API IGDB",
+          error
+        );
       }
     };
-    window.scrollTo(0, 0);
-    fetchGameDetails();
-  }, [id]); // Exécutez cette fonction chaque fois que l'ID du jeu change
+
+    fetchGame();
+  }, [clientId, accessToken, gameId]);
 
   if (!game) {
-    return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
+    return <Loading />;
   }
 
   function getRatingColor(rating) {
@@ -43,18 +61,18 @@ const DetailsGames = () => {
   }
   console.log(game);
   const publisher =
-    game[0]?.involved_companies.filter((company) => company.publisher)?.[0]
+    game?.involved_companies.filter((company) => company.publisher)?.[0]
       ?.company.name || "";
   const developer =
-    game[0]?.involved_companies.filter((company) => company.developer)?.[0]
+    game?.involved_companies.filter((company) => company.developer)?.[0]
       ?.company.name || "";
-
+  console.log(developer);
   return (
     <div className="details_games">
       <div className="screenshot">
-        {game[0]?.screenshots?.[0]?.image_id ? (
+        {game?.screenshots?.[0]?.image_id ? (
           <img
-            src={`https://images.igdb.com/igdb/image/upload/t_original/${game[0].screenshots[0].image_id}.jpg`}
+            src={`https://images.igdb.com/igdb/image/upload/t_original/${game.screenshots[0].image_id}.jpg`}
             alt=""
           />
         ) : (
@@ -66,14 +84,18 @@ const DetailsGames = () => {
         <div className="game_content_cover">
           <img
             className="cover"
-            src={`https://images.igdb.com/igdb/image/upload/t_720p/${game[0].cover.image_id}.jpg`}
+            src={
+              game?.cover
+                ? `https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`
+                : ""
+            }
             alt=""
           />
         </div>
 
         <div className="game_content_card">
           <div className="game_content_card_header">
-            <h1 className="game_title">{game[0]?.name || ""}</h1>
+            <h1 className="game_title">{game?.name || ""}</h1>
           </div>
 
           <div className="game_content_card_mid">
@@ -82,15 +104,15 @@ const DetailsGames = () => {
               className="game_rating"
               style={{ backgroundColor: getRatingColor(game.rating) }}
             >
-              {isNaN(game[0].aggregated_rating)
+              {game && !isNaN(game.aggregated_rating)
                 ? "Coming Soon"
-                : Math.floor(game[0].aggregated_rating)}
+                : Math.floor(game.aggregated_rating)}
             </p>
           </div>
 
           <div className="game_select">
             <select className="game_platform">
-              {game[0]?.platforms?.map((platform, index) => (
+              {game?.platforms?.map((platform, index) => (
                 <option key={index} value={platform.name}>
                   {platform.name}
                 </option>
@@ -98,8 +120,8 @@ const DetailsGames = () => {
             </select>
 
             <select className="game_edition">
-              <option value={game[0]?.name}>{game[0]?.name}</option>
-              {game[0]?.bundles?.map((bundle, index) => (
+              <option value={game?.name}>{game?.name}</option>
+              {game?.bundles?.map((bundle, index) => (
                 <option key={index} value={bundle.name}>
                   {bundle.name}
                 </option>
@@ -114,7 +136,7 @@ const DetailsGames = () => {
 
           <button
             className="buy_btn"
-            disabled={new Date(game[0]?.first_release_date * 1000) > new Date()}
+            disabled={new Date(game?.first_release_date * 1000) > new Date()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +149,7 @@ const DetailsGames = () => {
                 fill="white"
               />
             </svg>
-            {new Date(game[0]?.first_release_date * 1000) > new Date()
+            {new Date(game?.first_release_date * 1000) > new Date()
               ? "Pre Order"
               : "Buy now"}
           </button>
@@ -136,7 +158,7 @@ const DetailsGames = () => {
 
       <div className="game_content_footer">
         <div className="game_summary">
-          <p>{game[0]?.storyline || game[0]?.summary}</p>
+          <p>{game?.storyline || game?.summary}</p>
         </div>
 
         <div className="game_details">
@@ -153,9 +175,9 @@ const DetailsGames = () => {
           <div className="game_release">
             <p>Release date :</p>
             <p>
-              {game[0].first_release_date
+              {game.first_release_date
                 ? format(
-                    new Date(game[0].first_release_date * 1000),
+                    new Date(game.first_release_date * 1000),
                     "dd MMMM yyyy"
                   )
                 : "/"}
@@ -164,22 +186,20 @@ const DetailsGames = () => {
 
           <div className="game_genre">
             <p>Genres :</p>
-            <p>{game[0]?.genres?.map((genre) => genre.name).join(", ")}</p>
+            <p>{game?.genres?.map((genre) => genre.name).join(", ")}</p>
           </div>
 
           <div className="game_platforms">
             <p>Platforms :</p>
             <p>
-              {game[0]?.platforms?.map((platform) => platform.name).join(", ")}
+              {game?.platforms?.map((platform) => platform.name).join(", ")}
             </p>
           </div>
 
           <div className="game_modes">
             <p>Game modes :</p>
             <p>
-              {game[0]?.game_modes
-                ?.map((game_mode) => game_mode.name)
-                .join(", ")}
+              {game?.game_modes?.map((game_mode) => game_mode.name).join(", ")}
             </p>
           </div>
         </div>
@@ -187,12 +207,12 @@ const DetailsGames = () => {
 
       <div className="game_content_trailer">
         <div className="game_trailer">
-          {game[0]?.videos?.[0]?.video_id ? (
+          {game?.videos?.[0]?.video_id ? (
             <iframe
               className="iframe"
               width="560"
               height="315"
-              src={`https://www.youtube.com/embed/${game[0]?.videos[0]?.video_id}`}
+              src={`https://www.youtube.com/embed/${game?.videos[0]?.video_id}`}
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             ></iframe>
@@ -214,7 +234,7 @@ const DetailsGames = () => {
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
           >
-            {game[0].screenshots.map((screenshot) => (
+            {game.screenshots.map((screenshot) => (
               <SwiperSlide key={screenshot.id}>
                 <img
                   src={`https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`}
@@ -226,7 +246,7 @@ const DetailsGames = () => {
         </div>
         <div className="similar_games">
           <div className="similar_games_list">
-            {game[0]?.similar_games?.slice(0, 6).map((similarGame) => (
+            {game?.similar_games?.slice(0, 6).map((similarGame) => (
               <div className="similar_game" key={similarGame.id}>
                 <Link to={`/games/${similarGame.id}`}>
                   <img

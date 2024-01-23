@@ -2,14 +2,32 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import useAuth from "../../hook/auth";
 
 export default function Cta() {
   const [game, setGame] = useState(null);
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const accessToken = useAuth();
 
   useEffect(() => {
     const fetchTrendingGame = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/trending");
+        const threeMonthsAgo = Math.floor(
+          (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
+        ); // Date Unix d'il y a trois mois
+        const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
+
+        const response = await axios({
+          method: "post",
+          url: "https://api.igdb.com/v4/games",
+          headers: {
+            Accept: "application/json",
+            "Client-ID": clientId,
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
+        });
+
         const gamesWithScreenshots = response.data.filter(
           (game) => game.screenshots && game.screenshots[0]?.image_id
         );
@@ -18,6 +36,7 @@ export default function Cta() {
             Math.floor(Math.random() * gamesWithScreenshots.length)
           ];
         setGame(randomGame);
+        console.log("bizarre");
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du jeu tendance :",
@@ -26,8 +45,10 @@ export default function Cta() {
       }
     };
 
-    fetchTrendingGame();
-  }, []);
+    if (accessToken) {
+      fetchTrendingGame();
+    }
+  }, [accessToken]);
 
   if (!game) return <Loading />;
   return (
