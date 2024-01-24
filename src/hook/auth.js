@@ -4,10 +4,7 @@ import Cookies from "js-cookie";
 
 export default function useAuth() {
   const [accessToken, setAccessToken] = useState(Cookies.get("accessToken"));
-  console.log(
-    import.meta.env.VITE_CLIENT_ID,
-    import.meta.env.VITE_CLIENT_SECRET
-  );
+
   useEffect(() => {
     const tokenExpiration = Cookies.get("tokenExpiration");
 
