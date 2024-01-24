@@ -13,7 +13,7 @@ const SearchGames = () => {
     const fetchGameSearch = async () => {
       try {
         const response = await axios.get(
-          `https://gamecenter-git-deploy-justindr96s-projects.vercel.app/games/search/${gameName}`
+          `https://gamecenter-git-deploy-justindr96s-projects.vercel.app/search/${gameName}`
         );
         console.log(response.data);
         const game = response.data;

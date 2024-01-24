@@ -39,7 +39,7 @@ function DisplayGames() {
 
     try {
       const response = await axios.post(
-        "https://gamecenter-git-deploy-justindr96s-projects.vercel.app/games",
+        "https://gamecenter-git-deploy-justindr96s-projects.vercel.app",
         body,
         {
           headers: {

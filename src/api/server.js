@@ -12,7 +12,7 @@ import detailsGamesRouter from "./routes/detailsGames.cjs";
 import searchGamesRouter from "./routes/searchGames.cjs";
 
 const app = express();
-app.post("/", async (req, res) => {
+app.post("/games", async (req, res) => {
   try {
     const response = await axios({
       method: "post",

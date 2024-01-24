@@ -19,7 +19,7 @@ export default function Cta() {
 
         const response = await axios({
           method: "post",
-          url: "https://gamecenter-git-deploy-justindr96s-projects.vercel.app/games",
+          url: "https://gamecenter-git-deploy-justindr96s-projects.vercel.app",
           headers: {
             Accept: "application/json",
             "Client-ID": clientId,
