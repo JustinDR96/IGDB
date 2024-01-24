@@ -33,7 +33,8 @@
     "react-youtube": "^10.1.0",
     "router": "^1.3.8",
     "sass": "^1.69.5",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "vercel": "^33.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
