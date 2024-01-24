@@ -4,7 +4,10 @@ import Cookies from "js-cookie";
 
 export default function useAuth() {
   const [accessToken, setAccessToken] = useState(Cookies.get("accessToken"));
-
+  console.log(
+    import.meta.env.VITE_CLIENT_ID,
+    import.meta.env.VITE_CLIENT_SECRET
+  );
   useEffect(() => {
     const tokenExpiration = Cookies.get("tokenExpiration");
 
@@ -18,8 +21,14 @@ export default function useAuth() {
           `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
         )
         .then((response) => {
+          console.log(response.data);
+          console.log(response.data.access_token);
           setAccessToken(response.data.access_token);
-          Cookies.set("accessToken", response.data.access_token);
+          Cookies.set("accessToken", response.data.access_token, {
+            expires: 1 / 1440,
+            secure: true, // défini sur true si votre site est servi via HTTPS
+            sameSite: "None", // peut être 'None', 'Lax' ou 'Strict'
+          });
 
           // Enregistrez l'heure d'expiration du token
           const tokenExpiration = new Date();
@@ -27,7 +36,10 @@ export default function useAuth() {
           Cookies.set("tokenExpiration", tokenExpiration, { expires: 1 }); // 1/1440 est équivalent à 1 minute
         })
         .catch((error) => {
-          console.error("Error fetching access token:", error);
+          console.error(
+            "Error fetching access token:",
+            error.response ? error.response.data : error.message
+          );
         });
     }
   }, [accessToken]);

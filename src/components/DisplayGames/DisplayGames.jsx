@@ -38,7 +38,7 @@ function DisplayGames() {
     }
 
     try {
-      const response = await axios.post("/api/games", body, {
+      const response = await axios.post("/api/proxy/games", body, {
         headers: {
           Accept: "application/json",
           "Client-ID": import.meta.env.VITE_CLIENT_ID,
@@ -115,7 +115,9 @@ function DisplayGames() {
                       <div className="game_cover">
                         <img
                           className="game_cover_img"
-                          src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
+                          src={`https://images.igdb.com/igdb/image/upload/t_original/${
+                            game.cover.image_id
+                          }.jpg`}
                           alt={game.name}
                         />
                       </div>
