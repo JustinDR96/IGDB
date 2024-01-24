@@ -20,7 +20,7 @@ const DetailsGames = () => {
     const fetchGame = async () => {
       try {
         const igdbResponse = await axios.post(
-          "/api/proxy/games",
+          "/api/cors-proxy/games",
           `fields id,name,platforms.*,themes.name,similar_games.*,similar_games.cover.*,player_perspectives.name,storyline,game_modes.name,platforms.platform_logo.image_id,bundles.*,bundles.cover.*,dlcs.*,cover.*,involved_companies.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
           {
             headers: {
@@ -69,7 +69,9 @@ const DetailsGames = () => {
       <div className="screenshot">
         {game?.screenshots?.[0]?.image_id ? (
           <img
-            src={`https://images.igdb.com/igdb/image/upload/t_original/${game.screenshots[0].image_id}.jpg`}
+            src={`https://images.igdb.com/igdb/image/upload/t_original/${
+              game.screenshots[0].image_id
+            }.jpg`}
             alt=""
           />
         ) : (
@@ -83,7 +85,9 @@ const DetailsGames = () => {
             className="cover"
             src={
               game?.cover
-                ? `https://images.igdb.com/igdb/image/upload/t_720p/${game.cover.image_id}.jpg`
+                ? `https://images.igdb.com/igdb/image/upload/t_720p/${
+                    game.cover.image_id
+                  }.jpg`
                 : ""
             }
             alt=""
@@ -212,9 +216,9 @@ const DetailsGames = () => {
               src={`https://www.youtube.com/embed/${game?.videos[0]?.video_id}`}
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+            />
           ) : (
-            <p></p>
+            <p />
           )}
         </div>
         <div className="game_screenshots">
@@ -234,7 +238,9 @@ const DetailsGames = () => {
             {game.screenshots.map((screenshot) => (
               <SwiperSlide key={screenshot.id}>
                 <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`}
+                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${
+                    screenshot.image_id
+                  }.jpg`}
                   alt="Screenshot"
                 />
               </SwiperSlide>
@@ -247,7 +253,9 @@ const DetailsGames = () => {
               <div className="similar_game" key={similarGame.id}>
                 <Link to={`/games/${similarGame.id}`}>
                   <img
-                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${similarGame.cover.image_id}.jpg`}
+                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${
+                      similarGame.cover.image_id
+                    }.jpg`}
                     alt=""
                   />
                 </Link>
