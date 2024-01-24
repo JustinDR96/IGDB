@@ -31,6 +31,7 @@ app.post("/games", async (req, res) => {
   }
 });
 app.use(authMiddleware);
+app.options("*", cors());
 app.use(cors());
 app.use(json()); // Utilisez express.json() comme middleware directement
 app.use(urlencoded({ extended: true }));
