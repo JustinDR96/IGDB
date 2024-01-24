@@ -1,0 +1,8 @@
+{
+  "builds": [
+    {
+      "src": "api/proxy.js",
+      "use": "@vercel/node"
+    }
+  ]
+}

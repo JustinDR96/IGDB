@@ -1,24 +1,32 @@
-import { createProxyMiddleware } from "http-proxy-middleware";
+import axios from "axios";
+import express from "express";
+import cors from "cors";
 
-export default (req, res) => {
-  let target = "https://api.igdb.com/v4/games";
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.post("/api/proxy", async (req, res) => {
   const { accessToken } = req.body;
+  console.log(req.body);
+  try {
+    const response = await axios({
+      url: "https://api.igdb.com/v4/games",
+      method: "POST",
+      headers: {
+        "Client-ID": import.meta.env.VITE_CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+      },
+    });
 
-  // Create a proxy middleware
-  const proxy = createProxyMiddleware({
-    target,
-    changeOrigin: true,
-    onProxyReq: (proxyReq) => {
-      proxyReq.setHeader("Client-ID", process.env.VITE_CLIENT_ID);
-      proxyReq.setHeader("Authorization", `Bearer ${accessToken}`);
-    },
-  });
-
-  // Use the proxy to forward the request
-  proxy(req, res, (result) => {
-    if (result instanceof Error) {
-      throw result;
-    }
-    throw new Error(`Request '${req.url}' is not proxied!`);
-  });
-};
+    res.status(200).json(response.data);
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+  console.log(process.env.VITE_CLIENT_ID);
+  console.log(accessToken);
+});

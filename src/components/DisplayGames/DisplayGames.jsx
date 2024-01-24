@@ -43,12 +43,14 @@ function DisplayGames() {
         { body, accessToken },
         {
           headers: {
+            "Client-ID": process.env.VITE_CLIENT_ID,
+            Authorization: `Bearer ${accessToken}`,
             Accept: "application/json",
           },
         }
       );
       setGames(response.data);
-      console.log(igdbResponse.data);
+      console.log(response);
     } catch (error) {
       console.error(
         "Error:",

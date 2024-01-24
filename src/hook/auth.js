@@ -30,7 +30,7 @@ export default function useAuth() {
           // Enregistrez l'heure d'expiration du token
           const tokenExpiration = new Date();
           tokenExpiration.setMinutes(tokenExpiration.getMinutes() + 1);
-          Cookies.set("tokenExpiration", tokenExpiration, { expires: 1 }); // 1/1440 est équivalent à 1 minute
+          Cookies.set("tokenExpiration", tokenExpiration, { expires: 1 / 24 });
         })
         .catch((error) => {
           console.error(
