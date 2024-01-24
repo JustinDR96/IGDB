@@ -38,12 +38,12 @@ function DisplayGames() {
     }
 
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         "/api/proxy",
-        { body, accessToken },
+        { body },
         {
           headers: {
-            "Client-ID": process.env.VITE_CLIENT_ID,
+            "Client-ID": import.meta.env.VITE_CLIENT_ID,
             Authorization: `Bearer ${accessToken}`,
             Accept: "application/json",
           },

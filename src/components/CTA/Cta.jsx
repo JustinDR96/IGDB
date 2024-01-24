@@ -16,19 +16,21 @@ export default function Cta() {
         ); // Date Unix d'il y a trois mois
         const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
 
-        const response = await axios.post(
-          "/api/proxy/games",
+        const response = await axios.get(
+          "/api/proxy",
           {
             body: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
-            accessToken,
           },
           {
             headers: {
+              "Client-ID": import.meta.env.VITE_CLIENT_ID,
+              Authorization: `Bearer ${accessToken}`,
               Accept: "application/json",
             },
           }
         );
 
+        console.log(response.data);
         const gamesWithScreenshots = response.data.filter(
           (game) => game.screenshots && game.screenshots[0]?.image_id
         );
