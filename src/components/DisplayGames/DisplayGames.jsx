@@ -39,7 +39,7 @@ function DisplayGames() {
 
     try {
       const response = await axios.post(
-        "/api/proxy/games",
+        "/api/proxy",
         { body, accessToken },
         {
           headers: {

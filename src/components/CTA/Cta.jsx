@@ -17,7 +17,7 @@ export default function Cta() {
         const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
 
         const response = await axios.post(
-          "/api/proxy/games",
+          "/api/proxy",
           {
             body: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
             accessToken,
