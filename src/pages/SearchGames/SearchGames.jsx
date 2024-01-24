@@ -12,7 +12,9 @@ const SearchGames = () => {
   useEffect(() => {
     const fetchGameSearch = async () => {
       try {
-        const response = await axios.get(`/api/games/search/${gameName}`);
+        const response = await axios.get(
+          `https://api.igdb.com/v4/games/search/${gameName}`
+        );
         console.log(response.data);
         const game = response.data;
         setGame(game);

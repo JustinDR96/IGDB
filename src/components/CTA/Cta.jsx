@@ -19,7 +19,7 @@ export default function Cta() {
 
         const response = await axios({
           method: "post",
-          url: "/api/games",
+          url: "https://api.igdb.com/v4/games",
           headers: {
             Accept: "application/json",
             "Client-ID": clientId,
