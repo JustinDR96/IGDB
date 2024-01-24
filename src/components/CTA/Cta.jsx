@@ -19,7 +19,7 @@ export default function Cta() {
 
         const response = await axios({
           method: "post",
-          url: "/api/proxy/games",
+          url: "/api/proxy",
           headers: {
             Accept: "application/json",
             "Client-ID": clientId,

@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 
 export default (req, res) => {
-  let target = "https://api.igdb.com/v4";
+  let target = "https://api.igdb.com/v4/games";
 
   // Create a proxy middleware
   const proxy = createProxyMiddleware({
