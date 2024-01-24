@@ -16,7 +16,7 @@ const SearchGames = () => {
     const fetchGameSearch = async () => {
       try {
         const igdbResponse = await axios.post(
-          "/api/cors-proxy/games",
+          "/api/proxy/games",
           `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
           {
             headers: {

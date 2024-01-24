@@ -38,7 +38,7 @@ function DisplayGames() {
     }
 
     try {
-      const response = await axios.post("/api/cors-proxy/games", body, {
+      const response = await axios.post("/api/proxy/games", body, {
         headers: {
           Accept: "application/json",
           "Client-ID": import.meta.env.VITE_CLIENT_ID,
