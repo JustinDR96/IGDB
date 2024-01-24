@@ -3,28 +3,41 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
+import useAuth from "../../hook/auth";
 
 const SearchGames = () => {
   const { name: gameName } = useParams();
-  const [game, setGame] = useState(null);
+  const [game, setGame] = useState([]);
   const [error, setError] = useState(null);
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const accessToken = useAuth();
 
   useEffect(() => {
     const fetchGameSearch = async () => {
       try {
-        const response = await axios.get(`/api/games/search/${gameName}`);
-        console.log(response.data);
-        const game = response.data;
-        setGame(game);
+        const igdbResponse = await axios.post(
+          "/api/games",
+          `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Client-ID": clientId,
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        console.log(igdbResponse.data); // Affichez les données récupérées dans la console
+
+        setGame(igdbResponse.data); // Définissez tous les jeux, pas seulement le premier
       } catch (error) {
-        console.error("Error fetching game search:", error.message);
-        console.error("Full error: ", error);
-        setError(error.message); // Ajoutez cette ligne
+        console.error("Erreur lors de la requête à l'API IGDB", error);
       }
     };
 
     fetchGameSearch();
-  }, [gameName]);
+  }, [clientId, accessToken, gameName]);
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -44,7 +57,9 @@ const SearchGames = () => {
               {gameItem.cover && gameItem.cover.image_id ? (
                 <img
                   className="gameItem_cover"
-                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${gameItem.cover.image_id}.jpg`}
+                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${
+                    gameItem.cover.image_id
+                  }.jpg`}
                   alt=""
                 />
               ) : (
