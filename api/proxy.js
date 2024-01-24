@@ -1,6 +1,6 @@
-const { createProxyMiddleware } = require("http-proxy-middleware");
+import { createProxyMiddleware } from "http-proxy-middleware";
 
-module.exports = (req, res) => {
+export default (req, res) => {
   let target = "https://api.igdb.com/v4";
 
   // Create a proxy middleware
