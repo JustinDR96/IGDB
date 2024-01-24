@@ -48,6 +48,7 @@ function DisplayGames() {
         }
       );
       setGames(response.data);
+      console.log(igdbResponse.data);
     } catch (error) {
       console.error(
         "Error:",
