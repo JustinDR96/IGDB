@@ -38,13 +38,17 @@ function DisplayGames() {
     }
 
     try {
-      const response = await axios.post("https://api.igdb.com/v4/games", body, {
-        headers: {
-          Accept: "application/json",
-          "Client-ID": import.meta.env.VITE_CLIENT_ID,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.post(
+        "https://my-server.vercel.app/games",
+        body,
+        {
+          headers: {
+            Accept: "application/json",
+            "Client-ID": import.meta.env.VITE_CLIENT_ID,
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       setGames(response.data);
     } catch (error) {
       console.error(
