@@ -1,17 +1,15 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
-import useAuth from "../src/hook/auth";
 
 export default (req, res) => {
   let target = "https://api.igdb.com/v4";
-  const accessToken = useAuth();
+  const { accessToken } = req.body;
+
   // Create a proxy middleware
-  console.log(accessToken);
-  console.log(import.meta.env.VITE_CLIENT_ID);
   const proxy = createProxyMiddleware({
     target,
     changeOrigin: true,
     onProxyReq: (proxyReq) => {
-      proxyReq.setHeader("Client-ID", import.meta.env.VITE_CLIENT_ID);
+      proxyReq.setHeader("Client-ID", process.env.VITE_CLIENT_ID);
       proxyReq.setHeader("Authorization", `Bearer ${accessToken}`);
     },
   });
