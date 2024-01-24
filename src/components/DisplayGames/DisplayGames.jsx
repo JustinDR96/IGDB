@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import useAuth from "../../hook/auth";
 
 function DisplayGames() {
-  const accessToken = useAuth();
+  const { accessToken } = useAuth();
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
@@ -38,13 +38,15 @@ function DisplayGames() {
     }
 
     try {
-      const response = await axios.post("/api/proxy/games", body, {
-        headers: {
-          Accept: "application/json",
-          "Client-ID": import.meta.env.VITE_CLIENT_ID,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.post(
+        "/api/proxy/games",
+        { body, accessToken },
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
       setGames(response.data);
     } catch (error) {
       console.error(
@@ -53,6 +55,14 @@ function DisplayGames() {
       );
     }
   };
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    fetchGames("popular", setPopularGames);
+    fetchGames("trending", setTrendingGames);
+    fetchGames("preorder", setPreorderGames);
+  }, [accessToken]);
 
   useEffect(() => {
     if (!accessToken) return;

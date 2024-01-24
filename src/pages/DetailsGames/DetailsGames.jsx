@@ -12,8 +12,7 @@ import useAuth from "../../hook/auth";
 
 const DetailsGames = () => {
   const [game, setGame] = useState(null);
-  const clientId = import.meta.env.VITE_CLIENT_ID;
-  const accessToken = useAuth();
+  const { accessToken } = useAuth();
   const { id: gameId } = useParams();
 
   useEffect(() => {
@@ -21,12 +20,13 @@ const DetailsGames = () => {
       try {
         const igdbResponse = await axios.post(
           "/api/proxy/games",
-          `fields id,name,platforms.*,themes.name,similar_games.*,similar_games.cover.*,player_perspectives.name,storyline,game_modes.name,platforms.platform_logo.image_id,bundles.*,bundles.cover.*,dlcs.*,cover.*,involved_companies.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`, // Utilisez l'ID du jeu dans la requête à l'API IGDB
+          {
+            body: `fields id,name,platforms.*,themes.name,similar_games.*,similar_games.cover.*,player_perspectives.name,storyline,game_modes.name,platforms.platform_logo.image_id,bundles.*,bundles.cover.*,dlcs.*,cover.*,involved_companies.*,involved_companies.company.*,first_release_date,genres.name,summary,videos.*,aggregated_rating,expansions.*,screenshots.*;limit:1; where id = ${gameId};`,
+            accessToken,
+          },
           {
             headers: {
               Accept: "application/json",
-              "Client-ID": clientId,
-              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -41,8 +41,8 @@ const DetailsGames = () => {
     };
 
     fetchGame();
-  }, [clientId, accessToken, gameId]);
-
+  }, [accessToken, gameId]);
+  
   if (!game) {
     return <Loading />;
   }

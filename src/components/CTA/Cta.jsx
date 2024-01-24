@@ -6,8 +6,7 @@ import useAuth from "../../hook/auth";
 
 export default function Cta() {
   const [game, setGame] = useState(null);
-  const clientId = import.meta.env.VITE_CLIENT_ID;
-  const accessToken = useAuth();
+  const { accessToken } = useAuth();
 
   useEffect(() => {
     const fetchTrendingGame = async () => {
@@ -17,16 +16,18 @@ export default function Cta() {
         ); // Date Unix d'il y a trois mois
         const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
 
-        const response = await axios({
-          method: "post",
-          url: "/api/proxy/games",
-          headers: {
-            Accept: "application/json",
-            "Client-ID": clientId,
-            Authorization: `Bearer ${accessToken}`,
+        const response = await axios.post(
+          "/api/proxy/games",
+          {
+            body: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
+            accessToken,
           },
-          data: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
-        });
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
 
         const gamesWithScreenshots = response.data.filter(
           (game) => game.screenshots && game.screenshots[0]?.image_id

@@ -9,20 +9,20 @@ const SearchGames = () => {
   const { name: gameName } = useParams();
   const [game, setGame] = useState([]);
   const [error, setError] = useState(null);
-  const clientId = import.meta.env.VITE_CLIENT_ID;
-  const accessToken = useAuth();
+  const { accessToken } = useAuth();
 
   useEffect(() => {
     const fetchGameSearch = async () => {
       try {
         const igdbResponse = await axios.post(
           "/api/proxy/games",
-          `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
+          {
+            body: `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
+            accessToken,
+          },
           {
             headers: {
               Accept: "application/json",
-              "Client-ID": clientId,
-              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -36,7 +36,7 @@ const SearchGames = () => {
     };
 
     fetchGameSearch();
-  }, [clientId, accessToken, gameName]);
+  }, [accessToken, gameName]);
 
   if (error) {
     return <div>Error: {error}</div>;
