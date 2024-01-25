@@ -19,15 +19,15 @@ function DisplayGames() {
     switch (type) {
       case "popular":
         url =
-          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/popularGames";
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app/api/popularGames";
         break;
       case "trending":
         url =
-          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/trendingGames";
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app/api/trendingGames";
         break;
       case "preorder":
         url =
-          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/preorderGames";
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app/api/preorderGames";
         break;
       default:
         return;
