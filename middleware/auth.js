@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const clientId = import.meta.env.VITE_CLIENT_ID;
-const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+const clientId = process.env.VITE_CLIENT_ID;
+const clientSecret = process.env.VITE_CLIENT_SECRET;
 let accessToken = null;
 let tokenGenerationTime = null;
 let tokenExpiresIn = null;

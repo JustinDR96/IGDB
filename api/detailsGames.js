@@ -5,7 +5,7 @@ import { getTwitchAccessToken } from "../middleware/auth.js";
 export default async (req, res) => {
   const gameId = req.query.id; // Récupérez l'ID du jeu de la route
   const accessToken = await getTwitchAccessToken();
-  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const clientId = process.env.VITE_CLIENT_ID;
 
   try {
     console.log(

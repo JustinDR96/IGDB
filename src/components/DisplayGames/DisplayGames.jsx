@@ -18,13 +18,16 @@ function DisplayGames() {
 
     switch (type) {
       case "popular":
-        url = "http://localhost:3000/api/popularGames";
+        url =
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/popularGames";
         break;
       case "trending":
-        url = "http://localhost:3000/api/trendingGames";
+        url =
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/trendingGames";
         break;
       case "preorder":
-        url = "http://localhost:3000/api/preorderGames";
+        url =
+          "https://gamecenter-64s1miybm-justindr96s-projects.vercel.app//api/preorderGames";
         break;
       default:
         return;
