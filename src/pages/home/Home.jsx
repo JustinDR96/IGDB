@@ -6,7 +6,7 @@ import Cta from "../../components/CTA/Cta";
 function Home() {
   return (
     <div className="home">
-      <Cta />
+      {/* <Cta /> */}
       <DisplayGames />
     </div>
   );

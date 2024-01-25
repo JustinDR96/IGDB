@@ -19,7 +19,7 @@ export default function Cta() {
 
         const response = await axios({
           method: "post",
-          url: "https://gamecenter-git-deploy-justindr96s-projects.vercel.app",
+          url: "/proxy",
           headers: {
             Accept: "application/json",
             "Client-ID": clientId,
@@ -36,6 +36,7 @@ export default function Cta() {
             Math.floor(Math.random() * gamesWithScreenshots.length)
           ];
         setGame(randomGame);
+        console.log(randomGame);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du jeu tendance :",
@@ -64,7 +65,9 @@ export default function Cta() {
         <div className="cta-screenshot">
           {game.screenshots?.[0]?.image_id ? (
             <img
-              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${game.screenshots[0].image_id}.jpg`}
+              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${
+                game.screenshots[0].image_id
+              }.jpg`}
               alt=""
             />
           ) : (

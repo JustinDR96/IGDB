@@ -14,42 +14,34 @@ function DisplayGames() {
   const [preorderGames, setPreorderGames] = useState([]);
 
   const fetchGames = async (type, setGames) => {
-    let body;
-    const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
-    const threeMonthsAgo = Math.floor(
-      (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
-    ); // Date Unix d'il y a trois mois
-    const nextYearDate = Math.floor(
-      (Date.now() + 365 * 24 * 60 * 60 * 1000) / 1000
-    ); // Date Unix de l'année suivante
+    let url;
 
     switch (type) {
       case "popular":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort hypes desc; where rating >= 90;`;
+        url = "http://localhost:3000/api/popularGames";
         break;
       case "trending":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*,follows;limit:20;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`;
+        url = "http://localhost:3000/api/trendingGames";
         break;
       case "preorder":
-        body = `fields *, cover.*, videos.*, first_release_date;sort hypes desc;limit:15; where first_release_date > ${currentDate} & first_release_date <= ${nextYearDate};`;
+        url = "http://localhost:3000/api/preorderGames";
         break;
       default:
         return;
     }
 
+    console.log(`Fetching ${type} games`);
+
     try {
-      const response = await axios.post(
-        "https://gamecenter-git-deploy-justindr96s-projects.vercel.app",
-        body,
-        {
-          headers: {
-            Accept: "application/json",
-            "Client-ID": import.meta.env.VITE_CLIENT_ID,
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await axios.get(url, {
+        headers: {
+          Accept: "application/json",
+          "Client-ID": import.meta.env.VITE_CLIENT_ID,
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       setGames(response.data);
+      console.log("Games:", response.data);
     } catch (error) {
       console.error(
         "Error:",
@@ -64,6 +56,7 @@ function DisplayGames() {
     fetchGames("popular", setPopularGames);
     fetchGames("trending", setTrendingGames);
     fetchGames("preorder", setPreorderGames);
+    console.log(accessToken);
   }, [accessToken]);
 
   function getRatingColor(rating) {
@@ -119,7 +112,9 @@ function DisplayGames() {
                       <div className="game_cover">
                         <img
                           className="game_cover_img"
-                          src={`https://images.igdb.com/igdb/image/upload/t_original/${game.cover.image_id}.jpg`}
+                          src={`https://images.igdb.com/igdb/image/upload/t_original/${
+                            game.cover.image_id
+                          }.jpg`}
                           alt={game.name}
                         />
                       </div>

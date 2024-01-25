@@ -1,20 +1,21 @@
-const axios = require("axios");
-const express = require("express");
-const authMiddleware = require("../middleware/auth.js");
-const router = express.Router();
+// api/searchGames.js
+import axios from "axios";
+import { getTwitchAccessToken } from "../middleware/auth.js";
 
-// route pour récupérer un jeu via son nom
-searchGamesRouter.get("/:name", function (req, res) {
-  const gameName = req.params.name; // Récupérez le nom du jeu de la route
+export default async (req, res) => {
+  const gameName = req.query.name; // Récupérez le nom du jeu de la route
+  const accessToken = await getTwitchAccessToken();
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+
   try {
-    const igdbResponse = axios.post(
+    const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/games",
       `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
       {
         headers: {
           Accept: "application/json",
-          "Client-ID": req.clientId,
-          Authorization: `Bearer ${req.accessToken}`,
+          "Client-ID": clientId,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -33,6 +34,4 @@ searchGamesRouter.get("/:name", function (req, res) {
       .status(500)
       .send("Erreur lors de la récupération des données de l'API IGDB");
   }
-});
-
-module.exports = router;
+};

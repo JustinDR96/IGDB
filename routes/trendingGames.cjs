@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect , useAuth} from "react";
 import axios from "axios";
 import useAuth from "../src/hook/auth";
 
-export default function useTrendingGames(accessToken, clientId) {
+export default function useTrendingGames( clientId) {
   const [trendingGames, setTrendingGames] = useState([]);
-
+  const{ accessToken} = useAuth();
   useEffect(() => {
     if (!accessToken || !clientId) return;
 

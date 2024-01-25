@@ -1,6 +1,6 @@
 const express = require("express");
 const axios = require("axios");
-const authMiddleware = require("../middleware/auth.cjs");
+const authMiddleware = require("../middleware/auth.js");
 const router = express.Router();
 
 // Utilisez le middleware d'authentification

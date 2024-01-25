@@ -1,14 +1,15 @@
-const axios = require("axios");
-const express = require("express");
-const authMiddleware = require("../middleware/auth.js");
-const router = express.Router();
+// api/detailsGames.js
+import axios from "axios";
+import { getTwitchAccessToken } from "../middleware/auth.js";
 
-router.get("/:id", async (req, res) => {
-  const gameId = req.params.id; // Récupérez l'ID du jeu de la route
+export default async (req, res) => {
+  const gameId = req.query.id; // Récupérez l'ID du jeu de la route
+  const accessToken = await getTwitchAccessToken();
+  const clientId = import.meta.env.VITE_CLIENT_ID;
 
   try {
     console.log(
-      `Game ID: ${gameId}, Client ID: ${req.clientId}, Access Token: ${req.accessToken}`
+      `Game ID: ${gameId}, Client ID: ${clientId}, Access Token: ${accessToken}`
     );
     const igdbResponse = await axios.post(
       "https://api.igdb.com/v4/games",
@@ -16,8 +17,8 @@ router.get("/:id", async (req, res) => {
       {
         headers: {
           Accept: "application/json",
-          "Client-ID": req.clientId,
-          Authorization: `Bearer ${req.accessToken}`,
+          "Client-ID": clientId,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -32,6 +33,4 @@ router.get("/:id", async (req, res) => {
       .status(500)
       .send("Erreur lors de la récupération des données de l'API IGDB");
   }
-});
-
-module.exports = router;
+};
