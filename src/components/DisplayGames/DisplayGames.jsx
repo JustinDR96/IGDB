@@ -10,6 +10,7 @@ function DisplayGames() {
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
   const ApiKey = import.meta.env.VITE_API_KEY;
+
   useEffect(() => {
     fetchGames("popular", setPopularGames);
     fetchGames("trending", setTrendingGames);
@@ -54,56 +55,79 @@ function DisplayGames() {
     <div className="display_games">
       <div className="display_games_content">
         <h2 className="page_title">{title}</h2>
-        {games.map((game) => (
-          <SwiperSlide key={game.id}>
-            <div className="game_element">
-              <Link className="link" to={`/games/${game.id}`}>
-                <div className="game_cover">
-                  <img
-                    className="game_cover_img"
-                    src={game.background_image}
-                    alt={game.name}
-                  />
-                </div>
-                <div className="game_content_detail">
-                  <div className="game_content_top">
-                    <h1 className="game_title">{game.name}</h1>
-                    <p>{game.released}</p> {/* Date de sortie du jeu */}
-                    <p>{game.metacritic}</p> {/* Score Metacritic du jeu */}
+        <Swiper
+          modules={[Autoplay]}
+          slidesPerView={5}
+          centeredSlides={false}
+          spaceBetween={0}
+          className="game_list"
+          loop={true}
+          speed={1000}
+          breakpoints={{
+            // when window width is >= 320px
+            320: {
+              slidesPerView: 1,
+            },
+            480: {
+              slidesPerView: 4,
+            },
+            // when window width is >= 640px
+            1000: {
+              slidesPerView: 5,
+            },
+          }}
+        >
+          {games.map((game) => (
+            <SwiperSlide key={game.id}>
+              <div className="game_element">
+                <Link className="link" to={`/games/${game.id}`}>
+                  <div className="game_cover">
+                    <img
+                      className="game_cover_img"
+                      src={game.background_image}
+                      alt={game.name}
+                    />
                   </div>
+                  <div className="game_content_detail">
+                    <div className="game_content_top">
+                      <h1 className="game_title">{game.name}</h1>
+                      <p>{game.released}</p> {/* Date de sortie du jeu */}
+                      <p>{game.metacritic}</p> {/* Score Metacritic du jeu */}
+                    </div>
 
-                  <div className="game_content_bottom">
-                    {!isNaN(game.rating) && (
-                      <p
-                        className="rating"
-                        style={{
-                          backgroundColor: getRatingColor(game.rating),
-                        }}
-                      >
-                        {Math.floor(game.rating)}
+                    <div className="game_content_bottom">
+                      {!isNaN(game.rating) && (
+                        <p
+                          className="rating"
+                          style={{
+                            backgroundColor: getRatingColor(game.metacritic),
+                          }}
+                        >
+                          {Math.floor(game.metacritic)}
+                        </p>
+                      )}
+                      <p className="game_genres">
+                        {game.genres &&
+                          game.genres.length > 0 &&
+                          game.genres
+                            .filter((genre) => genre && genre.name)
+                            .map((genre) => genre.name)
+                            .join(", ")}
                       </p>
-                    )}
-                    <p className="game_genres">
-                      {game.genres &&
-                        game.genres.length > 0 &&
-                        game.genres
-                          .filter((genre) => genre && genre.name)
-                          .map((genre) => genre.name)
-                          .join(", ")}
-                    </p>
-                    <p className="game_prices">59,99$</p>
+                      <p className="game_prices">59,99$</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
+                </Link>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
 
   return (
-    <div>
+    <div className="display_games_main">
       {renderGames("Popular Games", popularGames)}
       {renderGames("Trending Games", trendingGames)}
       {renderGames("Preorder Games", preorderGames)}

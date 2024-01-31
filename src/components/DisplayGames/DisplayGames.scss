@@ -30,12 +30,14 @@
         padding: 10px;
       }
       .game_cover {
-        width: 100%;
+        width: 500px;
+        height: 500px;
         display: flex;
         flex-direction: column;
         .game_cover_img {
           width: 100%;
           height: 100%;
+          object-fit: cover;
         }
       }
       .game_content_detail {

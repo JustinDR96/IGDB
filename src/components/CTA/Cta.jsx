@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
-import useAuth from "../../hook/auth";
 
 export default function Cta() {
   const [game, setGame] = useState(null);
@@ -65,9 +64,7 @@ export default function Cta() {
         <div className="cta-screenshot">
           {game.screenshots?.[0]?.image_id ? (
             <img
-              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${
-                game.screenshots[0].image_id
-              }.jpg`}
+              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${game.screenshots[0].image_id}.jpg`}
               alt=""
             />
           ) : (

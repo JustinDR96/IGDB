@@ -12,6 +12,7 @@ import Loading from "../../components/Loading/Loading";
 const DetailsGames = () => {
   const [game, setGame] = useState(null);
   const { id: gameId } = useParams();
+  const [screenshots, setScreenshots] = useState([]);
   const [similarGames, setSimilarGames] = useState([]);
 
   useEffect(() => {
@@ -34,6 +35,50 @@ const DetailsGames = () => {
 
     fetchGame();
   }, [gameId]);
+
+  useEffect(() => {
+    const fetchScreenshots = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.rawg.io/api/games/${gameId}/screenshots?key=${
+            import.meta.env.VITE_API_KEY
+          }`
+        );
+
+        setScreenshots(response.data.results);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des captures d'écran de l'API RAWG",
+          error
+        );
+      }
+    };
+
+    fetchScreenshots();
+  }, [gameId]);
+
+  useEffect(() => {
+    const fetchSimilarGames = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.rawg.io/api/games?key=${
+            import.meta.env.VITE_API_KEY
+          }&genres=${game.genres[0].id}`
+        );
+
+        setSimilarGames(response.data.results);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des jeux similaires de l'API RAWG",
+          error
+        );
+      }
+    };
+
+    if (game) {
+      fetchSimilarGames();
+    }
+  }, [game]);
 
   if (!game) {
     return <Loading />;
@@ -82,8 +127,8 @@ const DetailsGames = () => {
               style={{ backgroundColor: getRatingColor(game.metacritic) }}
             >
               {game && !isNaN(game.metacritic)
-                ? "Coming Soon"
-                : Math.floor(game.metacritic)}
+                ? Math.floor(game.metacritic)
+                : "Coming Soon"}
             </p>
           </div>
 
@@ -135,7 +180,9 @@ const DetailsGames = () => {
 
       <div className="game_content_footer">
         <div className="game_summary">
-          <p>{game?.description}</p>
+          <p>
+            <div dangerouslySetInnerHTML={{ __html: game?.description }} />
+          </p>
         </div>
 
         <div className="game_details">
@@ -187,21 +234,7 @@ const DetailsGames = () => {
         </div>
       </div>
 
-      {/* <div className="game_content_trailer">
-        <div className="game_trailer">
-          {game?.videos?.[0]?.video_id ? (
-            <iframe
-              className="iframe"
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${game?.videos[0]?.video_id}`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            />
-          ) : (
-            <p />
-          )}
-        </div>
+      <div className="game_content_trailer">
         <div className="game_screenshots">
           <Swiper
             modules={[Autoplay]}
@@ -216,16 +249,13 @@ const DetailsGames = () => {
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
           >
-            {game.screenshots.map((screenshot) => (
-              <SwiperSlide key={screenshot.id}>
-                <img
-                  src={`https://images.igdb.com/igdb/image/upload/t_1080p/${
-                    screenshot.image_id
-                  }.jpg`}
-                  alt="Screenshot"
-                />
-              </SwiperSlide>
-            ))}
+            <Swiper>
+              {screenshots.map((screenshot) => (
+                <SwiperSlide key={screenshot.id}>
+                  <img src={screenshot.image} alt="Screenshot" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </Swiper>
         </div>
         <div className="similar_games">
@@ -242,7 +272,7 @@ const DetailsGames = () => {
             ))}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
