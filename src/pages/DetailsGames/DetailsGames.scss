@@ -81,6 +81,7 @@
           color: white;
           margin-bottom: 1rem;
           text-align: center;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
       }
 
@@ -96,6 +97,9 @@
         .game_rating {
           padding: 15px;
           border-radius: 10px;
+        }
+        .game_stock {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
       }
 
