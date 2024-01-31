@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
-import useAuth from "../../hook/auth";
 
 const SearchGames = () => {
   const { name: gameName } = useParams();
@@ -15,7 +14,7 @@ const SearchGames = () => {
     const fetchGameSearch = async () => {
       try {
         const response = await axios.get(
-          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&ordering=-added&page_size=10`
+          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&page_size=15`
         );
         console.log(response.data);
         const games = response.data.results; // Définissez games comme un tableau de jeux
