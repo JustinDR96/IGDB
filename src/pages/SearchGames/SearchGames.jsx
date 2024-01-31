@@ -16,7 +16,6 @@ const SearchGames = () => {
         const response = await axios.get(
           `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&page_size=15`
         );
-        console.log(response.data);
         const games = response.data.results; // Définissez games comme un tableau de jeux
         setGames(games);
       } catch (error) {
@@ -35,7 +34,6 @@ const SearchGames = () => {
   if (!games) {
     return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
-  console.log(games);
   return (
     <div className="searchGames">
       {games

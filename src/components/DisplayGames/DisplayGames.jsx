@@ -9,7 +9,6 @@ function DisplayGames() {
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
-  const [displayedGames, setDisplayedGames] = useState(new Set());
   const ApiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
@@ -49,7 +48,6 @@ function DisplayGames() {
 
     const response = await axios.get(url);
     setGames(response.data.results);
-    console.log(response.data.results);
   };
 
   function getRatingColor(metacritic) {
@@ -102,7 +100,6 @@ function DisplayGames() {
                     <div className="game_content_top">
                       <h1 className="game_title">{game.name}</h1>
                       <p>{game.released}</p> {/* Date de sortie du jeu */}
-                      <p>{game.metacritic}</p> {/* Score Metacritic du jeu */}
                     </div>
 
                     <div className="game_content_bottom">

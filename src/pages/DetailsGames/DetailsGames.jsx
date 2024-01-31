@@ -11,7 +11,6 @@ const DetailsGames = () => {
   const [game, setGame] = useState(null);
   const { id: gameId } = useParams();
   const [screenshots, setScreenshots] = useState([]);
-  const [similarGames, setSimilarGames] = useState([]);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -68,8 +67,6 @@ const DetailsGames = () => {
       return "green";
     }
   }
-  console.log(game);
-
   return (
     <div className="details_games">
       <div className="screenshot">
@@ -218,7 +215,6 @@ const DetailsGames = () => {
             }}
             speed={500}
             loop={true}
-            onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
           >
             <Swiper>

@@ -25,7 +25,6 @@ export default function Cta() {
         const games = response.data.results;
         const randomGame = games[Math.floor(Math.random() * games.length)];
         setGame(randomGame);
-        console.log(randomGame);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du jeu tendance :",

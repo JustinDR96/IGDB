@@ -15,7 +15,6 @@ function Header() {
     // Vérifiez si searchInput a une valeur avant de naviguer
     if (searchInput.trim() !== "") {
       navigate(`/search/${searchInput}`);
-      console.log(searchInput);
     }
   };
 
@@ -70,13 +69,13 @@ function Header() {
             <a href="/">Home</a>
           </li>
           <li>
-            <a href="#">Popular Games</a>
+            <a href="/">Popular Games</a>
           </li>
           <li>
-            <a href="#">New Games</a>
+            <a href="/">New Games</a>
           </li>
           <li>
-            <a href="#">Upcoming Games</a>
+            <a href="/">Upcoming Games</a>
           </li>
         </ul>
         <div className="searchBar">
