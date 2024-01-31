@@ -9,7 +9,7 @@ function DisplayGames() {
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
-
+  const ApiKey = import.meta.env.VITE_API_KEY;
   useEffect(() => {
     fetchGames("popular", setPopularGames);
     fetchGames("trending", setTrendingGames);
@@ -21,22 +21,16 @@ function DisplayGames() {
 
     switch (type) {
       case "popular":
-        url = `https://api.rawg.io/api/games?key=${
-          import.meta.env.VITE_API_KEY
-        }&dates=2020-01-01,2022-12-31&ordering=-rating&page_size=10`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=2020-01-01,2022-12-31&ordering=-rating&page_size=10`;
         break;
       case "trending":
-        url = `https://api.rawg.io/api/games?key=${
-          import.meta.env.VITE_API_KEY
-        }&dates=2020-01-01,2022-12-31&ordering=-added&page_size=10`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=2020-01-01,2022-12-31&ordering=-added&page_size=10`;
         break;
-      // case "preorder":
-      //   url = `https://api.rawg.io/api/games?key=${
-      //     import.meta.env.VITE_API_KEY
-      //   }&dates=${
-      //     new Date().toISOString().split("T")[0]
-      //   },2022-12-31&ordering=-added&page_size=10`;
-      //   break;
+      case "preorder":
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${
+          new Date().toISOString().split("T")[0]
+        },2022-12-31&ordering=-added&page_size=10`;
+        break;
       default:
         return;
     }
