@@ -12,6 +12,7 @@ import Loading from "../../components/Loading/Loading";
 const DetailsGames = () => {
   const [game, setGame] = useState(null);
   const { id: gameId } = useParams();
+  const [similarGames, setSimilarGames] = useState([]);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -229,14 +230,12 @@ const DetailsGames = () => {
         </div>
         <div className="similar_games">
           <div className="similar_games_list">
-            {game?.similar_games?.slice(0, 6).map((similarGame) => (
+            {similarGames.slice(0, 6).map((similarGame) => (
               <div className="similar_game" key={similarGame.id}>
                 <Link to={`/games/${similarGame.id}`}>
                   <img
-                    src={`https://images.igdb.com/igdb/image/upload/t_720p/${
-                      similarGame.cover.image_id
-                    }.jpg`}
-                    alt=""
+                    src={similarGame.background_image}
+                    alt={similarGame.name}
                   />
                 </Link>
               </div>
