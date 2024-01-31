@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px 0px;
+
     .game_element {
       transition: all 0.3s ease-in-out;
       border-radius: 5px;
@@ -30,8 +31,6 @@
         padding: 10px;
       }
       .game_cover {
-        width: 500px;
-        height: 500px;
         display: flex;
         flex-direction: column;
         .game_cover_img {
@@ -42,12 +41,12 @@
       }
       .game_content_detail {
         display: none;
-        height: 30%;
+        height: 100%;
         width: 100%;
         position: absolute;
         bottom: 0;
         color: white;
-        background-color: rgb(19, 18, 18);
+        background-color: rgba(19, 18, 18, 0.9);
         padding: 1rem;
         .game_title {
           font-size: 1.5rem;

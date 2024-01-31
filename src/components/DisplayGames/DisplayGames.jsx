@@ -19,18 +19,18 @@ function DisplayGames() {
 
   const fetchGames = async (type, setGames) => {
     let url;
+    const currentYear = new Date().getFullYear();
+    const lastYear = currentYear - 1;
 
     switch (type) {
       case "popular":
-        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=2020-01-01,2022-12-31&ordering=-rating&page_size=10`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${lastYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
       case "trending":
-        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=2020-01-01,2022-12-31&ordering=-added&page_size=10`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${lastYear}-01-01,${currentYear}-12-31&ordering=-rating&page_size=10`;
         break;
       case "preorder":
-        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${
-          new Date().toISOString().split("T")[0]
-        },2022-12-31&ordering=-added&page_size=10`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${currentYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
       default:
         return;
@@ -40,16 +40,6 @@ function DisplayGames() {
     setGames(response.data.results);
     console.log(response.data.results);
   };
-
-  function getRatingColor(rating) {
-    if (rating < 50) {
-      return "red";
-    } else if (rating < 80) {
-      return "orange";
-    } else {
-      return "green";
-    }
-  }
 
   const renderGames = (title, games) => (
     <div className="display_games">
@@ -96,16 +86,6 @@ function DisplayGames() {
                     </div>
 
                     <div className="game_content_bottom">
-                      {!isNaN(game.rating) && (
-                        <p
-                          className="rating"
-                          style={{
-                            backgroundColor: getRatingColor(game.metacritic),
-                          }}
-                        >
-                          {Math.floor(game.metacritic)}
-                        </p>
-                      )}
                       <p className="game_genres">
                         {game.genres &&
                           game.genres.length > 0 &&
