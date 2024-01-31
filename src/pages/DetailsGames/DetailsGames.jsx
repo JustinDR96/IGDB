@@ -12,6 +12,7 @@ const DetailsGames = () => {
   const { id: gameId } = useParams();
   const [screenshots, setScreenshots] = useState([]);
   const [isTextTruncated, setIsTextTruncated] = useState(true);
+  const [editions, setEditions] = useState([]);
 
   const handleReadMoreClick = () => {
     setIsTextTruncated(!isTextTruncated);
@@ -61,6 +62,20 @@ const DetailsGames = () => {
     };
 
     fetchScreenshots();
+  }, [gameId]);
+
+  useEffect(() => {
+    const fetchEditions = async () => {
+      const response = await axios.get(
+        `https://api.rawg.io/api/games/${gameId}/additions?key=${
+          import.meta.env.VITE_API_KEY
+        }`
+      );
+      setEditions(response.data.results);
+      console.log(response.data.results);
+    };
+
+    fetchEditions();
   }, [gameId]);
 
   if (!game) {
@@ -123,9 +138,9 @@ const DetailsGames = () => {
 
             <select className="game_edition">
               <option value={game?.name}>{game?.name}</option>
-              {game?.bundles?.map((bundle, index) => (
-                <option key={index} value={bundle.name}>
-                  {bundle.name}
+              {editions.map((edition, index) => (
+                <option key={index} value={edition.name}>
+                  {edition.name}
                 </option>
               ))}
             </select>
