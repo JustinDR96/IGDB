@@ -4,87 +4,63 @@ import { Link } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { format } from "date-fns";
-import useAuth from "../../hook/auth";
 
 function DisplayGames() {
-  const { accessToken } = useAuth();
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
+  const [displayedGames, setDisplayedGames] = useState(new Set());
+  const ApiKey = import.meta.env.VITE_API_KEY;
+
+  useEffect(() => {
+    fetchGames("popular", setPopularGames);
+    fetchGames("trending", setTrendingGames);
+    fetchGames("preorder", setPreorderGames);
+  }, []);
 
   const fetchGames = async (type, setGames) => {
-    let body;
-    const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
-    const threeMonthsAgo = Math.floor(
-      (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
-    ); // Date Unix d'il y a trois mois
-    const nextYearDate = Math.floor(
-      (Date.now() + 365 * 24 * 60 * 60 * 1000) / 1000
-    ); // Date Unix de l'année suivante
+    let url;
+    const currentYear = new Date().getFullYear();
+    const lastYear = currentYear - 1;
 
     switch (type) {
       case "popular":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*;limit:20;sort hypes desc; where rating >= 90;`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${lastYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
+
       case "trending":
-        body = `fields *, cover.*, videos.*,genres.*,platforms.*,platforms.platform_logo.*,follows;limit:20;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`;
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+        const currentDate = new Date();
+
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${
+          threeMonthsAgo.toISOString().split("T")[0]
+        },${
+          currentDate.toISOString().split("T")[0]
+        }&ordering=-suggestions_count&page_size=10`;
         break;
+
       case "preorder":
-        body = `fields *, cover.*, videos.*, first_release_date;sort hypes desc;limit:15; where first_release_date > ${currentDate} & first_release_date <= ${nextYearDate};`;
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${currentYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
       default:
         return;
     }
 
-    try {
-      const response = await axios.get(
-        "/api/proxy",
-        { body },
-        {
-          headers: {
-            "Client-ID": import.meta.env.VITE_CLIENT_ID,
-            Authorization: `Bearer ${accessToken}`,
-            Accept: "application/json",
-          },
-        }
-      );
-      setGames(response.data);
-      console.log(response);
-    } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-    }
+    const response = await axios.get(url);
+    setGames(response.data.results);
+    console.log(response.data.results);
   };
 
-  useEffect(() => {
-    if (!accessToken) return;
-
-    fetchGames("popular", setPopularGames);
-    fetchGames("trending", setTrendingGames);
-    fetchGames("preorder", setPreorderGames);
-  }, [accessToken]);
-
-  useEffect(() => {
-    if (!accessToken) return;
-
-    fetchGames("popular", setPopularGames);
-    fetchGames("trending", setTrendingGames);
-    fetchGames("preorder", setPreorderGames);
-  }, [accessToken]);
-
-  function getRatingColor(rating) {
-    if (rating < 50) {
+  function getRatingColor(metacritic) {
+    if (metacritic < 50) {
       return "red";
-    } else if (rating < 80) {
+    } else if (metacritic < 80) {
       return "orange";
     } else {
       return "green";
     }
   }
-
   const renderGames = (title, games) => (
     <div className="display_games">
       <div className="display_games_content">
@@ -111,66 +87,52 @@ function DisplayGames() {
             },
           }}
         >
-          {games.map((game) => {
-            let formattedDate = "";
-            if (game.first_release_date) {
-              const unixTimestamp = game.first_release_date;
-              const date = new Date(unixTimestamp * 1000); // Convertit le timestamp Unix en millisecondes
-              formattedDate = format(date, "dd MMMM yyyy");
-            }
+          {games.map((game) => (
+            <SwiperSlide key={game.id}>
+              <div className="game_element">
+                <Link className="link" to={`/games/${game.id}`}>
+                  <div className="game_cover">
+                    <img
+                      className="game_cover_img"
+                      src={game.background_image}
+                      alt={game.name}
+                    />
+                  </div>
+                  <div className="game_content_detail">
+                    <div className="game_content_top">
+                      <h1 className="game_title">{game.name}</h1>
+                      <p>{game.released}</p> {/* Date de sortie du jeu */}
+                      <p>{game.metacritic}</p> {/* Score Metacritic du jeu */}
+                    </div>
 
-            return (
-              <SwiperSlide key={game.id}>
-                <div className="game_element">
-                  <Link className="link" to={`/games/${game.id}`} />
-                  {game.cover && game.cover.image_id && (
-                    <Link to={`/games/${game.id}`}>
-                      <div className="game_cover">
-                        <img
-                          className="game_cover_img"
-                          src={`https://images.igdb.com/igdb/image/upload/t_original/${
-                            game.cover.image_id
-                          }.jpg`}
-                          alt={game.name}
-                        />
-                      </div>
-                      <div className="game_content_detail">
-                        <div className="game_content_top">
-                          <h1 className="game_title">{game.name}</h1>
-                        </div>
-
-                        <div className="game_content_bottom">
-                          {!isNaN(game.rating) && (
-                            <p
-                              className="rating"
-                              style={{
-                                backgroundColor: getRatingColor(game.rating),
-                              }}
-                            >
-                              {Math.floor(game.rating)}
-                            </p>
-                          )}
-                          <p className="game_genres">
-                            {game.genres &&
-                              game.genres.length > 0 &&
-                              game.genres
-                                .filter((genre) => genre && genre.name)
-                                .map((genre) => genre.name)
-                                .join(", ")}
-                          </p>
-                          {title === "Pre-order" && game.first_release_date ? (
-                            <p className="game_release_date">{formattedDate}</p>
-                          ) : (
-                            <p className="game_prices">59,99$</p>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              </SwiperSlide>
-            );
-          })}
+                    <div className="game_content_bottom">
+                      {game.metacritic !== null && !isNaN(game.metacritic) ? (
+                        <p
+                          className="rating"
+                          style={{
+                            backgroundColor: getRatingColor(game.metacritic),
+                          }}
+                        >
+                          {Math.floor(game.metacritic)}
+                        </p>
+                      ) : (
+                        <p className="rating">Coming Soon</p>
+                      )}
+                      <p className="game_genres">
+                        {game.genres &&
+                          game.genres.length > 0 &&
+                          game.genres
+                            .filter((genre) => genre && genre.name)
+                            .map((genre) => genre.name)
+                            .join(", ")}
+                      </p>
+                      <p className="game_prices">59,99$</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>
@@ -178,9 +140,9 @@ function DisplayGames() {
 
   return (
     <div className="display_games_main">
-      {renderGames("Popular", popularGames)}
-      {renderGames("Trending", trendingGames)}
-      {renderGames("Pre-order", preorderGames)}
+      {renderGames("Popular Games", popularGames)}
+      {renderGames("Trending Games", trendingGames)}
+      {renderGames("Preorder Games", preorderGames)}
     </div>
   );
 }

@@ -17,10 +17,12 @@
     align-items: center;
     justify-content: center;
     padding: 10px 0px;
+
     .game_element {
       transition: all 0.3s ease-in-out;
       border-radius: 5px;
       overflow: hidden;
+
       margin-top: 2rem;
       margin-bottom: 2rem;
       margin-right: 1px;
@@ -30,22 +32,23 @@
         padding: 10px;
       }
       .game_cover {
-        width: 100%;
         display: flex;
         flex-direction: column;
+        height: 400px;
         .game_cover_img {
           width: 100%;
           height: 100%;
+          object-fit: cover;
         }
       }
       .game_content_detail {
         display: none;
-        height: 30%;
+        height: 100%;
         width: 100%;
         position: absolute;
         bottom: 0;
         color: white;
-        background-color: rgb(19, 18, 18);
+        background-color: rgba(19, 18, 18, 0.9);
         padding: 1rem;
         .game_title {
           font-size: 1.5rem;
@@ -78,7 +81,7 @@
       }
     }
     .game_element:hover {
-      transform: scale(1.1);
+      transform: scale(0.9);
       z-index: 1000;
       .game_content_detail {
         @include flex-center-btw;

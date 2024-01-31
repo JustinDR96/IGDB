@@ -7,59 +7,47 @@ import useAuth from "../../hook/auth";
 
 const SearchGames = () => {
   const { name: gameName } = useParams();
-  const [game, setGame] = useState([]);
+  const [games, setGames] = useState(null);
   const [error, setError] = useState(null);
-  const { accessToken } = useAuth();
+  const ApiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchGameSearch = async () => {
       try {
-        const igdbResponse = await axios.post(
-          "/api/proxy/games",
-          {
-            body: `fields *,cover.image_id,follows,hypes;limit:20;search "${gameName}";where follows != null | hypes != null;`,
-            accessToken,
-          },
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
+        const response = await axios.get(
+          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&ordering=-added&page_size=10`
         );
-
-        console.log(igdbResponse.data); // Affichez les données récupérées dans la console
-
-        setGame(igdbResponse.data); // Définissez tous les jeux, pas seulement le premier
+        console.log(response.data);
+        const games = response.data.results; // Définissez games comme un tableau de jeux
+        setGames(games);
       } catch (error) {
-        console.error("Erreur lors de la requête à l'API IGDB", error);
+        console.error("Erreur lors de la recherche du jeu :", error.message);
+        console.error("Erreur complète : ", error);
+        setError(error.message);
       }
     };
 
     fetchGameSearch();
-  }, [accessToken, gameName]);
+  }, [gameName]);
 
   if (error) {
     return <div>Error: {error}</div>;
   }
-  if (!game) {
+  if (!games) {
     return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
-  console.log(game);
+  console.log(games);
   return (
     <div className="searchGames">
-      {game
-        .filter(
-          (gameItem) => gameItem && gameItem.cover && gameItem.cover.image_id
-        )
+      {games
+        .filter((gameItem) => gameItem && gameItem.background_image)
         .map((gameItem) => (
           <Link to={`/games/${gameItem.id}`} key={gameItem.id}>
             <div className="gameItem">
-              {gameItem.cover && gameItem.cover.image_id ? (
+              {gameItem.background_image ? (
                 <img
                   className="gameItem_cover"
-                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${
-                    gameItem.cover.image_id
-                  }.jpg`}
+                  src={gameItem.background_image}
                   alt=""
                 />
               ) : (
