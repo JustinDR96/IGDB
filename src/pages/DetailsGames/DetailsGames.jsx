@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { format } from "date-fns";
-import moment from "moment";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -57,29 +55,6 @@ const DetailsGames = () => {
     fetchScreenshots();
   }, [gameId]);
 
-  useEffect(() => {
-    const fetchSimilarGames = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.rawg.io/api/games?key=${
-            import.meta.env.VITE_API_KEY
-          }&genres=${game.genres[0].id}`
-        );
-
-        setSimilarGames(response.data.results);
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des jeux similaires de l'API RAWG",
-          error
-        );
-      }
-    };
-
-    if (game) {
-      fetchSimilarGames();
-    }
-  }, [game]);
-
   if (!game) {
     return <Loading />;
   }
@@ -94,7 +69,6 @@ const DetailsGames = () => {
     }
   }
   console.log(game);
-  console.log(game.metacritic);
 
   return (
     <div className="details_games">
@@ -126,7 +100,7 @@ const DetailsGames = () => {
               className="game_rating"
               style={{ backgroundColor: getRatingColor(game.metacritic) }}
             >
-              {game && !isNaN(game.metacritic)
+              {game && game.metacritic !== null && !isNaN(game.metacritic)
                 ? Math.floor(game.metacritic)
                 : "Coming Soon"}
             </p>
@@ -158,7 +132,7 @@ const DetailsGames = () => {
 
           <button
             className="buy_btn"
-            disabled={new Date(game?.released * 1000) > new Date()}
+            disabled={new Date(game?.released) > new Date()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -171,9 +145,7 @@ const DetailsGames = () => {
                 fill="white"
               />
             </svg>
-            {new Date(game?.released * 1000) > new Date()
-              ? "Pre Order"
-              : "Buy now"}
+            {new Date(game?.released) > new Date() ? "Pre Order" : "Buy now"}
           </button>
         </div>
       </div>
@@ -257,20 +229,6 @@ const DetailsGames = () => {
               ))}
             </Swiper>
           </Swiper>
-        </div>
-        <div className="similar_games">
-          <div className="similar_games_list">
-            {similarGames.slice(0, 6).map((similarGame) => (
-              <div className="similar_game" key={similarGame.id}>
-                <Link to={`/games/${similarGame.id}`}>
-                  <img
-                    src={similarGame.background_image}
-                    alt={similarGame.name}
-                  />
-                </Link>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

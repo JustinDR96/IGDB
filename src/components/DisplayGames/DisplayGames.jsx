@@ -9,6 +9,7 @@ function DisplayGames() {
   const [popularGames, setPopularGames] = useState([]);
   const [trendingGames, setTrendingGames] = useState([]);
   const [preorderGames, setPreorderGames] = useState([]);
+  const [displayedGames, setDisplayedGames] = useState(new Set());
   const ApiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
@@ -26,9 +27,19 @@ function DisplayGames() {
       case "popular":
         url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${lastYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
+
       case "trending":
-        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${lastYear}-01-01,${currentYear}-12-31&ordering=-rating&page_size=10`;
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+        const currentDate = new Date();
+
+        url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${
+          threeMonthsAgo.toISOString().split("T")[0]
+        },${
+          currentDate.toISOString().split("T")[0]
+        }&ordering=-suggestions_count&page_size=10`;
         break;
+
       case "preorder":
         url = `https://api.rawg.io/api/games?key=${ApiKey}&dates=${currentYear}-01-01,${currentYear}-12-31&ordering=-added&page_size=10`;
         break;
@@ -41,6 +52,15 @@ function DisplayGames() {
     console.log(response.data.results);
   };
 
+  function getRatingColor(metacritic) {
+    if (metacritic < 50) {
+      return "red";
+    } else if (metacritic < 80) {
+      return "orange";
+    } else {
+      return "green";
+    }
+  }
   const renderGames = (title, games) => (
     <div className="display_games">
       <div className="display_games_content">
@@ -86,6 +106,18 @@ function DisplayGames() {
                     </div>
 
                     <div className="game_content_bottom">
+                      {game.metacritic !== null && !isNaN(game.metacritic) ? (
+                        <p
+                          className="rating"
+                          style={{
+                            backgroundColor: getRatingColor(game.metacritic),
+                          }}
+                        >
+                          {Math.floor(game.metacritic)}
+                        </p>
+                      ) : (
+                        <p className="rating">Coming Soon</p>
+                      )}
                       <p className="game_genres">
                         {game.genres &&
                           game.genres.length > 0 &&

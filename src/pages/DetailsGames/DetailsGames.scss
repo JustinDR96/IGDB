@@ -5,8 +5,10 @@
   gap: 2rem;
   margin-bottom: 1rem;
   .screenshot {
+    width: 100%;
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
       position: absolute;
       top: 0;
@@ -44,7 +46,8 @@
     }
 
     .game_content_cover {
-      max-width: 600px;
+      width: 500px;
+      height: 300px;
       margin-bottom: 1.5rem;
       @include mobile {
         width: 100%;

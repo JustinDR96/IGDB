@@ -5,35 +5,25 @@ import Loading from "../Loading/Loading";
 
 export default function Cta() {
   const [game, setGame] = useState(null);
-  const clientId = import.meta.env.VITE_CLIENT_ID;
-  const accessToken = useAuth();
+  const ApiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchTrendingGame = async () => {
       try {
-        const threeMonthsAgo = Math.floor(
-          (Date.now() - 3 * 30 * 24 * 60 * 60 * 1000) / 1000
-        ); // Date Unix d'il y a trois mois
-        const currentDate = Math.floor(Date.now() / 1000); // Date Unix actuelle
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+        const currentDate = new Date();
 
-        const response = await axios({
-          method: "post",
-          url: "/proxy",
-          headers: {
-            Accept: "application/json",
-            "Client-ID": clientId,
-            Authorization: `Bearer ${accessToken}`,
-          },
-          data: `fields *, cover.*, videos.*,screenshots.*;limit: 50;sort follows desc;where first_release_date >= ${threeMonthsAgo} & first_release_date <= ${currentDate} & rating >= 70;`,
-        });
-
-        const gamesWithScreenshots = response.data.filter(
-          (game) => game.screenshots && game.screenshots[0]?.image_id
+        const response = await axios.get(
+          `https://api.rawg.io/api/games?key=${ApiKey}&dates=${
+            threeMonthsAgo.toISOString().split("T")[0]
+          },${
+            currentDate.toISOString().split("T")[0]
+          }&ordering=-suggestions_count&page_size=10`
         );
-        const randomGame =
-          gamesWithScreenshots[
-            Math.floor(Math.random() * gamesWithScreenshots.length)
-          ];
+
+        const games = response.data.results;
+        const randomGame = games[Math.floor(Math.random() * games.length)];
         setGame(randomGame);
         console.log(randomGame);
       } catch (error) {
@@ -44,10 +34,8 @@ export default function Cta() {
       }
     };
 
-    if (accessToken) {
-      fetchTrendingGame();
-    }
-  }, [accessToken]);
+    fetchTrendingGame();
+  }, []);
 
   if (!game) return <Loading />;
   return (
@@ -62,11 +50,8 @@ export default function Cta() {
         </div>
 
         <div className="cta-screenshot">
-          {game.screenshots?.[0]?.image_id ? (
-            <img
-              src={`https://images.igdb.com/igdb/image/upload/t_1080p/${game.screenshots[0].image_id}.jpg`}
-              alt=""
-            />
+          {game.background_image ? (
+            <img src={game.background_image} alt="" />
           ) : (
             <div>Screenshot not available</div>
           )}

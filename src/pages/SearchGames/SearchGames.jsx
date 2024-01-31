@@ -6,47 +6,47 @@ import Loading from "../../components/Loading/Loading";
 
 const SearchGames = () => {
   const { name: gameName } = useParams();
-  const [game, setGame] = useState(null);
+  const [games, setGames] = useState(null);
   const [error, setError] = useState(null);
+  const ApiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchGameSearch = async () => {
       try {
         const response = await axios.get(
-          `https://gamecenter-git-deploy-justindr96s-projects.vercel.app/search/${gameName}`
+          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&ordering=-added&page_size=10`
         );
         console.log(response.data);
-        const game = response.data;
-        setGame(game);
+        const games = response.data.results; // Définissez games comme un tableau de jeux
+        setGames(games);
       } catch (error) {
-        console.error("Error fetching game search:", error.message);
-        console.error("Full error: ", error);
-        setError(error.message); // Ajoutez cette ligne
+        console.error("Erreur lors de la recherche du jeu :", error.message);
+        console.error("Erreur complète : ", error);
+        setError(error.message);
       }
     };
 
     fetchGameSearch();
   }, [gameName]);
+
   if (error) {
     return <div>Error: {error}</div>;
   }
-  if (!game) {
+  if (!games) {
     return <Loading />; // Affiche un message de chargement tant que les détails du jeu ne sont pas chargés
   }
-  console.log(game);
+  console.log(games);
   return (
     <div className="searchGames">
-      {game
-        .filter(
-          (gameItem) => gameItem && gameItem.cover && gameItem.cover.image_id
-        )
+      {games
+        .filter((gameItem) => gameItem && gameItem.background_image)
         .map((gameItem) => (
           <Link to={`/games/${gameItem.id}`} key={gameItem.id}>
             <div className="gameItem">
-              {gameItem.cover && gameItem.cover.image_id ? (
+              {gameItem.background_image ? (
                 <img
                   className="gameItem_cover"
-                  src={`https://images.igdb.com/igdb/image/upload/t_720p/${gameItem.cover.image_id}.jpg`}
+                  src={gameItem.background_image}
                   alt=""
                 />
               ) : (
