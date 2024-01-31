@@ -64,6 +64,8 @@
       display: flex;
       justify-content: space-between;
       flex-direction: column;
+      width: 500px;
+      height: fit-content;
       gap: 1.5rem;
       padding: 25px;
       background: rgba(255, 255, 255, 0);
@@ -76,7 +78,7 @@
       }
       .game_content_card_header {
         .game_title {
-          font-size: 1.6rem;
+          font-size: 3rem;
           font-weight: 700;
           color: white;
           margin-bottom: 1rem;
@@ -195,11 +197,28 @@
     .game_summary {
       width: 600px;
       text-align: justify;
+      position: relative;
       @include tablet {
         width: 100%;
       }
       @include mobile {
         font-size: 0.8rem;
+      }
+      button {
+        cursor: pointer;
+        background-color: rgb(26, 22, 22);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: #ebeaea;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
     .game_details {

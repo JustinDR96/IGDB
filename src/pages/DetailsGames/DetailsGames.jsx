@@ -11,6 +11,15 @@ const DetailsGames = () => {
   const [game, setGame] = useState(null);
   const { id: gameId } = useParams();
   const [screenshots, setScreenshots] = useState([]);
+  const [isTextTruncated, setIsTextTruncated] = useState(true);
+
+  const handleReadMoreClick = () => {
+    setIsTextTruncated(!isTextTruncated);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -150,8 +159,17 @@ const DetailsGames = () => {
       <div className="game_content_footer">
         <div className="game_summary">
           <p>
-            <div dangerouslySetInnerHTML={{ __html: game?.description }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: isTextTruncated
+                  ? game?.description.slice(0, 300) + "..."
+                  : game?.description,
+              }}
+            />
           </p>
+          <button onClick={handleReadMoreClick}>
+            {isTextTruncated ? "+" : "-"}
+          </button>
         </div>
 
         <div className="game_details">

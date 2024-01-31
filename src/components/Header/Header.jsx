@@ -57,7 +57,7 @@ function Header() {
   return (
     <div className="header">
       <nav className="navBar">
-        <a className="nav_logo" href="/">
+        <a className="nav_logo" href="/home">
           <img
             className="nav_logo"
             src="/Images/logo/logo_game_center_removebg.png"
@@ -66,16 +66,16 @@ function Header() {
         </a>
         <ul className="nav_links">
           <li>
-            <a href="/">Home</a>
+            <a href="/home">Home</a>
           </li>
           <li>
-            <a href="/">Popular Games</a>
+            <a href="/home">Popular Games</a>
           </li>
           <li>
-            <a href="/">New Games</a>
+            <a href="/home">New Games</a>
           </li>
           <li>
-            <a href="/">Upcoming Games</a>
+            <a href="/home">Upcoming Games</a>
           </li>
         </ul>
         <div className="searchBar">

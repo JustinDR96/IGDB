@@ -9,7 +9,9 @@
   flex-direction: column;
   padding: 15px;
   .page_title {
-    font-size: 2.5rem;
+    font-family: "DebugFreeTrial", sans-serif;
+    font-size: 4rem;
+    text-shadow: 2px 2px 4px #0303e9;
     color: white;
   }
   .game_list {
