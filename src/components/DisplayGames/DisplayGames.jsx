@@ -113,7 +113,7 @@ function DisplayGames() {
                           {Math.floor(game.metacritic)}
                         </p>
                       ) : (
-                        <p className="rating" />
+                        <p className="loading">Loading...</p>
                       )}
                       <p className="game_genres">
                         {game.genres &&

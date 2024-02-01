@@ -47,7 +47,7 @@
       }
       .game_content_detail {
         display: none;
-        height: 50%;
+        height: min-content;
         width: 100%;
         position: absolute;
         bottom: 0;
@@ -71,9 +71,8 @@
         .game_content_bottom {
           width: 100%;
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           justify-content: space-between;
-
           .game_genres {
             margin-left: 5px;
             font-size: 0.8rem;
