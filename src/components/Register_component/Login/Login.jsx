@@ -53,9 +53,7 @@ export default function Login(props) {
         </div>
 
         <div className="submit-link">
-          <button type="submit">
-            <LoginBtn />
-          </button>
+          <button type="submit">{/* <LoginBtn /> */}Login</button>
           <a href="#" onClick={props.onNeedAccountClick}>
             Need account ?
           </a>
