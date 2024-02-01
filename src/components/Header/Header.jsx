@@ -18,6 +18,7 @@ function Header() {
     // Vérifiez si searchInput a une valeur avant de naviguer
     if (searchInput.trim() !== "") {
       navigate(`/search/${searchInput}`);
+      setSearchInput(""); // Réinitialiser la barre de recherche
     }
   };
 
@@ -72,7 +73,7 @@ function Header() {
             <a href="/home">Home</a>
           </li>
           <li>
-            <a href="/home">Popular Games</a>
+            <a href="/popular">Popular Games</a>
           </li>
           <li>
             <a href="/home">New Games</a>
@@ -143,10 +144,10 @@ function Header() {
             </div>
             <ul className="nav_links">
               <li>
-                <a href="#">Home</a>
+                <a href="/home">Home</a>
               </li>
               <li>
-                <a href="#">Popular Games</a>
+                <a href="/popular">Popular Games</a>
               </li>
               <li>
                 <a href="#">New Games</a>

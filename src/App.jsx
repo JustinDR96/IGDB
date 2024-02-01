@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import DetailsGames from "./pages/DetailsGames/DetailsGames";
 import SearchGames from "./pages/SearchGames/SearchGames";
 import Register from "./pages/Register/Register";
+import Popular from "./pages/Popular/Popular";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/Popular" element={<Popular />} />
       </Routes>
     </Router>
   );

@@ -9,24 +9,38 @@ const SearchGames = () => {
   const [games, setGames] = useState(null);
   const [error, setError] = useState(null);
   const ApiKey = import.meta.env.VITE_API_KEY;
-  
+
   useEffect(() => {
-    console.log(gameName);
     const fetchGameSearch = async () => {
       try {
         const response = await axios.get(
-          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&page_size=15`
+          `https://api.rawg.io/api/games?key=${ApiKey}&search=${gameName}&page_size=20&exclude_additions&exclude_collection`
         );
-        const games = response.data.results; // Définissez games comme un tableau de jeux
-        console.log(games); // Imprimez les résultats de l'API avant de les filtrer
-        const matchingGames = games.filter((game) =>
+        let games = response.data.results; // Définissez games comme un tableau de jeux
+
+        games = games.filter((game) =>
           game.name.toLowerCase().includes(gameName.toLowerCase())
         ); // Filtrer les jeux dont le nom contient gameName
-        const sortedGames = matchingGames.sort(
-          (a, b) => b.suggestions_count - a.suggestions_count
-        ); // Trier les jeux par suggestions_count en ordre décroissant
-        setGames(sortedGames);
-        console.log(sortedGames);
+
+        games = games.sort((a, b) => {
+          // Trie d'abord par added en ordre décroissant
+          const addedComparison = b.added - a.added;
+
+          // Extraire l'année de la date de sortie
+          const yearA = new Date(a.released).getFullYear();
+          const yearB = new Date(b.released).getFullYear();
+
+          // Ensuite, trie par année de sortie en ordre décroissant, si les jeux ont le même added
+          const yearComparison = yearB - yearA;
+
+          return addedComparison === 0 ? yearComparison : addedComparison;
+        });
+
+        games = games.filter((game) => game.added !== 0); // Filtrer les jeux dont added n'est pas égal à 0
+
+        const parentGames = games.filter((game) => game.parent_platforms); // Filtrer les jeux qui ont des plateformes parentes
+        setGames(parentGames);
+        console.log(parentGames);
       } catch (error) {
         console.error("Erreur lors de la recherche du jeu :", error.message);
         console.error("Erreur complète : ", error);
