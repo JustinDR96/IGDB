@@ -5,6 +5,7 @@ import DetailsGames from "./pages/DetailsGames/DetailsGames";
 import SearchGames from "./pages/SearchGames/SearchGames";
 import Register from "./pages/Register/Register";
 import Popular from "./pages/Popular/Popular";
+import NewGames from "./pages/NewGames/NewGames";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Popular" element={<Popular />} />
+        <Route path="/NewGames" element={<NewGames />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LoginBtn from "../login_button/LoginBtn";
 
 export default function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +53,9 @@ export default function Login(props) {
         </div>
 
         <div className="submit-link">
-          <button type="submit">Se connecter</button>
+          <button type="submit">
+            <LoginBtn />
+          </button>
           <a href="#" onClick={props.onNeedAccountClick}>
             Need account ?
           </a>
