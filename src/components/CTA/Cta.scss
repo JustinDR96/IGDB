@@ -1,12 +1,12 @@
 .CTA {
   width: 100%;
-  height: 500px;
+  height: 600px;
   position: relative;
   .cta-screenshot {
     img {
-      filter: opacity(60%);
+      filter: opacity(50%);
       width: 100vw;
-      height: 600px;
+      height: 100%;
       object-fit: cover;
       object-position: center;
       clip-path: polygon(0 0, 100% 0%, 100% 95%, 0 80%);

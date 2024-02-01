@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import Loading from "../../components/Loading/Loading";
 import { CartContext } from "../../components/panier/CartContext";
 
@@ -176,15 +175,13 @@ const DetailsGames = () => {
 
       <div className="game_content_footer">
         <div className="game_summary">
-          <p>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: isTextTruncated
-                  ? game?.description.slice(0, 300) + "..."
-                  : game?.description,
-              }}
-            />
-          </p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: isTextTruncated
+                ? game?.description.slice(0, 300) + "..."
+                : game?.description,
+            }}
+          />
           <button onClick={handleReadMoreClick}>
             {isTextTruncated ? "+" : "-"}
           </button>
@@ -242,24 +239,24 @@ const DetailsGames = () => {
       <div className="game_content_trailer">
         <div className="game_screenshots">
           <Swiper
-            modules={[Autoplay]}
+            modules={[Autoplay, Navigation]}
             spaceBetween={0}
             slidesPerView={1}
+            slidesPerGroup={1}
+            navigation={true}
             autoplay={{
               delay: 2500,
               disableOnInteraction: false,
             }}
             speed={500}
-            loop={true}
+            loop={screenshots.length > 1}
             onSwiper={(swiper) => console.log(swiper)}
           >
-            <Swiper>
-              {screenshots.map((screenshot) => (
-                <SwiperSlide key={screenshot.id}>
-                  <img src={screenshot.image} alt="Screenshot" />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            {screenshots.map((screenshot) => (
+              <SwiperSlide key={screenshot.id}>
+                <img src={screenshot.image} alt="Screenshot" />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
       </div>

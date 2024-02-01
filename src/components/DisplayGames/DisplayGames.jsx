@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 
 function DisplayGames() {
   const [popularGames, setPopularGames] = useState([]);
@@ -64,24 +64,25 @@ function DisplayGames() {
       <div className="display_games_content">
         <h2 className="page_title">{title}</h2>
         <Swiper
-          modules={[Autoplay]}
-          slidesPerView={5}
+          modules={[Autoplay, Navigation]}
+          slidesPerView={3}
           centeredSlides={false}
-          spaceBetween={0}
+          spaceBetween={2}
           className="game_list"
-          loop={true}
-          speed={1000}
+          navigation={true}
+          loop={games.length > 1}
+          speed={500}
           breakpoints={{
             // when window width is >= 320px
             320: {
               slidesPerView: 1,
             },
             480: {
-              slidesPerView: 4,
+              slidesPerView: 2,
             },
             // when window width is >= 640px
             1000: {
-              slidesPerView: 5,
+              slidesPerView: 3,
             },
           }}
         >
