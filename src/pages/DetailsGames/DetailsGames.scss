@@ -7,6 +7,7 @@
   .screenshot {
     width: 100%;
     img {
+      filter: opacity(70%);
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -31,7 +32,7 @@
 
   .game_content {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     margin-top: 3rem;
     z-index: 2;
@@ -46,8 +47,7 @@
     }
 
     .game_content_cover {
-      width: 500px;
-      height: 300px;
+      max-width: 650px;
       margin-bottom: 1.5rem;
       @include mobile {
         width: 100%;
@@ -174,6 +174,15 @@
       .buy_btn:active {
         transform: translateY(0px);
         box-shadow: none;
+      }
+      .buy_btn:disabled {
+        box-shadow: none;
+        background-color: #1d1b1b;
+        cursor: not-allowed;
+        &:hover {
+          box-shadow: none;
+          transform: translateY(0px);
+        }
       }
     }
   }

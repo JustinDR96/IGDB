@@ -117,7 +117,6 @@ const DetailsGames = () => {
           </div>
 
           <div className="game_content_card_mid">
-            <p className="game_stock">Stock 5</p>
             <p
               className="game_rating"
               style={{ backgroundColor: getRatingColor(game.metacritic) }}
@@ -154,7 +153,7 @@ const DetailsGames = () => {
 
           <button
             className="buy_btn"
-            disabled={new Date(game?.released) > new Date()}
+            disabled={!game?.released || new Date(game?.released) > new Date()}
             onClick={() => addToCart(game)}
           >
             <svg
@@ -168,7 +167,11 @@ const DetailsGames = () => {
                 fill="white"
               />
             </svg>
-            {new Date(game?.released) > new Date() ? "Pre Order" : "Buy now"}
+            {!game?.released
+              ? "Not available"
+              : new Date(game?.released) > new Date()
+                ? "Pre Order"
+                : "Buy now"}
           </button>
         </div>
       </div>
@@ -178,7 +181,7 @@ const DetailsGames = () => {
           <div
             dangerouslySetInnerHTML={{
               __html: isTextTruncated
-                ? game?.description.slice(0, 300) + "..."
+                ? game?.description.slice(0, 400) + "..."
                 : game?.description,
             }}
           />
@@ -248,7 +251,7 @@ const DetailsGames = () => {
               delay: 2500,
               disableOnInteraction: false,
             }}
-            speed={500}
+            speed={1000}
             loop={screenshots.length > 1}
             onSwiper={(swiper) => console.log(swiper)}
           >
