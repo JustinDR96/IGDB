@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Loading from "../../components/Loading/Loading";
+import { CartContext } from "../../components/panier/CartContext";
 
 const DetailsGames = () => {
   const [game, setGame] = useState(null);
@@ -13,6 +14,7 @@ const DetailsGames = () => {
   const [screenshots, setScreenshots] = useState([]);
   const [isTextTruncated, setIsTextTruncated] = useState(true);
   const [editions, setEditions] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
   const handleReadMoreClick = () => {
     setIsTextTruncated(!isTextTruncated);
@@ -123,7 +125,7 @@ const DetailsGames = () => {
             >
               {game && game.metacritic !== null && !isNaN(game.metacritic)
                 ? Math.floor(game.metacritic)
-                : "Coming Soon"}
+                : "Not Rated Yet"}
             </p>
           </div>
 
@@ -154,6 +156,7 @@ const DetailsGames = () => {
           <button
             className="buy_btn"
             disabled={new Date(game?.released) > new Date()}
+            onClick={() => addToCart(game)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

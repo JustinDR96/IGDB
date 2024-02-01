@@ -1,5 +1,6 @@
-import react, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../panier/CartContext";
 
 function Header() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -8,6 +9,8 @@ function Header() {
   const accountMenuRef = useRef(null);
   const sidenavRef = useRef(null);
   const navigate = useNavigate();
+  const { cart, removeFromCart } = useContext(CartContext);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -92,9 +95,28 @@ function Header() {
           </form>
         </div>
         <div className="user_links">
-          <a href="#">
-            <img src="/Images/SVG/shopping_cart.svg" alt="" />
-          </a>
+          <div
+            className="cart-icon"
+            onMouseEnter={() => setIsDrawerOpen(true)}
+            onMouseLeave={() => setIsDrawerOpen(false)}
+          >
+            <img src="/Images/SVG/shopping_cart.svg" alt="Cart" />
+            {cart.length > 0 && (
+              <span className="cart-badge">{cart.length}</span>
+            )}
+            {isDrawerOpen && (
+              <div className="cart-drawer">
+                {cart.map((game) => (
+                  <div key={game.id}>
+                    <img src={game.background_image} alt={game.name} />
+                    <p>{game.name}</p>
+                    <p>50$</p>
+                    <button onClick={() => removeFromCart(game.id)}>X</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <a href="/register">
             <img src="/Images/SVG/account_icon.svg" alt="" />
           </a>
@@ -112,9 +134,12 @@ function Header() {
                 <img src="/Images/SVG/account_icon.svg" alt="" />
               </a>
 
-              <a href="#">
-                <img src="/Images/SVG/shopping_cart.svg" alt="" />
-              </a>
+              <div className="cart-icon">
+                <img src="/Images/SVG/shopping_cart.svg" alt="Cart" />
+                {cart.length > 0 && (
+                  <span className="cart-badge">{cart.length}</span>
+                )}
+              </div>
             </div>
             <ul className="nav_links">
               <li>
