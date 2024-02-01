@@ -5,7 +5,6 @@ import { CartContext } from "../panier/CartContext";
 function Header() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const accountMenuRef = useRef(null);
   const sidenavRef = useRef(null);
   const navigate = useNavigate();

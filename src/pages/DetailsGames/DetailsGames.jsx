@@ -33,6 +33,7 @@ const DetailsGames = () => {
         );
 
         setGame(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données de l'API RAWG",

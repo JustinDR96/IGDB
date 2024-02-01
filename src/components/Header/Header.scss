@@ -43,6 +43,7 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
   @include mobile {
     width: 10rem;
   }
@@ -55,6 +56,7 @@
     width: 30rem;
     display: flex;
     align-items: center;
+    position: relative;
     input {
       width: 100%;
       border: none;
@@ -278,3 +280,11 @@
 .cart-drawer button {
   color: red;
 }
+
+// .suggestions {
+//   background-color: red;
+//   color: white;
+//   position: absolute;
+//   top: 20px;
+//   height: 400px;
+// }
